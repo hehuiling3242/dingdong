@@ -2,9 +2,12 @@ package com.dingdong.mapper;
 
 import com.dingdong.domain.model.DingDongFile;
 import com.dingdong.domain.query.DingDongFileQuery;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Mapper
 public interface DingDongFileMapper {
 
     //根据id查询
