@@ -32,6 +32,4 @@ public class DingDongFileController {
     public void upload(@RequestParam("Filedata") ArrayList<MultipartFile> uploadFile){
         dingDongFileService.upload(uploadFile);
     }
-
-
 }
