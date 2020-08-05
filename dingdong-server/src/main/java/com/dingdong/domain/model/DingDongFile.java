@@ -23,6 +23,9 @@ public class DingDongFile implements Serializable {
     @ApiModelProperty(value = "文件路径")
     private String filePath;
 
+    @ApiModelProperty(value = "商品id")
+    private Long productId;
+
     public Long getId() {
         return id;
     }
@@ -53,5 +56,13 @@ public class DingDongFile implements Serializable {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }

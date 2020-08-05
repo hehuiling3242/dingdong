@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 /**
@@ -27,9 +28,25 @@ public class DingDongFileController {
         return aaa;
     }
 
-    @ApiOperation(value = "文件上传接口")
-    @PostMapping("upload")
-    public void upload(@RequestParam("Filedata") ArrayList<MultipartFile> uploadFile){
-        dingDongFileService.upload(uploadFile);
+    @ApiOperation(value = "批量上传文件接口")
+    @PostMapping("batch-upload")
+    @ResponseBody
+    public void upload(@RequestParam("fileArray") ArrayList<MultipartFile> uploadFile){
+        dingDongFileService.batchUpload(uploadFile);
     }
+
+    @ApiOperation(value = "单文件文件上传接口")
+    @PostMapping("one-upload")
+    @ResponseBody
+    public void upload(@RequestParam("file") MultipartFile file, HttpServletRequest request){
+        dingDongFileService.oneUpload(file,request);
+    }
+
+    /*@ApiOperation(value = "单文件文件上传接口")
+    @GetMapping("load")
+    public void upload(@RequestParam("id") Long id){
+        dingDongFileService.oneUpload(file);
+    }*/
+
+
 }

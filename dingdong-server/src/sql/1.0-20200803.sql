@@ -10,5 +10,13 @@ PRIMARY KEY (`id`)
 ALTER TABLE `file`
 ADD COLUMN `upload_date`  datetime NULL DEFAULT NULL COMMENT '上传时间' AFTER `file_path`;
 
+ALTER TABLE `dingdong`.`file`
+ADD COLUMN `product_id` bigint(11) NULL COMMENT '商品id' AFTER `upload_date`;
+
+ALTER TABLE `file`
+MODIFY COLUMN `id`  bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键id' FIRST ;
+
+
+
 
 

@@ -9,6 +9,7 @@
         <result column="file_name" property="fileName"></result>
         <result column="uploaded_name" property="uploadedName"></result>
         <result column="file_path" property="filePath"></result>
+        <result column="product_id" property="productId"></result>
     </resultMap>
 
     <insert id="insert" parameterType="dingDongFile" useGeneratedKeys="true" keyProperty="id">
@@ -17,12 +18,14 @@
             <if test="fileName != null and fileName.trim() !=''">,file_name</if>
             <if test="uploadedName != null and uploadedName.trim() !=''">,uploaded_name</if>
             <if test="filePath != null and filePath.trim() !=''">,file_path</if>
+            <if test="productId != null">,product_id</if>
         </trim>
         )values(
         <trim prefix="" prefixOverrides=",">
             <if test="fileName != null and fileName.trim() !=''">,#{fileName,jdbcType=VARCHAR}</if>
             <if test="uploadedName != null and uploadedName.trim() !=''">,#{uploadedName,jdbcType=VARCHAR}</if>
             <if test="filePath != null and filePath.trim() !=''">,#{filePath,jdbcType=VARCHAR}</if>
+            <if test="productId != null">,#{productId,jdbcType=BIGINT}</if>
         </trim>
         )
     </insert>
@@ -52,6 +55,8 @@
             <if test="fileName != null and fileName.trim() !=''">file_name = #{fileName}</if>
             <if test="uploadedName != null and uploadedName.trim() !=''">,uploaded_name = #{uploadedName}</if>
             <if test="filePath != null and filePath.trim() !=''">,file_path = #{filePath}</if>
+            <if test="productId != null">,product_id = #{productId}</if>
+
         </where>
     </sql>
 
@@ -75,7 +80,7 @@
     </sql>
 
     <select id="queryList" parameterType="dingDongFileQuery" resultMap="dingDongFileMap">
-        select f.id,f.file_name,f.uploaded_name,f.file_path
+        select f.id,f.file_name,f.uploaded_name,f.file_path,f.product_id
         <include refid="queryCommonSql"/>
         <include refid="sortSql"/>
         <include refid="pageEnd"/>
