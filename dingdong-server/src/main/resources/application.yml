@@ -3,6 +3,6 @@ server:
 spring:
   datasource:
     #数据库ip及库名
-    url: jdbc:mysql://127.0.0.1:3306/tcl_user?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://121.199.24.90:3306/tcl_user?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false
     username: root #账号
-    password: 123456  #密码
+    password: 123JSGBSH..jsgbsh  #密码
