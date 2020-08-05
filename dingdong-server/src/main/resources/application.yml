@@ -1,3 +1,5 @@
+server:
+  port: 9090
 spring:
   datasource:
     #数据库ip及库名
