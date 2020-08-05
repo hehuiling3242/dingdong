@@ -3,10 +3,16 @@ package com.dingdong.web.controller;
 import com.dingdong.service.DingDongFileService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -42,11 +48,19 @@ public class DingDongFileController {
         dingDongFileService.oneUpload(file,request);
     }
 
-    /*@ApiOperation(value = "单文件文件上传接口")
+    @ApiOperation(value = "单文件文件上传接口")
     @GetMapping("load")
     public void upload(@RequestParam("id") Long id){
-        dingDongFileService.oneUpload(file);
-    }*/
+        dingDongFileService.load(id);
+    }
+
+
+    @GetMapping(value = "aa",produces = MediaType.IMAGE_JPEG_VALUE)
+    @ResponseBody
+    public BufferedImage getImage() throws IOException {
+        return ImageIO.read(new FileInputStream(new File("E:/img/1.jpg")));
+    }
+
 
 
 }

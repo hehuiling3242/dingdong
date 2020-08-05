@@ -8,7 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -59,7 +64,8 @@ public class DingDongFileService {
 
         String filePath = FILE_PATH + uploadedName;
 
-        File filef = new File(new File(FILE_PATH).getAbsolutePath()+ "/" + uploadedName);
+
+        File filef = new File(new File(filePath).getAbsolutePath());
         if (!filef.getParentFile().exists()) {
             boolean mkdirs = filef.getParentFile().mkdirs();
         }
@@ -75,7 +81,7 @@ public class DingDongFileService {
         }
     }
 
-    /*public void load(Long id){
+    public void load(Long id){
         DingDongFile dingDongFile = dingDongFileMapper.load(id);
 
         byte [] bytes = null;
@@ -102,7 +108,7 @@ public class DingDongFileService {
                 e.printStackTrace();
             }
         }
-    }*/
+    }
 
     /**
      * 上传之后的名称
@@ -116,6 +122,7 @@ public class DingDongFileService {
 
         return fileUploadedName;
     }
+
 
 
 }
