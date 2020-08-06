@@ -17,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -29,12 +30,13 @@ public class DingDongFileService {
     @Autowired
     private DingDongFileMapper dingDongFileMapper;
 
-    public void batchUpload(List<MultipartFile> uploadFile){
+    public List<Long> batchUpload(MultipartFile[] uploadFile){
 
-        if(CollectionUtils.isEmpty(uploadFile)){
-            return;
+        if(!(uploadFile.length > 0)){
+             return null;
         }
 
+        List<Long> result = new ArrayList<>();
         for (MultipartFile multipartFile : uploadFile) {
             //文件名称
             String filename = multipartFile.getOriginalFilename();
@@ -51,10 +53,13 @@ public class DingDongFileService {
                 dingDongFile.setFilePath(filePath);
                 dingDongFile.setUploadedName(uploadedName);
                 dingDongFileMapper.insert(dingDongFile);
+                result.add(dingDongFile.getId());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+        return result;
     }
 
     public Long oneUpload(MultipartFile file, HttpServletRequest request){
@@ -77,7 +82,7 @@ public class DingDongFileService {
             dingDongFile.setFileName(filename);
             dingDongFile.setFilePath(filePath);
             dingDongFile.setUploadedName(uploadedName);
-            dingDongFile.setUploadDate(new Date());
+            //dingDongFile.setUploadDate(new Date());
             dingDongFileMapper.insert(dingDongFile);
         } catch (IOException e) {
             e.printStackTrace();

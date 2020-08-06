@@ -43,8 +43,8 @@ public class DingDongFileController {
     @ApiOperation(value = "批量上传文件接口")
     @PostMapping("batch-upload")
     @ResponseBody
-    public void upload(@RequestParam("fileArray") ArrayList<MultipartFile> uploadFile){
-        dingDongFileService.batchUpload(uploadFile);
+    public List<Long> upload(@RequestParam("uploadFileArray[]") MultipartFile[] uploadFileArray){
+        return dingDongFileService.batchUpload(uploadFileArray);
     }
 
     @ApiOperation(value = "单文件文件上传接口")
