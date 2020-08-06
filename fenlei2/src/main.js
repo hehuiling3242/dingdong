@@ -24,7 +24,6 @@ Vue.component('xitong',xitong)
 import xitongtwo from './components/demo/xitongtwo.vue'
 Vue.component('xitongtwo',xitongtwo)
 
-axios.defaults.baseURL = 'http://127.0.0.1'
 Vue.prototype.axios = axios;
 Vue.config.productionTip = false
 

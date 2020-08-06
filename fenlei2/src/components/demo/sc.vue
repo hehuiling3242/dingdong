@@ -1,44 +1,76 @@
 <template>
-  <form action="121.199.24.90:9090/file/upload" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" value="选择jar包"/>
-    <input id="submit_form" type="submit" value="保存"/>
-  </form>
+  <div>
 
-  <el-upload
-          class="upload-demo"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
-          :before-remove="beforeRemove"
-          multiple
-          :limit="3"
-          :on-exceed="handleExceed"
-          :file-list="fileList">
-    <el-button size="small" type="primary">点击上传</el-button>
-    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-  </el-upload>
+
+
+    <input type="file" @change="changeFile" value="选择文件"/>
+    <input id="submit_form" type="submit" @click="upload" value="保存"/>
+
+    <ul >
+      <li v-for="item in imgArray">
+        <img style="height: 100px;width: 100px" v-lazy="item">
+      </li>
+    </ul>
+
+    <ul >
+      <li v-for="item in fileDate">
+        <img style="height: 100px;width: 100px" v-lazy="item.url">
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
+
   export default {
-    data() {
+    data(){
       return {
-        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
-      };
-    },
-    methods: {
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      handleExceed(files, fileList) {
-        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-      },
-      beforeRemove(file, fileList) {
-        return this.$confirm(`确定移除 ${ file.name }？`);
+
+        files:'',
+        id: '',
+        query:{},
+        imgArray:[],
+        fileDate:[],
+
       }
+    },
+
+    created() {
+      this.queryList();
+    },
+
+    methods:{
+
+      changeFile(val){
+        this.file = val.target.files[0];
+        console.log(this.file);
+      },
+
+      upload(){
+        let formData = new FormData();
+        formData.append('file', this.file);
+        this.axios.post("server/file/one-upload", formData).then((res)=>{
+          let url = 'http://localhost:9090/file/'+ res.data +'/load'
+          this.imgArray.push(url);
+          console.log("---->> ",this.imgArray);
+        })
+      },
+
+      load(){
+        this.axios.get("server/file/"+ 5 +"/load").then((res) =>{
+          console.log("--->> ",res.data);
+          this.id = 5;
+        })
+      },
+
+      queryList(){
+        this.axios.get("server/file/1/query-list-for-product").then((res)=>{
+          this.fileDate = res.data;
+        })
+      },
     }
+
   }
+
+
 </script>
