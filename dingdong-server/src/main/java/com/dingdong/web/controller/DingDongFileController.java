@@ -1,19 +1,25 @@
 package com.dingdong.web.controller;
 
+import com.dingdong.domain.model.DingDongFile;
+import com.dingdong.domain.query.DingDongFileQuery;
+import com.dingdong.domain.vo.DingDongFileVO;
 import com.dingdong.service.DingDongFileService;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 文件控制类
@@ -44,14 +50,68 @@ public class DingDongFileController {
     @ApiOperation(value = "单文件文件上传接口")
     @PostMapping("one-upload")
     @ResponseBody
-    public void upload(@RequestParam("file") MultipartFile file, HttpServletRequest request){
-        dingDongFileService.oneUpload(file,request);
+    public Long upload(@RequestParam("file") MultipartFile file, HttpServletRequest request){
+        return dingDongFileService.oneUpload(file, request);
     }
 
-    @ApiOperation(value = "单文件文件上传接口")
-    @GetMapping("load")
-    public void upload(@RequestParam("id") Long id){
-        dingDongFileService.load(id);
+    @ApiOperation(value = "根据id查询")
+    @GetMapping("{id}/load")
+    public void load(@PathVariable("id") Long id, HttpServletResponse response){
+        DingDongFile dingDongFile = dingDongFileService.load(id);
+
+        //读取路径下面的文件
+        File file = new File(new File(dingDongFile.getFilePath()).getAbsolutePath());
+        if(!file.exists()){
+            return;
+        }
+        try{
+            //读取指定路径下面的文件
+            InputStream in = new FileInputStream(file);
+            OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
+            //创建存放文件内容的数组
+            byte[] buff =new byte[1024];
+            //所读取的内容使用n来接收
+            int n;
+            //当没有读取完时,继续读取,循环
+            while((n=in.read(buff))!=-1){
+                //将字节数组的数据全部写入到输出流中
+                outputStream.write(buff,0,n);
+            }
+            //强制将缓存区的数据进行输出
+            outputStream.flush();
+            //关流
+            outputStream.close();
+            in.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @ApiOperation(value = "根据商品id查询")
+    @GetMapping("{productId}/query-list-for-product")
+    @ResponseBody
+    public List<DingDongFileVO> queryList(@PathVariable("productId") Long productId){
+        DingDongFileQuery dingDongFileQuery = new DingDongFileQuery();
+        dingDongFileQuery.setProductId(productId);
+        List<DingDongFile> dingDongFiles = dingDongFileService.queryList(dingDongFileQuery);
+
+        List<DingDongFileVO> result = new ArrayList<>();
+        String urlFix = "http://localhost:9090/file/";
+        DingDongFileVO dongFileVO;
+        for (DingDongFile dingDongFile : dingDongFiles) {
+            dongFileVO = new DingDongFileVO();
+            BeanUtils.copyProperties(dingDongFile,dongFileVO);
+            String url = urlFix + dingDongFile.getId() + "/load";
+            File file = new File(new File(dingDongFile.getFilePath()).getAbsolutePath());
+            if(!file.exists()){
+                continue;
+            }
+            dongFileVO.setUrl(url);
+            result.add(dongFileVO);
+        }
+
+        return result;
     }
 
 

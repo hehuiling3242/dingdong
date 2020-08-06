@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 文件model
@@ -25,6 +26,9 @@ public class DingDongFile implements Serializable {
 
     @ApiModelProperty(value = "商品id")
     private Long productId;
+
+    @ApiModelProperty(value = "上传时间")
+    private Date uploadDate;
 
     public Long getId() {
         return id;
@@ -64,5 +68,13 @@ public class DingDongFile implements Serializable {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public Date getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(Date uploadDate) {
+        this.uploadDate = uploadDate;
     }
 }

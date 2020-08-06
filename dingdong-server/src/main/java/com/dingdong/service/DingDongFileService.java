@@ -1,6 +1,7 @@
 package com.dingdong.service;
 
 import com.dingdong.domain.model.DingDongFile;
+import com.dingdong.domain.query.DingDongFileQuery;
 import com.dingdong.mapper.DingDongFileMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,7 +57,7 @@ public class DingDongFileService {
         }
     }
 
-    public void oneUpload(MultipartFile file, HttpServletRequest request){
+    public Long oneUpload(MultipartFile file, HttpServletRequest request){
         //文件名称
         String filename = file.getOriginalFilename();
         //上传后的文件名，防止文件名一样导致文件覆盖
@@ -69,45 +71,27 @@ public class DingDongFileService {
         if (!filef.getParentFile().exists()) {
             boolean mkdirs = filef.getParentFile().mkdirs();
         }
+        DingDongFile dingDongFile = new DingDongFile();
         try {
             file.transferTo(filef);
-            DingDongFile dingDongFile = new DingDongFile();
             dingDongFile.setFileName(filename);
             dingDongFile.setFilePath(filePath);
             dingDongFile.setUploadedName(uploadedName);
+            dingDongFile.setUploadDate(new Date());
             dingDongFileMapper.insert(dingDongFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return dingDongFile.getId();
     }
 
-    public void load(Long id){
+    public DingDongFile load(Long id){
         DingDongFile dingDongFile = dingDongFileMapper.load(id);
+        return dingDongFile;
+    }
 
-        byte [] bytes = null;
-        ServletOutputStream sos =null;// 将图像输出到Servlet输出流中。
-        try {
-            GetImageRes getImageRes = acctManager.getImageBytes(dingDongFile.getFilePath());
-            bytes = getImageRes.getFilebyte();
-
-            ByteArrayInputStream in = new ByteArrayInputStream(bytes);    //将b作为输入流；
-            BufferedImage image = ImageIO.read(in);
-
-            resp.setHeader("Pragma", "no-cache");
-            resp.setHeader("Cache-Control", "no-cache");
-            resp.setDateHeader("Expires", 0);
-            sos = resp.getOutputStream();// 将图像输出到Servlet输出流中。
-            ImageIO.write(image, "jpeg", sos);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                sos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public List<DingDongFile> queryList(DingDongFileQuery query){
+        return dingDongFileMapper.queryList(query);
     }
 
     /**

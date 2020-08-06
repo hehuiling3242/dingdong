@@ -2,6 +2,7 @@ package com.dingdong.domain.query;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 
 import java.util.Collection;
 
@@ -22,6 +23,9 @@ public class DingDongFileQuery extends BaseQuery{
 
     @ApiModelProperty(value = "文件路径")
     private String filePath;
+
+    @ApiModelProperty(value = "商品id")
+    private Long productId;
 
     public Long getId() {
         return id;
@@ -61,5 +65,13 @@ public class DingDongFileQuery extends BaseQuery{
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }

@@ -13,6 +13,8 @@ public class BaseQuery implements Serializable {
     private int pageNo; // 当前是第几页，从1开始记数
     @ApiModelProperty(value = "每页展示多少条")
     private int pageSize; // 每页多少条
+    @ApiModelProperty(value = "排序")
+    private String sort; // 排序表达式
 
     public int getPageNo() {
         return pageNo;
@@ -28,5 +30,13 @@ public class BaseQuery implements Serializable {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
     }
 }
