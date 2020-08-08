@@ -3,6 +3,7 @@ package com.dingdong.domain.query;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 
@@ -18,6 +19,9 @@ public class BaseQuery implements Serializable {
     /** 公用查询字段 **/
     @ApiModelProperty(value = "模糊搜索公用查询字段")
     private String commonString;
+
+    @ApiModelProperty(value = "软删除状态,0-正常、1-删除")
+    private Integer isDelete;
 
     public int getPageNo() {
         return pageNo;
@@ -49,5 +53,13 @@ public class BaseQuery implements Serializable {
 
     public void setCommonString(String commonString) {
         this.commonString = commonString;
+    }
+
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
     }
 }

@@ -48,10 +48,12 @@ public class DingDongFileController {
     }
 
     @ApiOperation(value = "单文件文件上传接口")
-    @PostMapping("one-upload")
+    @PostMapping("{productId}/one-upload")
     @ResponseBody
-    public Long upload(@RequestParam("file") MultipartFile file, HttpServletRequest request){
-        return dingDongFileService.oneUpload(file, request);
+    public Long upload(@RequestParam("file") MultipartFile file,
+                       @PathVariable("productId")Long productId,
+                       HttpServletRequest request){
+        return dingDongFileService.oneUpload(productId,file, request);
     }
 
     @ApiOperation(value = "根据id查询")
@@ -89,11 +91,9 @@ public class DingDongFileController {
     }
 
     @ApiOperation(value = "根据商品id查询")
-    @GetMapping("{productId}/query-list-for-product")
+    @GetMapping("query-list")
     @ResponseBody
-    public List<DingDongFileVO> queryList(@PathVariable("productId") Long productId){
-        DingDongFileQuery dingDongFileQuery = new DingDongFileQuery();
-        dingDongFileQuery.setProductId(productId);
+    public List<DingDongFileVO> queryList(DingDongFileQuery dingDongFileQuery){
         List<DingDongFile> dingDongFiles = dingDongFileService.queryList(dingDongFileQuery);
 
         List<DingDongFileVO> result = new ArrayList<>();

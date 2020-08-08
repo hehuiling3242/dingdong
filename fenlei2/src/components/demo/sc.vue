@@ -3,15 +3,15 @@
 
 
 
-    <input type="file" @change="changeFile" value="选择文件"/>
+    <!--<input type="file" @change="changeFile" value="选择文件"/>
     <input id="submit_form" type="submit" @click="upload" value="保存"/>
 
     =================================================================
     <input type="file" @change="batchChangeFile" value="选择文件"/>
-    <input id="batch_submit_form" type="submit" @click="batchUpload" value="保存"/>
+    <input id="batch_submit_form" type="submit" @click="batchUpload" value="保存"/>-->
 
 
-    <ul >
+<!--    <ul >
       <li v-for="item in imgArray">
         <img style="height: 100px;width: 100px" v-lazy="item">
       </li>
@@ -21,7 +21,7 @@
       <li v-for="item in fileDate">
         <img style="height: 100px;width: 100px" v-lazy="item.url">
       </li>
-    </ul>
+    </ul>-->
   </div>
 </template>
 
@@ -38,12 +38,16 @@
         fileDate:[],
         fileArray:[],
         fileId:[],
+        productQuery:{},
+        fileQuery:{},
+        productList:[],
 
       }
     },
 
     created() {
       this.queryList(1);
+      this.queryProductList();
     },
 
     methods:{
@@ -96,10 +100,20 @@
         })
       },
 
-      queryList(productId){
-        let url = "server/file/" + productId + "/query-list-for-product"
-        this.axios.get(url).then((res)=>{
+      queryList(fileQuery){
+        let url = "server/file/query-list"
+        this.axios.get(url,{params:fileQuery}).then((res)=>{
           this.fileDate = res.data;
+        })
+      },
+
+      queryProductList(){
+        this.productQuery.id=1;
+        let url = "server/product/query-list"
+        this.axios.get(url,{params:this.productQuery}).then((res)=>{
+
+          this.productList = res.data;
+          console.log("--->> 商品",);
         })
       },
     }

@@ -49,15 +49,23 @@
     <sql id="queryCommonSql">
         FROM file f
         <where>
+            <choose>
+                <when test="isDelete != null">
+                    f.is_delete = #{isDelete}
+                </when>
+                <otherwise>
+                    f.is_delete = 0
+                </otherwise>
+            </choose>
             <if test="idArray != null">
-                f.id in
+                and f.id in
                 <foreach collection="idArray" index="index" item="item" open="(" separator="," close="),">#{item}
                 </foreach>
             </if>
-            <if test="fileName != null and fileName.trim() !=''">f.file_name = #{fileName},</if>
-            <if test="uploadedName != null and uploadedName.trim() !=''">,f.uploaded_name = #{uploadedName},</if>
-            <if test="filePath != null and filePath.trim() !=''">f.file_path = #{filePath},</if>
-            <if test="productId != null">f.product_id = #{productId}</if>
+            <if test="fileName != null and fileName.trim() !=''">and f.file_name = #{fileName}</if>
+            <if test="uploadedName != null and uploadedName.trim() !=''">and f.uploaded_name = #{uploadedName}</if>
+            <if test="filePath != null and filePath.trim() !=''">and f.file_path = #{filePath}</if>
+            <if test="productId != null">and f.product_id = #{productId}</if>
 
         </where>
     </sql>

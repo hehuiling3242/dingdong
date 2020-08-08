@@ -62,7 +62,7 @@ public class DingDongFileService {
         return result;
     }
 
-    public Long oneUpload(MultipartFile file, HttpServletRequest request){
+    public Long oneUpload(Long productId,MultipartFile file, HttpServletRequest request){
         //文件名称
         String filename = file.getOriginalFilename();
         //上传后的文件名，防止文件名一样导致文件覆盖
@@ -82,7 +82,10 @@ public class DingDongFileService {
             dingDongFile.setFileName(filename);
             dingDongFile.setFilePath(filePath);
             dingDongFile.setUploadedName(uploadedName);
-            //dingDongFile.setUploadDate(new Date());
+            if(null!=productId){
+                dingDongFile.setProductId(productId);
+            }
+            dingDongFile.setUploadDate(new Date());
             dingDongFileMapper.insert(dingDongFile);
         } catch (IOException e) {
             e.printStackTrace();
