@@ -27,6 +27,15 @@ public class DingDongFileQuery extends BaseQuery{
     @ApiModelProperty(value = "商品id")
     private Long productId;
 
+    @ApiModelProperty(value = "商品id")
+    private Collection<Long> productIdArray;
+
+    @ApiModelProperty(value = "文件类型")
+    private Integer fileType;
+
+    @ApiModelProperty(value = "文件类型")
+    private Collection<Integer> fileTypeArray;
+
     public Long getId() {
         return id;
     }
@@ -73,5 +82,29 @@ public class DingDongFileQuery extends BaseQuery{
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public Collection<Long> getProductIdArray() {
+        return productIdArray;
+    }
+
+    public void setProductIdArray(Collection<Long> productIdArray) {
+        this.productIdArray = productIdArray;
+    }
+
+    public Integer getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(Integer fileType) {
+        this.fileType = fileType;
+    }
+
+    public Collection<Integer> getFileTypeArray() {
+        return fileTypeArray;
+    }
+
+    public void setFileTypeArray(Collection<Integer> fileTypeArray) {
+        this.fileTypeArray = fileTypeArray;
     }
 }

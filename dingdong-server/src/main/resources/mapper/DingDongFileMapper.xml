@@ -20,6 +20,7 @@
             <if test="filePath != null and filePath.trim() !=''">,file_path</if>
             <if test="uploadDate != null and filePath.trim() !=''">,upload_date</if>
             <if test="productId != null">,product_id</if>
+            <if test="fileType != null">,file_type</if>
         </trim>
         )values(
         <trim prefix="" prefixOverrides=",">
@@ -28,6 +29,7 @@
             <if test="filePath != null and filePath.trim() !=''">,#{filePath,jdbcType=VARCHAR}</if>
             <if test="uploadDate != null and uploadDate.trim() !=''">,#{uploadDate,jdbcType=DATE}</if>
             <if test="productId != null">,#{productId,jdbcType=BIGINT}</if>
+            <if test="fileType != null">,#{fileType,jdbcType=BIGINT}</if>
         </trim>
         )
     </insert>
@@ -59,14 +61,24 @@
             </choose>
             <if test="idArray != null">
                 and f.id in
-                <foreach collection="idArray" index="index" item="item" open="(" separator="," close="),">#{item}
+                <foreach collection="idArray" index="index" item="item" open="(" separator="," close=")">#{item}
                 </foreach>
             </if>
             <if test="fileName != null and fileName.trim() !=''">and f.file_name = #{fileName}</if>
             <if test="uploadedName != null and uploadedName.trim() !=''">and f.uploaded_name = #{uploadedName}</if>
             <if test="filePath != null and filePath.trim() !=''">and f.file_path = #{filePath}</if>
             <if test="productId != null">and f.product_id = #{productId}</if>
-
+            <if test="productIdArray != null">
+                and f.product_id in
+                <foreach collection="productIdArray" index="index" item="item" open="(" separator="," close=")">#{item}
+                </foreach>
+            </if>
+            <if test="fileType != null">and f.file_type = #{fileType}</if>
+            <if test="fileTypeArray != null">
+                and f.file_type in
+                <foreach collection="productIdArray" index="index" item="item" open="(" separator="," close=")">#{item}
+                </foreach>
+            </if>
         </where>
     </sql>
 

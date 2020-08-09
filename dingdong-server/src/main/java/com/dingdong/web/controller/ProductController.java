@@ -2,6 +2,7 @@ package com.dingdong.web.controller;
 
 import com.dingdong.domain.model.DingDongProduct;
 import com.dingdong.domain.query.DingDongProductQuery;
+import com.dingdong.domain.vo.DingDongProductVO;
 import com.dingdong.service.DingDongProductService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -25,7 +26,7 @@ public class ProductController {
     @ApiOperation(value = "queryList")
     @GetMapping("query-list")
     @ResponseBody
-    public List<DingDongProduct> queryList(@ApiParam("productQuery")DingDongProductQuery query){
+    public List<DingDongProductVO> queryList(@ApiParam("productQuery")DingDongProductQuery query){
 
         return productService.queryList(query);
     }

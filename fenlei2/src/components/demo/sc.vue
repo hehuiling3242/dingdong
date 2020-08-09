@@ -1,124 +1,212 @@
 <template>
-  <div>
+    <div>
+
+        <!--<btbs-nav-tabs :tabs="tabs"></btbs-nav-tabs>-->
+
+        <!--<input type="file" @change="changeFile" value="选择文件"/>
+        <input id="submit_form" type="submit" @click="upload" value="保存"/>
+
+        =================================================================
+        <input type="file" @change="batchChangeFile" value="选择文件"/>
+        <input id="batch_submit_form" type="submit" @click="batchUpload" value="保存"/>-->
 
 
+        <!--    <ul >
+              <li v-for="item in imgArray">
+                <img style="height: 100px;width: 100px" v-lazy="item">
+              </li>
+            </ul>
 
-    <!--<input type="file" @change="changeFile" value="选择文件"/>
-    <input id="submit_form" type="submit" @click="upload" value="保存"/>
+            <ul >
+              <li v-for="item in fileDate">
+                <img style="height: 100px;width: 100px" v-lazy="item.url">
+              </li>
+            </ul>-->
 
-    =================================================================
-    <input type="file" @change="batchChangeFile" value="选择文件"/>
-    <input id="batch_submit_form" type="submit" @click="batchUpload" value="保存"/>-->
 
+        <el-table
+                :data="productList"
+                style="width: 100%">
+            <el-table-column
+                    prop="id"
+                    label="id"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="productName"
+                    label="商品名称"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="detail"
+                    label="详细"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="url"
+                    label="tupian"
+                    width="180">
+                <template slot-scope="scope">
+                    <el-image v-for="url in scope.row.filePaths" :key="url" :src="url" lazy></el-image>
+                </template>
 
-<!--    <ul >
-      <li v-for="item in imgArray">
-        <img style="height: 100px;width: 100px" v-lazy="item">
-      </li>
-    </ul>
+            </el-table-column>
+            <el-table-column
+                    prop="img"
+                    label="图片"
+                    width="300px">
+                <template slot-scope="scope">
+                    <el-select v-model="type" placeholder="请选择图片类型">
+                        <el-option
+                                v-for="item in options"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                        </el-option>
+                    </el-select>
+                    <input type="file" style="width: 100px;display: inline" @change="changeFile" value="选择文件"/>
+                    <input id="submit_form" style="width: 100px;display: inline" type="submit"
+                           @click="upload(scope.row.id)" value="保存"/>
+                </template>
 
-    <ul >
-      <li v-for="item in fileDate">
-        <img style="height: 100px;width: 100px" v-lazy="item.url">
-      </li>
-    </ul>-->
-  </div>
+            </el-table-column>
+        </el-table>
+    </div>
 </template>
 
 <script>
 
-  export default {
-    data(){
-      return {
+    import BtbsNavTabs from '../test/BtbsNavTabs.vue';
+    export default {
+        data() {
+            return {
 
-        files:'',
-        id: '',
-        query:{},
-        imgArray:[],
-        fileDate:[],
-        fileArray:[],
-        fileId:[],
-        productQuery:{},
-        fileQuery:{},
-        productList:[],
+                files: '',
+                id: '',
+                query: {},
+                imgArray: [],
+                fileDate: [],
+                fileArray: [],
+                fileId: [],
+                productQuery: {},
+                fileQuery: {},
+                productList: [],
+                options: [
+                    {
+                        label: '主图',
+                        value: '1',
+                    },
+                    {
+                        label: '详情图',
+                        value: '2',
+                    },
+                ],
+                type: '',
+                tabs: [
+                    {
+                        code: '蔬菜豆制品',
+                        label: '蔬菜豆制品',
+                        tabType: '101',
+                        actionUrl: '',
+                    },
+                    {
+                        code: '新鲜水果',
+                        label: '新鲜水果',
+                        tabType: '102',
+                        actionUrl: '',
+                    },
+                    {
+                        code: '肉禽蛋品',
+                        label: '肉禽蛋品',
+                        tabType: '103',
+                        actionUrl: '',
+                    },
+                ],
 
-      }
-    },
+            }
+        },
+        components:{
+            BtbsNavTabs
+        },
 
-    created() {
-      this.queryList(1);
-      this.queryProductList();
-    },
+        created() {
+            this.load();
+        },
 
-    methods:{
+        methods: {
 
-      changeFile(val){
-        this.file = val.target.files[0];
-        console.log(this.file);
-      },
+            load() {
+                this.queryProductList();
+            },
 
-      batchChangeFile(val){
-        this.fileArray.push(val.target.files[0]);
-        console.log("--->>fileArray: ",this.fileArray);
-      },
+            changeFile(val) {
+                this.file = val.target.files[0];
+                console.log(this.file);
+            },
 
-      upload(){
-        let formData = new FormData();
-        formData.append('file', this.file);
-        this.axios.post("server/file/one-upload", formData).then((res)=>{
-          let url = 'http://localhost:9090/file/'+ res.data +'/load'
-          this.imgArray.push(url);
-          console.log("---->> ",this.imgArray);
-        })
-      },
+            batchChangeFile(val) {
+                this.fileArray.push(val.target.files[0]);
+                console.log("--->>fileArray: ", this.fileArray);
+            },
 
-      batchUpload(){
+            upload(productId) {
 
-        let _this =this;
-        this.fileArray.forEach(function (val,index) {
-          let formData = new FormData();
-          formData.append('file', val);
-          _this.axios.post("server/file/one-upload", formData).then((res)=>{
-            _this.imgArray.push(url);
-            console.log("---->> ",this.imgArray);
-          })
-        })
+                console.log("--->>> 商品id ", productId);
 
-        /*let formData = new FormData();
-        formData.append('fileArray', this.fileArray);
-        console.log(formData);
-        this.axios.post("server/file/batch-upload", formData).then((res)=>{
-          console.log("---->>> ",res.data);
-        })*/
-      },
+                let formData = new FormData();
+                formData.append('file', this.file);
+                this.axios.post("server/file//one-upload", {
+                    params: {
+                        productId: productId,
+                        type: this.type,
+                        file: formData
+                    }
+                }).then((res) => {
+                    let url = 'http://localhost:9090/file/' + res.data + '/load'
+                    this.imgArray.push(url);
+                    console.log("---->> ", this.imgArray);
+                    this.load();
+                })
+            },
 
-      load(id){
-        let url = "server/file/" + id + "/load"
-        this.axios.get(url).then((res) =>{
-          console.log("--->> ",res.data);
-          //this.id = 5;
-        })
-      },
+            batchUpload() {
 
-      queryList(fileQuery){
-        let url = "server/file/query-list"
-        this.axios.get(url,{params:fileQuery}).then((res)=>{
-          this.fileDate = res.data;
-        })
-      },
+                let _this = this;
+                this.fileArray.forEach(function (val, index) {
+                    let formData = new FormData();
+                    formData.append('file', val);
+                    _this.axios.post("server/file/one-upload", formData).then((res) => {
+                        _this.imgArray.push(url);
+                        console.log("---->> ", this.imgArray);
+                    })
+                })
 
-      queryProductList(){
-        this.productQuery.id=1;
-        let url = "server/product/query-list"
-        this.axios.get(url,{params:this.productQuery}).then((res)=>{
+                /*let formData = new FormData();
+                formData.append('fileArray', this.fileArray);
+                console.log(formData);
+                this.axios.post("server/file/batch-upload", formData).then((res)=>{
+                  console.log("---->>> ",res.data);
+                })*/
+            },
 
-          this.productList = res.data;
-          console.log("--->> 商品",);
-        })
-      },
+            queryList(fileQuery) {
+                let url = "server/file/query-list"
+                this.axios.get(url, {params: fileQuery}).then((res) => {
+                    this.fileDate = res.data;
+                })
+            },
+
+            queryProductList() {
+                this.productQuery.classifyId = 101;
+                let url = "server/product/query-list"
+                this.axios.get(url, {params: this.productQuery}).then((res) => {
+                    this.productList = res.data;
+                    console.log("--->> 商品",);
+                })
+            },
+        }
+
     }
-
-  }
 
 
 </script>

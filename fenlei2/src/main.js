@@ -4,9 +4,13 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import qs from 'qs'
-import MintUI from 'mint-ui'
+/*import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.min.css'
-Vue.use(MintUI)
+Vue.use(MintUI)*/
+
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI)
 
 // 返回全局组件
 // import Fanhuittop from './components/demo/Fanhuittop.vue'
@@ -26,6 +30,7 @@ Vue.component('xitongtwo',xitongtwo)
 
 Vue.prototype.axios = axios;
 Vue.config.productionTip = false
+
 
 new Vue({
   router,

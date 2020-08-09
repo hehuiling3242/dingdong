@@ -6,6 +6,7 @@ import com.dingdong.mapper.DingDongFileMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -62,7 +63,8 @@ public class DingDongFileService {
         return result;
     }
 
-    public Long oneUpload(Long productId,MultipartFile file, HttpServletRequest request){
+    @Transactional
+    public Long oneUpload(Long productId,Integer fileType,MultipartFile file, HttpServletRequest request){
         //文件名称
         String filename = file.getOriginalFilename();
         //上传后的文件名，防止文件名一样导致文件覆盖
@@ -85,7 +87,8 @@ public class DingDongFileService {
             if(null!=productId){
                 dingDongFile.setProductId(productId);
             }
-            dingDongFile.setUploadDate(new Date());
+            dingDongFile.setFileType(fileType);
+            //dingDongFile.setUploadDate(new Date());
             dingDongFileMapper.insert(dingDongFile);
         } catch (IOException e) {
             e.printStackTrace();

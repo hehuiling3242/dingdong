@@ -48,12 +48,13 @@ public class DingDongFileController {
     }
 
     @ApiOperation(value = "单文件文件上传接口")
-    @PostMapping("{productId}/one-upload")
+    @PostMapping("one-upload")
     @ResponseBody
     public Long upload(@RequestParam("file") MultipartFile file,
-                       @PathVariable("productId")Long productId,
+                       @RequestParam("productId")Long productId,
+                       @RequestParam("type")Integer fileType,
                        HttpServletRequest request){
-        return dingDongFileService.oneUpload(productId,file, request);
+        return dingDongFileService.oneUpload(productId,fileType,file, request);
     }
 
     @ApiOperation(value = "根据id查询")
