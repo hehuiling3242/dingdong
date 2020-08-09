@@ -1,26 +1,27 @@
 <template>
   <div class="details">
     <xitongtwo></xitongtwo>
-    <img src="../../assets/img/jiantou.png">
-    <div class="none" style="display:none">
+    <div id="toTop" v-show="showAbs">
+      <div class="none">
       <img src="../../assets/img/jiantou.png">
-      <p style="display:inline" class="nonecen">
-        <span>商品</span>
-        <span>评价</span>
-        <span>详情</span>
-        <span>推荐</span>
+      <p style="display:inline-block" class="nonecen">
+        <a href="#lL">商品</a>
+        <a href="#2L">评价</a>
+        <a href="#3L">详情</a>
+        <a href="#4L">推荐</a>
       </p>
       <img src="../../assets/img/zhuan.png" alt="">
+      </div>
     </div>
-    <div class="lunbo">
-      <img src="../../assets/img/main1021.jpg" alt="">
-    </div>
+    <img src="../../assets/img/jiantou.png">
+    <!-- 轮播 -->
+    <lunbo  class="lunbo"></lunbo>
     <p class="price">
-      <span>¥98.80</span>
-      <del>¥118.90</del>  
+      <span>¥{{price}}</span>
+      <del>¥{{original_cost}}</del>  
     </p>
-    <p class="title">山姆 美国 进口 车厘子 900g</p>
-    <p class="deta">红宝石级"美人果"</p>
+    <p class="title">{{title}}</p>
+    <p class="deta">{{describe}}</p>
     <hr style="border:0.05rem solid #eee"/>
     <div class="time">
       <img src="../../assets/img/shijian.png" alt="">
@@ -30,15 +31,24 @@
     <hr style="border:0.05rem solid #eee;margin-bottom:2rem"/>
     <!-- 推荐做法 -->
     <div class="recom">
-      <p class="recom_top">
-        <span>推荐做法</span>
-        <img src="../../assets/img/gengduo.png" alt="">  
+      <p  class="recom_top">
+        <span class="tui">推荐做法</span>
+        <img src="../../assets/img/gengduo.png" alt="">
       </p>
+      <div class="homenew_btn">
+        <div class="sliding_box">
+          <div class="sliding_item" v-for="(item,index) in content" :key="index">
+            <div class="sliding_item_img">
+              <img src="../../assets/img/yt.jpg" alt="">
+                <p>{{title}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <homenew></homenew>
     <hr style="border:0.05rem solid #eee;margin-bottom:2rem"/>
     <!-- 评价 -->
-    <div class="assess">
+    <div class="assess" id="2L">
       <p>评价</p>
       <div class="asscen">
         <img src="../../assets/img/people.png" alt="">
@@ -59,7 +69,7 @@
     </div>
     <!-- 为你推荐 -->
     <hr style="border:0.05rem solid #eee;margin:2rem 0rem"/>
-    <p class="tui">为你推荐</p>
+    <p class="tui"  id="3L">为你推荐</p>
     <homenew></homenew>
     <!-- 规格 -->
     <hr style="border:0.05rem solid #eee;margin:2rem 0rem"/>
@@ -71,7 +81,7 @@
     <hr style="border:0.05rem solid #eee;margin:1.6rem 0rem"/>
     <pre>保存条件    常温</pre>
     <hr style="border:0.05rem solid #eee;margin:1.6rem 0rem"/>
-    <div class="detabom">
+    <div class="detabom" id="4L">
       <img src="../../assets/img/datails1021-1.jpg" alt="">
       <img src="../../assets/img/datails1022-2.jpg" alt="">
     </div>
@@ -79,34 +89,127 @@
     <div style="height:6rem"></div>
     <div class="detailadd">
       <img src="./../../assets/cart.png" alt="">
-      <button>加入购物车</button>
+      <span v-show="btnadd">{{n}}</span>
+      <button @click="add" >加入购物车</button>
     </div>
   </div>
 </template>
 
 <script>
 import homenew from '../demo/HomeNew.vue'
+import lunbo from '../demo/lunbo.vue'
 export default {
     data(){
-        return{}
+        return{
+          price:2.55,
+          original_cost:5.55,
+          title:"杭白菜 300g",
+          describe:"又称毛毛菜，煮汤味更美哦",
+          content:13,
+          showAbs: false,
+          n:0,
+          btnadd:false,
+          // 数量
+          content: 13,
+          // 价格
+          price: 19.90,
+          // 标题
+          title: "樱桃果酱樱桃果酱",
+          a: null,   // 倒计时默认值
+          oldTime: new Date().getTime(),   //获取现在距离1970年的毫秒数
+          newTime: new Date('2020/8/4 00:00:00').getTime(),   //获取现在距离1970年的毫秒数
+          second: null, //秒数
+          hour: null,  //多少小时
+          minute: null,  //多少分钟
+          tosecond: null,
+          tohour: null,
+          tominute: null
+        }
     },
     methods:{
+      tow(n){
+            return n>=0 && n<10 ? '0'+n : ''+n;
+      },
+      load(){
+        setInterval(()=>{
+            this.oldTime= new Date().getTime()
+            this.second=Math.floor((this.newTime - this.oldTime) / 1000),//总共多少秒
+            this.hour=Math.floor(this.second / 3600),  //多少小时
+            this.second %= 3600,
+            this.minute=Math.floor(this.second / 60),  //多少分钟
+            this.second %= 60
+            this.tosecond=this.tow(this.second)
+            this.tohour=this.tow(this.hour)
+            this.tominute=this.tow(this.minute)
+        },1000)
+      },
+      scrollTops(){
+        var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
+        // console.log(scrollTop);
+        var toTop=document.getElementById("toTop");
+          if(scrollTop>=500){
+            this.showAbs = true;
+          }else{
+            this.showAbs = false;
+          }
+        },
+        add(){
+          this.btnadd=true,
+          this.n++;
+        },
         
+    },
+    mounted(){
+      this.load();
+      window.addEventListener('scroll',this.scrollTops);
     },
     components:{
         homenew,
-    }
+        lunbo,
+    },
+
 }
 </script>
 
 <style scope>
+  /* body, html {
+    scroll-behavior: smooth;
+  } */
   .details{
     padding: 0rem 2rem;
   }
-  .details>img{
-    width: 2rem;
+  #toTop{
+    width: 100%;
+    position: fixed;
+    top: 0;
+    background-color: #fff;
+    box-sizing: border-box;
   }
-  .lunbo>img{
+  .none{
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    color: #333;
+    font-size: 1.8rem;
+    font-weight: 550;
+    padding: 2rem 0rem;
+  }
+  .none>.nonecen{
+    width: 65%;
+    display: flex;
+  }
+  .nonecen>a{
+    margin-left: 2rem;
+    color: #333;
+  }
+  .none>img{
+    height: 2.5rem;
+    vertical-align: middle;
+  }
+  .details>img{
+    width: 2.5rem;
+  }
+  .lunbo{
     width: 100%;
     margin: 1rem 0rem;
   }
@@ -167,15 +270,40 @@ export default {
   .homenew>.homenew_top{
     display: none;
   }
-  /* .sliding_item_img>.sliding_item_btn{
-    display: none;
+  .recom .sliding_box{
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    background-color: #fff;
+    /* border-radius: .6rem; */
+    margin-bottom: .8rem;
+    /* overflow-y: scroll; */
+    /* overflow:hidden */
   }
-  .sliding_item>.sliding_item_img>p{
+  .recom .sliding_item{
+    display: flex;
+    margin-right: .8rem;
+    margin-left: .8rem;
+    /* background-color: #CDCDCD; */
+    border-radius: .6rem;
+  }
+  .recom .sliding_item_img {
+    width: 11.5rem;
+    height: 15rem;
+    border-radius: .6rem;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+  }
+  .recom .sliding_item_img>img{
+    margin: 1.5rem 0px 1.5rem;
+    width: 12rem;
+    border-radius: 1rem;
+    height: 9rem;
+  }
+  .recom .sliding_item_img>p{
     text-align: left;
   }
-  .sliding_item_img[data-v-56a8acf6]{
-    height: 15rem;
-  }  */
 
   .asscen{
     display: flex;
@@ -212,9 +340,12 @@ export default {
   .detabom img{
     width: 100%;
   }
+  .detabom img:nth-child(2){
+    margin-top:-0.5rem ;
+  }
 
 
-
+  
   .detailadd{
     width: 100%;
     height: 8%;
@@ -230,6 +361,20 @@ export default {
     height: 3.5rem;
     padding: 1rem 1rem;
     vertical-align: middle;
+    position: relative;
+  }
+  .detailadd>span{
+    display: inline-block;
+    background-color: red;
+    width: 2.2rem;height: 2.2rem;
+    line-height: 2rem;
+    color: #fff;
+    font-size: 1.5rem;
+    text-align: center;
+    border-radius: 50%;
+    position: absolute;
+    left: 4.2rem;
+    top: 0.5rem;
   }
   .detailadd button{
     border-radius: 5rem;

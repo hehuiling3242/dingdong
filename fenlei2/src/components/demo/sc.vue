@@ -1,11 +1,7 @@
 <template>
   <div>
-
-
-
     <input type="file" @change="changeFile" value="选择文件"/>
     <input id="submit_form" type="submit" @click="upload" value="保存"/>
-
     <ul >
       <li v-for="item in imgArray">
         <img style="height: 100px;width: 100px" v-lazy="item">
@@ -64,7 +60,7 @@
       },
 
       queryList(){
-        this.axios.get("server/file/1/query-list-for-product").then((res)=>{
+        this.axios.get("server/file/"+2 +"query-list-for-product").then((res)=>{
           this.fileDate = res.data;
         })
       },
@@ -74,3 +70,24 @@
 
 
 </script>
+
+<style scoped>
+  div{
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 0rem 2rem;
+  }
+  div input:nth-child(1){
+    height: 3.8rem;
+    border: 0;
+    outline: 0;
+  }
+  div input:nth-child(2){
+    width: 13rem;
+    height: 3.3rem;
+    background-color: ghostwhite;
+    color: #333;
+  }
+
+</style>

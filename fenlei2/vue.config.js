@@ -13,7 +13,7 @@ module.exports={
         port: 8080,
         proxy: {
             '/server': {
-                target: 'http://localhost:9090',
+                target: 'http://localhost:8080',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/server': ''

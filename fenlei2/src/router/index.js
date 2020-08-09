@@ -31,15 +31,19 @@ import HomeFea from '../components/demo/HomeFea.vue'
 // 注册页面
 import Login from '../components/demo/Login.vue'
 import Details from '../components/demo/Details.vue'
+import lunbo from '../components/demo/lunbo.vue'
 import sc from '../components/demo/sc.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
+    path:'/lunbo',
+    component:lunbo
+  },
+  {
     path:'/sc',
     component:sc
-    // 注册页面(我的页面没有写,没有地方跳转)
   },
   {
     path:'/details',

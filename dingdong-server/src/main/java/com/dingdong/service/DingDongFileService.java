@@ -77,7 +77,7 @@ public class DingDongFileService {
             dingDongFile.setFileName(filename);
             dingDongFile.setFilePath(filePath);
             dingDongFile.setUploadedName(uploadedName);
-            dingDongFile.setUploadDate(new Date());
+            //dingDongFile.setUploadDate(new Date());
             dingDongFileMapper.insert(dingDongFile);
         } catch (IOException e) {
             e.printStackTrace();
