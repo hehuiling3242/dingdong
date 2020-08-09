@@ -56,7 +56,7 @@
                     label="图片"
                     width="300px">
                 <template slot-scope="scope">
-                    <el-select v-model="type" placeholder="请选择图片类型">
+                    <el-select v-model="fileType" placeholder="请选择图片类型">
                         <el-option
                                 v-for="item in options"
                                 :key="item.value"
@@ -87,18 +87,19 @@
                 imgArray: [],
                 fileDate: [],
                 fileArray: [],
-                fileId: [],
+                fileId: '',
                 productQuery: {},
                 fileQuery: {},
                 productList: [],
+                fileType:'',
                 options: [
                     {
                         label: '主图',
-                        value: '1',
+                        value: 1,
                     },
                     {
                         label: '详情图',
-                        value: '2',
+                        value: 2,
                     },
                 ],
                 type: '',
@@ -141,6 +142,11 @@
 
             changeFile(val) {
                 this.file = val.target.files[0];
+                let formData = new FormData();
+                formData.append('file', this.file);
+                this.axios.post("server/file/one-upload",formData ).then((res) => {
+                    this.fileId = res.data;
+                })
                 console.log(this.file);
             },
 
@@ -150,43 +156,15 @@
             },
 
             upload(productId) {
-
-                console.log("--->>> 商品id ", productId);
-
-                let formData = new FormData();
-                formData.append('file', this.file);
-                this.axios.post("server/file//one-upload", {
-                    params: {
-                        productId: productId,
-                        type: this.type,
-                        file: formData
-                    }
-                }).then((res) => {
-                    let url = 'http://localhost:9090/file/' + res.data + '/load'
-                    this.imgArray.push(url);
-                    console.log("---->> ", this.imgArray);
+                let param = {
+                    productId:productId,
+                    fileType:this.fileType,
+                    id:this.fileId
+                }
+                let url = "server/file/upate-file?id=" + this.fileId + "&productId=" + productId + "&fileType=" + this.fileType
+                this.axios.post(url).then((res) => {
                     this.load();
                 })
-            },
-
-            batchUpload() {
-
-                let _this = this;
-                this.fileArray.forEach(function (val, index) {
-                    let formData = new FormData();
-                    formData.append('file', val);
-                    _this.axios.post("server/file/one-upload", formData).then((res) => {
-                        _this.imgArray.push(url);
-                        console.log("---->> ", this.imgArray);
-                    })
-                })
-
-                /*let formData = new FormData();
-                formData.append('fileArray', this.fileArray);
-                console.log(formData);
-                this.axios.post("server/file/batch-upload", formData).then((res)=>{
-                  console.log("---->>> ",res.data);
-                })*/
             },
 
             queryList(fileQuery) {
@@ -197,7 +175,7 @@
             },
 
             queryProductList() {
-                this.productQuery.classifyId = 101;
+                this.productQuery.id = 1;
                 let url = "server/product/query-list"
                 this.axios.get(url, {params: this.productQuery}).then((res) => {
                     this.productList = res.data;

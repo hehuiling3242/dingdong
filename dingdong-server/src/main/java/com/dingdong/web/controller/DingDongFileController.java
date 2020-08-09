@@ -51,10 +51,14 @@ public class DingDongFileController {
     @PostMapping("one-upload")
     @ResponseBody
     public Long upload(@RequestParam("file") MultipartFile file,
-                       @RequestParam("productId")Long productId,
-                       @RequestParam("type")Integer fileType,
                        HttpServletRequest request){
-        return dingDongFileService.oneUpload(productId,fileType,file, request);
+        return dingDongFileService.oneUpload(file, request);
+    }
+
+    @ApiOperation(value = "修改文件")
+    @PostMapping("upate-file")
+    public void updateFile(DingDongFile dingDongFile){
+        dingDongFileService.updateFile(dingDongFile);
     }
 
     @ApiOperation(value = "根据id查询")

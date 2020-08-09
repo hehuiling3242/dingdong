@@ -37,9 +37,11 @@
     <update id="update" parameterType="dingDongFile">
         update file
         <set>
-            <if test="fileName != null and fileName.trim() !=''">file_name = #{fileName,jdbcType=VARCHAR}</if>
-            <if test="uploadedName != null and uploadedName.trim() !=''">,uploaded_name = #{uploadedName,jdbcType=VARCHAR}</if>
-            <if test="filePath != null and filePath.trim() !=''">,file_path = #{filePath,jdbcType=VARCHAR}</if>
+            <if test="fileName != null and fileName.trim() !=''">file_name = #{fileName,jdbcType=VARCHAR},</if>
+            <if test="uploadedName != null and uploadedName.trim() !=''">uploaded_name = #{uploadedName,jdbcType=VARCHAR},</if>
+            <if test="filePath != null and filePath.trim() !=''">file_path = #{filePath,jdbcType=VARCHAR},</if>
+            <if test="productId != null">product_id = #{productId,jdbcType=VARCHAR},</if>
+            <if test="fileType != null">file_type = #{fileType,jdbcType=VARCHAR}</if>
         </set>
         where id=#{id}
     </update>

@@ -3,7 +3,6 @@ package com.dingdong.mapper;
 import com.dingdong.domain.model.DingDongFile;
 import com.dingdong.domain.query.DingDongFileQuery;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -15,6 +14,8 @@ public interface DingDongFileMapper {
 
     //插入
     void insert(DingDongFile dingDongFile);
+
+    void update(DingDongFile dingDongFile);
 
     //批量插入
     void insertBatch(List<DingDongFile> dingDongFileList);

@@ -64,7 +64,10 @@ public class DingDongFileService {
     }
 
     @Transactional
-    public Long oneUpload(Long productId,Integer fileType,MultipartFile file, HttpServletRequest request){
+    public Long oneUpload(MultipartFile file, HttpServletRequest request){
+        if(null == file){
+            return null;
+        }
         //文件名称
         String filename = file.getOriginalFilename();
         //上传后的文件名，防止文件名一样导致文件覆盖
@@ -84,11 +87,6 @@ public class DingDongFileService {
             dingDongFile.setFileName(filename);
             dingDongFile.setFilePath(filePath);
             dingDongFile.setUploadedName(uploadedName);
-            if(null!=productId){
-                dingDongFile.setProductId(productId);
-            }
-            dingDongFile.setFileType(fileType);
-            //dingDongFile.setUploadDate(new Date());
             dingDongFileMapper.insert(dingDongFile);
         } catch (IOException e) {
             e.printStackTrace();
@@ -116,6 +114,13 @@ public class DingDongFileService {
                 + StringUtils.substring(fileOriginalName, StringUtils.lastIndexOf(fileOriginalName, '.'));
 
         return fileUploadedName;
+    }
+
+    public void updateFile(DingDongFile dingDongFile){
+        if(null == dingDongFile || null== dingDongFile.getId()){
+            return;
+        }
+        dingDongFileMapper.update(dingDongFile);
     }
 
 
