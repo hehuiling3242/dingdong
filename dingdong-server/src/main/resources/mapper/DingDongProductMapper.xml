@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.dingdong.mapper.DingDongProductMapper">
+    <resultMap id="dingDongProductMap" type="dingDongProduct">
+        <id column="id" property="id"/><!-- 主键 -->
+        <result column="status" property="status"></result>
+        <result column="product_name" property="productName"></result>
+        <result column="classify_id" property="classifyId"></result>
+        <result column="price" property="price"></result>
+        <result column="digg" property="digg"></result>
+        <result column="product_about" property="productAbout"></result>
+        <result column="detail" property="detail"></result>
+        <result column="count" property="count"></result>
+        <result column="product_show" property="productShow"></result>
+    </resultMap>
+
+    <update id="update" parameterType="dingDongFile">
+        update commodity_details
+        <set>
+            <if test="status != null">status = #{status,jdbcType=NUMBER}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="load" parameterType="long" resultMap="dingDongProductMap">
+        select * from file where id=#{id}
+    </select>
+
+    <sql id="queryCommonSql">
+        FROM commodity_details p
+        <where>
+            <if test="id != null">p.id = #{id} </if>
+            <if test="idArray != null">
+                and p.id in
+                <foreach collection="idArray" index="index" item="item" open="(" separator="," close=")">#{item}
+                </foreach>
+            </if>
+            <if test="status != null">and p.status = #{status}</if>
+            <if test="statusArray != null">
+                and p.status in
+                <foreach collection="statusArray" index="index" item="item" open="(" separator="," close=")">#{item}
+                </foreach>
+            </if>
+            <if test="productName != null and productName.trim() !=''">and p.product_name = #{productName}</if>
+            <if test="classifyId != null">and p.classify_id = #{classifyId}</if>
+            <if test="price != null">and p.price = #{price}</if>
+            <if test="digg != null">and p.digg = #{digg}</if>
+            <if test="productAbout != null">and p.product_about = #{productAbout}</if>
+            <if test="detail != null">and p.detail = #{detail}</if>
+            <if test="count != null">and p.count = #{count}</if>
+            <if test="productShow != null">and p.product_show = #{productShow}</if>
+
+        </where>
+    </sql>
+
+    <!-- 排序 -->
+    <sql id="sortSql">
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort}
+            </when>
+            <otherwise>
+                order by f.upload_date DESC
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 分页 -->
+    <sql id="pageEnd">
+        <if test="pageSize > 0">
+            limit ${startRowBegin},${pageSize}
+        </if>
+    </sql>
+
+    <select id="queryList" parameterType="dingDongProductQuery" resultMap="dingDongProductMap">
+        select p.id,
+        p.status,
+        p.product_name,
+        p.classify_id,
+        p.price,
+        p.digg,
+        p.product_about,
+        p.detail,
+        p.count,
+        p.product_show
+        <include refid="queryCommonSql"/>
+    </select>
+
+    <select id="queryCount" parameterType="dingDongProductQuery" resultType="int">
+        select count(1)
+        <include refid="queryCommonSql" />
+    </select>
+
+</mapper>
