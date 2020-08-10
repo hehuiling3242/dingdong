@@ -17,11 +17,11 @@
     <!-- 轮播 -->
     <lunbo  class="lunbo"></lunbo>
     <p class="price">
-      <span>¥{{price}}</span>
+      <span>¥{{productList[0].price}}</span>
       <del>¥{{original_cost}}</del>  
     </p>
-    <p class="title">{{title}}</p>
-    <p class="deta">{{describe}}</p>
+    <p class="title">{{productList[0].productName}}</p>
+    <p class="deta">{{productList[0].digg}}</p>
     <hr style="border:0.05rem solid #eee"/>
     <div class="time">
       <img src="../../assets/img/shijian.png" alt="">
@@ -101,10 +101,10 @@ import lunbo from '../demo/lunbo.vue'
 export default {
     data(){
         return{
-          price:2.55,
+          // price:2.55,
           original_cost:5.55,
-          title:"杭白菜 300g",
-          describe:"又称毛毛菜，煮汤味更美哦",
+          // title:"杭白菜 300g",
+          // describe:"又称毛毛菜，煮汤味更美哦",
           content:13,
           showAbs: false,
           n:0,
@@ -123,10 +123,30 @@ export default {
           minute: null,  //多少分钟
           tosecond: null,
           tohour: null,
-          tominute: null
+          tominute: null,
+          productQuery:{},
+          productList:[{}],
+          productId:'',
         }
     },
+    created(){
+      this.productId = parseInt(this.$route.params.id);
+      this.queryProductList(this.productId);
+    },
+
     methods:{
+      queryProductList(productId) {
+                // this.productQuery.id = 1018;
+                // this.productQuery.id = parseInt(window.location.search.slice(4));
+                this.productQuery.id = productId;
+                console.log('--->> ',this.productQuery.id===1012);
+                let url = "server/product/query-list"
+                this.axios.get(url, {params: this.productQuery}).then((res) => {
+                    console.log(res);
+                    this.productList = res.data;
+                    console.log("--->> 商品",this.productList);
+                })
+            },
       tow(n){
             return n>=0 && n<10 ? '0'+n : ''+n;
       },

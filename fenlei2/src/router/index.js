@@ -46,10 +46,13 @@ const routes = [
     component:sc
   },
   {
-    path:'/details',
-    component:Details
-    // 注册页面(我的页面没有写,没有地方跳转)
+    path:'/details/:id',
+    component:Details,
   },
+  // {
+  //   path:'/details',
+  //   component:Details,
+  // },
   {
     path:'/jiujiu',
     component:jiujiu

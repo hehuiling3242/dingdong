@@ -163,6 +163,8 @@
                 }
                 let url = "server/file/upate-file?id=" + this.fileId + "&productId=" + productId + "&fileType=" + this.fileType
                 this.axios.post(url).then((res) => {
+                    this.fileType = '';
+                    this.fileId = '';
                     this.load();
                 })
             },
@@ -175,11 +177,12 @@
             },
 
             queryProductList() {
-                this.productQuery.id = 1;
+                // this.productQuery.id = 1014;
+                console.log(this.productQuery);
                 let url = "server/product/query-list"
                 this.axios.get(url, {params: this.productQuery}).then((res) => {
                     this.productList = res.data;
-                    console.log("--->> 商品",);
+                    console.log("--->> 商品",this.productList);
                 })
             },
         }
