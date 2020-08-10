@@ -1,3 +1,4 @@
+<script src="../../router/index.js"></script>
 <template>
   <div class="details">
     <xitongtwo></xitongtwo>
@@ -134,11 +135,11 @@ export default {
 
     methods:{
       queryProductList() {
-                this.productQuery.id = 1072;
+                // this.productQuery.id = 1072;
                 // this.productQuery.id = parseInt(window.location.search.slice(4));
-                // this.productQuery.id = parseInt(this.$route.params.id);
+                this.productQuery.id = parseInt(this.$route.params.id);
                 console.log(this.productQuery.id);
-                let url = "server/product/query-list"
+                let url = "/server/product/query-list"
                 this.axios.get(url, {params: this.productQuery}).then((res) => {
                     console.log(res);
                     this.productList = res.data;
