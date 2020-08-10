@@ -56,7 +56,7 @@ public class DingDongProductService {
             }
 
             List<String> filePaths = new ArrayList<>();
-            String urlFix = "http://localhost:9090/file/";
+            String urlFix = "http://121.199.24.90:9090/file/";
             for (DingDongFile dingDongFile : dingDongFileList) {
                 String url = urlFix + dingDongFile.getId() + "/load";
                 File file = new File(new File(dingDongFile.getFilePath()).getAbsolutePath());

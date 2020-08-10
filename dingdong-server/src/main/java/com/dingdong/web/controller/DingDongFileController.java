@@ -102,7 +102,7 @@ public class DingDongFileController {
         List<DingDongFile> dingDongFiles = dingDongFileService.queryList(dingDongFileQuery);
 
         List<DingDongFileVO> result = new ArrayList<>();
-        String urlFix = "http://localhost:9090/file/";
+        String urlFix = "http://121.199.24.90:9090/file/";
         DingDongFileVO dongFileVO;
         for (DingDongFile dingDongFile : dingDongFiles) {
             dongFileVO = new DingDongFileVO();
