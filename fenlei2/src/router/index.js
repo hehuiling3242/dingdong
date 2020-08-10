@@ -46,7 +46,7 @@ const routes = [
     component:sc
   },
   {
-    path:'/details/:id',
+    path:'/details',
     component:Details,
   },
   // {

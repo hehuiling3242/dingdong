@@ -125,21 +125,19 @@ export default {
           tohour: null,
           tominute: null,
           productQuery:{},
-          productList:[{}],
-          productId:'',
+          productList:[{}]
         }
     },
     created(){
-      this.productId = parseInt(this.$route.params.id);
-      this.queryProductList(this.productId);
+      this.queryProductList();
     },
 
     methods:{
-      queryProductList(productId) {
-                // this.productQuery.id = 1018;
+      queryProductList() {
+                this.productQuery.id = 1072;
                 // this.productQuery.id = parseInt(window.location.search.slice(4));
-                this.productQuery.id = productId;
-                console.log('--->> ',this.productQuery.id===1012);
+                // this.productQuery.id = parseInt(this.$route.params.id);
+                console.log(this.productQuery.id);
                 let url = "server/product/query-list"
                 this.axios.get(url, {params: this.productQuery}).then((res) => {
                     console.log(res);
