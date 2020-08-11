@@ -175,7 +175,7 @@
             },
 
             queryProductList() {
-                this.productQuery. = 1;
+                this.productQuery.id = 1;
                 let url = "server/product/query-list"
                 this.axios.get(url, {params: this.productQuery}).then((res) => {
                     this.productList = res.data;

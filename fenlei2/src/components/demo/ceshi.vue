@@ -1,7 +1,9 @@
 <template>
     <div class="shu">
+        
+        
         <div class="a">
-            <p>毛奥阿尔</p>
+            <p><router-link to='/details?id=1016'>毛奥阿尔</router-link></p>
             <span>毛奥阿尔</span>
         </div>
         

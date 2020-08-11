@@ -31,21 +31,28 @@ import HomeFea from '../components/demo/HomeFea.vue'
 // 注册页面
 import Login from '../components/demo/Login.vue'
 import Details from '../components/demo/Details.vue'
+import lunbo from '../components/demo/lunbo.vue'
 import sc from '../components/demo/sc.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path:'/sc',
-    component:sc
-    // 注册页面(我的页面没有写,没有地方跳转)
+    path:'/lunbo',
+    component:lunbo
   },
   {
-    path:'/details',
-    component:Details
-    // 注册页面(我的页面没有写,没有地方跳转)
+    path:'/sc',
+    component:sc
   },
+  {
+    path:'/details/:id',
+    component:Details,
+  },
+  // {
+  //   path:'/details',
+  //   component:Details,
+  // },
   {
     path:'/jiujiu',
     component:jiujiu

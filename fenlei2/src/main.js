@@ -4,9 +4,9 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import qs from 'qs'
-/*import MintUI from 'mint-ui'
-import 'mint-ui/lib/style.min.css'
-Vue.use(MintUI)*/
+// import MintUI from 'mint-ui'
+// import 'mint-ui/lib/style.min.css'
+// Vue.use(MintUI)
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -30,7 +30,6 @@ Vue.component('xitongtwo',xitongtwo)
 
 Vue.prototype.axios = axios;
 Vue.config.productionTip = false
-
 
 new Vue({
   router,

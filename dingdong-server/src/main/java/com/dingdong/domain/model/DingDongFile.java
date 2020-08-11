@@ -30,9 +30,6 @@ public class DingDongFile implements Serializable {
     @ApiModelProperty(value = "上传时间")
     private Date uploadDate;
 
-    @ApiModelProperty(value = "文件类型，1-主图、2-详情图")
-    private Integer fileType;
-
     public Long getId() {
         return id;
     }
@@ -79,13 +76,5 @@ public class DingDongFile implements Serializable {
 
     public void setUploadDate(Date uploadDate) {
         this.uploadDate = uploadDate;
-    }
-
-    public Integer getFileType() {
-        return fileType;
-    }
-
-    public void setFileType(Integer fileType) {
-        this.fileType = fileType;
     }
 }
