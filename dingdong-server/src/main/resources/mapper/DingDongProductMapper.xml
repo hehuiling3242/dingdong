@@ -5,7 +5,7 @@
 
 <mapper namespace="com.dingdong.mapper.DingDongProductMapper">
     <resultMap id="dingDongProductMap" type="dingDongProduct">
-        <id column="id" property="id"/><!-- 主键 -->
+        <id column="id" property="id"/>
         <result column="status" property="status"></result>
         <result column="product_name" property="productName"></result>
         <result column="classify_id" property="classifyId"></result>
@@ -56,7 +56,6 @@
         </where>
     </sql>
 
-    <!-- 排序 -->
     <sql id="sortSql">
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -68,7 +67,6 @@
         </choose>
     </sql>
 
-    <!-- 分页 -->
     <sql id="pageEnd">
         <if test="pageSize > 0">
             limit ${startRowBegin},${pageSize}
