@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-        "com.dingdong"
+        "com.dingdong.*"
 })
 public class DingdongApplication {
 
