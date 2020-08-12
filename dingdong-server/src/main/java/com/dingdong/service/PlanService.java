@@ -1,5 +1,6 @@
 package com.dingdong.service;
 
+import com.dingdong.domain.model.DingDongProduct;
 import com.dingdong.domain.model.Plan;
 import com.dingdong.domain.model.Result;
 import com.dingdong.domain.query.PlanQuery;
@@ -13,6 +14,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,6 +24,8 @@ public class PlanService {
     private PlanMapper planMapper;
     @Autowired
     private PubRegionService pubRegionService;
+    @Autowired
+    private DingDongProductService dingDongProductService;
 
     /**
      * 下单
@@ -29,17 +33,70 @@ public class PlanService {
      */
     @Transactional
     public Result addPlan(Plan plan){
-        Assert.notNull(plan,"订单不能为空");
-        Assert.notNull(plan.getProductId(),"商品不能为空");
-        Assert.notNull(plan.getUserId(),"下单人不能为空");
-        Assert.notNull(plan.getDeliverAddress(),"收获地址不能为空");
-        Assert.notNull(plan.getDeliverProvinceCode(),"收获地址不能为空");
-        Assert.notNull(plan.getDeliverCityCode(),"收获地址不能为空");
-        Assert.notNull(plan.getDeliverRegionCode(),"收获地址不能为空");
+        Result result = new Result();
 
+        if(null == plan){
+            result.setCode("400");
+            result.setMessage("请选择商品信息");
+            return result;
+        }
+        if(null == plan.getProductId()){
+            result.setCode("400");
+            result.setMessage("请选择商品");
+            return result;
+        }
+        if(null == plan.getUserId()){
+            result.setCode("400");
+            result.setMessage("下单人不能为空");
+            return result;
+        }
+        if(null == plan.getDeliverAddress()){
+            result.setCode("400");
+            result.setMessage("请输入收获地址");
+            return result;
+        }
+        if(null == plan.getDeliverRegionCode()){
+            result.setCode("400");
+            result.setMessage("请输入收获地址");
+            return result;
+        }
+        if(null == plan.getDeliverProvinceCode()){
+            result.setCode("400");
+            result.setMessage("请输入收获地址");
+            return result;
+        }
+        if(null == plan.getDeliverCityCode()){
+            result.setCode("400");
+            result.setMessage("请输入收获地址");
+            return result;
+        }
+        if(null == plan.getPlanCount() || plan.getPlanCount()<0){
+            result.setCode("400");
+            result.setMessage("请输入购买数量");
+            return result;
+        }
+
+        DingDongProduct product = dingDongProductService.load(plan.getProductId());
+        if(null == product){
+            result.setCode("400");
+            result.setMessage("商品不存在");
+            return result;
+        }
+
+        if(product.getCount() < plan.getPlanCount()){
+            result.setCode("400");
+            result.setMessage("该商品库存数量不够");
+            return result;
+        }
+        plan.setProductName(product.getProductName());
+        plan.setPlanDate(new Date());
         planMapper.insert(plan);
 
-        Result result = new Result();
+        //减去商品库存
+        DingDongProduct dingDongProduct = new DingDongProduct();
+        dingDongProduct.setId(plan.getProductId());
+        dingDongProduct.setCount(product.getCount()-plan.getPlanCount());
+        dingDongProductService.update(dingDongProduct);
         result.setCode("200");
         result.setMessage("下单成功");
         result.setData(plan);
@@ -57,7 +114,7 @@ public class PlanService {
         for (Plan plan : planList) {
             planVO = new PlanVO();
             BeanUtils.copyProperties(plan,planVO);
-            planVO.setDelieverFullAddress(pubRegionService.queryFullForRegionCode(plan.getDeliverRegionCode(),""));
+            planVO.setDelieverFullAddress(pubRegionService.queryFullForRegionCode(plan.getDeliverRegionCode(),"") + plan.getDeliverAddress());
             planVOList.add(planVO);
         }
 

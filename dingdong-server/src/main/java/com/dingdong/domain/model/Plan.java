@@ -1,6 +1,7 @@
 package com.dingdong.domain.model;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations
+        .ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,28 +13,40 @@ public class Plan implements Serializable {
 	private static final long serialVersionUID = 15959997036812L;
 
 
-    @ApiModelProperty("主键id")
+
+	@ApiModelProperty("主键id")
 	private Long id;//主键id
+
     @ApiModelProperty("下单日")
 	private Date planDate;//下单日
+
     @ApiModelProperty("下单人id")
 	private Long userId;//下单人id
+
     @ApiModelProperty("下单人")
 	private String userName;//下单人
+
     @ApiModelProperty("下单人真实姓名")
 	private String userRealName;//下单人真实姓名
+
     @ApiModelProperty("商品id")
 	private Long productId;//商品id
+
     @ApiModelProperty("商品名称")
 	private String productName;//商品名称
+
     @ApiModelProperty("下单数量")
 	private Integer planCount;//下单数量
+
     @ApiModelProperty("收货地址省级code")
 	private String deliverProvinceCode;//收货地址省级code
+
     @ApiModelProperty("收货地址市级code")
 	private String deliverCityCode;//收货地址市级code
+
     @ApiModelProperty("收货地址区级code")
 	private String deliverRegionCode;//收货地址区级code
+
     @ApiModelProperty("详细收货地址")
 	private String deliverAddress;//详细收货地址
 

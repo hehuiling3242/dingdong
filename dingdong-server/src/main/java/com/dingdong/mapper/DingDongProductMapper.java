@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface DingDongProductMapper {
 
+    void update(DingDongProduct dingDongProduct);
+
     DingDongProduct load(Long id);
 
     List<DingDongProduct> queryList(DingDongProductQuery query);

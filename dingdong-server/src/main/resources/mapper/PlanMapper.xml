@@ -20,8 +20,7 @@
     </resultMap>
 
     <insert id="insert" parameterType="plan" useGeneratedKeys="true" keyProperty="id">
-        insert into
-        plan(
+        insert into plan(
         <trim prefix="" prefixOverrides=",">
             <if test="planDate != null">,plan_date</if>
             <if test="userId != null">,user_id</if>
@@ -112,9 +111,7 @@
                 order by ${sort}
             </when>
             <otherwise>
-                <if test="sortByDefault">
-                    order by p.plan_date DESC
-                </if>
+                order by p.plan_date DESC
             </otherwise>
         </choose>
     </sql>
