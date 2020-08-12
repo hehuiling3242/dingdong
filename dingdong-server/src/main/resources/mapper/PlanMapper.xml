@@ -121,24 +121,17 @@
 
     <select id="queryList" parameterType="planQuery" resultMap="planMap">
         select p.id
-        <choose>
-            <when test="columns != null and columns.length>0">
-                <foreach collection="columns" index="index" item="item">,${item}</foreach>
-            </when>
-            <otherwise>
-                ,p.plan_date
-                ,p.user_id
-                ,p.user_name
-                ,p.user_real_name
-                ,p.product_id
-                ,p.product_name
-                ,p.plan_count
-                ,p.deliver_province_code
-                ,p.deliver_city_code
-                ,p.deliver_region_code
-                ,p.deliver_address
-            </otherwise>
-        </choose>
+        ,p.plan_date
+        ,p.user_id
+        ,p.user_name
+        ,p.user_real_name
+        ,p.product_id
+        ,p.product_name
+        ,p.plan_count
+        ,p.deliver_province_code
+        ,p.deliver_city_code
+        ,p.deliver_region_code
+        ,p.deliver_address
         <include refid="queryCommonSql"/>
         <include refid="sortSql"/>
         <if test="pageSize > 0">

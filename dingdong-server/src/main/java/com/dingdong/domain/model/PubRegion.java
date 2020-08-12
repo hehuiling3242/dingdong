@@ -27,7 +27,7 @@ public class PubRegion implements Serializable {
      * @see com.dingdong.domain.enums.PubRegionTypeEnum
      */
     @ApiModelProperty("地区类型，0：国家，1： 省份/直辖市，2：市，3：县/区")
-	private String regionType;//地区类型，0：国家，1： 省份/直辖市，2：市，3：县/区
+	private Integer regionType;//地区类型，0：国家，1： 省份/直辖市，2：市，3：县/区
 
     @ApiModelProperty("1、正常 -1、失效")
 	private String status;//1、正常 -1、失效
@@ -97,14 +97,14 @@ public class PubRegion implements Serializable {
     /**
      * 地区类型，0：国家，1： 省份/直辖市，2：市，3：县/区
      */
-    public String getRegionType() {
+    public Integer getRegionType() {
         return regionType;
     }
 
     /**
      * 地区类型，0：国家，1： 省份/直辖市，2：市，3：县/区
      */
-    public void setRegionType(String regionType) {
+    public void setRegionType(Integer regionType) {
         this.regionType = regionType;
     }
 

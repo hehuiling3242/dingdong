@@ -3,7 +3,9 @@ package com.dingdong.service;
 import com.dingdong.domain.model.Result;
 import com.dingdong.domain.model.User;
 import com.dingdong.domain.query.UserQuery;
+import com.dingdong.domain.vo.UserVO;
 import com.dingdong.mapper.UserMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ public class UserService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private PubRegionService pubRegionService;
 
     public Result login(UserQuery userQuery){
         Result result = new Result();
@@ -39,7 +43,10 @@ public class UserService {
         User user = users.get(0);
         result.setCode("200");
         result.setMessage("登录成功");
-        result.setData(user);
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(user,userVO);
+        userVO.setFullAddress(pubRegionService.queryFullForRegionCode(user.getRegionCode(),""));
+        result.setData(userVO);
         return result;
     }
 

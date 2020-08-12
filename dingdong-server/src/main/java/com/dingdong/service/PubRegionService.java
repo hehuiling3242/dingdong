@@ -72,11 +72,11 @@ public class PubRegionService {
             return StringUtils.EMPTY;
         }
         PubRegion pubRegion = pubRegionMapper.load(regionCode);
-        if(PubRegionTypeEnum.PROVINCE.getValue().equals(pubRegion.getRegionType())){
-            return fullName;
+        if(!PubRegionTypeEnum.PROVINCE.getValue().equals(pubRegion.getRegionType())){
+            fullName = pubRegion.getRegionName() + fullName;
+            this.queryFullForRegionCode(pubRegion.getParentCode(),fullName);
         }
         fullName = pubRegion.getRegionName() + fullName;
-        this.queryFullForRegionCode(pubRegion.getParentCode(),fullName);
         return fullName;
     }
 }
