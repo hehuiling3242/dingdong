@@ -42,7 +42,7 @@ public class User implements Serializable {
     private String address;
 
     @ApiModelProperty("邮编")
-    private int postCode;
+    private String postCode;
 
     public int getId() {
         return id;
@@ -108,11 +108,11 @@ public class User implements Serializable {
         this.address = address;
     }
 
-    public int getPostCode() {
+    public String getPostCode() {
         return postCode;
     }
 
-    public void setPostCode(int postCode) {
+    public void setPostCode(String postCode) {
         this.postCode = postCode;
     }
 

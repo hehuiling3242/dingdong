@@ -21,7 +21,7 @@ public class UserQuery extends BaseQuery {
     private String realName;
 
     @ApiModelProperty("性别")
-    private int sex;
+    private Integer sex;
 
     @ApiModelProperty("手机号")
     private String mobile;
@@ -42,17 +42,17 @@ public class UserQuery extends BaseQuery {
     private String address;
 
     @ApiModelProperty("邮编")
-    private int postCode;
+    private String postCode;
 
-    @ApiModelProperty(value = "userIdArray")
-    private Collection<Long> userIdArray;
+    @ApiModelProperty(value = "idArray")
+    private Collection<Long> idArray;
 
     public Collection<Long> getIdArray() {
-        return userIdArray;
+        return idArray;
     }
 
-    public void setIdArray(Collection<Long> userIdArray) {
-        this.userIdArray = userIdArray;
+    public void setIdArray(Collection<Long> idArray) {
+        this.idArray = idArray;
     }
 
     public int getId() {
@@ -87,11 +87,11 @@ public class UserQuery extends BaseQuery {
         this.realName = realName;
     }
 
-    public int getSex() {
+    public Integer getSex() {
         return sex;
     }
 
-    public void setSex(int sex) {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
 
@@ -135,14 +135,6 @@ public class UserQuery extends BaseQuery {
         this.regionCode = regionCode;
     }
 
-    public Collection<Long> getUserIdArray() {
-        return userIdArray;
-    }
-
-    public void setUserIdArray(Collection<Long> userIdArray) {
-        this.userIdArray = userIdArray;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -151,11 +143,11 @@ public class UserQuery extends BaseQuery {
         this.address = address;
     }
 
-    public int getPostCode() {
+    public String getPostCode() {
         return postCode;
     }
 
-    public void setPostCode(int postCode) {
+    public void setPostCode(String postCode) {
         this.postCode = postCode;
     }
 

@@ -15,8 +15,6 @@ public interface DingDongFileMapper {
 
     void update(DingDongFile dingDongFile);
 
-    void insertBatch(List<DingDongFile> dingDongFileList);
-
     List<DingDongFile> queryList(DingDongFileQuery query);
 
     int queryCount(DingDongFileQuery query);

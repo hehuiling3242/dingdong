@@ -21,8 +21,13 @@ public class UserService {
     private UserMapper userMapper;
 
     public Result login(UserQuery userQuery){
-
         Result result = new Result();
+
+        if(null == userQuery || null == userQuery.getUserName() || null == userQuery.getPassWord()){
+            result.setCode("400");
+            result.setMessage("用户名或密码错误");
+            return result;
+        }
 
         List<User> users = userMapper.queryList(userQuery);
         if(CollectionUtils.isEmpty(users)){

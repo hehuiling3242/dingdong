@@ -17,6 +17,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 import org.springframework.util.Assert;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -34,8 +36,8 @@ import java.util.Properties;
 public class BaseServiceSpringBeansConfig implements TransactionManagementConfigurer {
 
     private static final String TYPE_ALIASES_PACKAGE =
-            "com.dingdong.domain.query," +
-                    "com.dingdong.domain.model";
+            "com.dingdong.domain.query" +
+                    ",com.dingdong.domain.model";
 
     /**
      * 数据源

@@ -4,17 +4,17 @@
 
 
 <mapper namespace="com.dingdong.mapper.PubRegionMapper">
-    <resultMap id="pubRegionMap" type="pubRegion">
+    <resultMap id="pubRegionMap" type="com.dingdong.domain.model.PubRegion">
         <id column="CODE" property="code"/><!-- 按照国家规则的统一编码来 -->
         <result column="PARENT_CODE" property="parentCode"/><!-- 上一级地区的编码 -->
         <result column="REGION_NAME" property="regionName"/><!-- 地区名字 -->
         <result column="REGION_TYPE" property="regionType"/><!-- 地区类型，0：国家，1： 省份/直辖市，2：市，3：县/区 -->
         <result column="STATUS" property="status"/><!-- 1、正常 -1、失效 -->
         <result column="ABBNAME" property="abbname"/><!-- 区域别名 -->
-        <result column="" property="postCode"/><!-- 邮编 -->
-    </resultMap>post_code
+        <result column="POST_CODE" property="postCode"/><!-- 邮编 -->
+    </resultMap>
 
-    <insert id="insert" parameterType="pubRegion">
+    <insert id="insert" parameterType="com.dingdong.domain.model.PubRegion">
         insert into
         pub_region(
         CODE
@@ -35,7 +35,7 @@
         )
     </insert>
 
-    <update id="update" parameterType="pubRegion">
+    <update id="update" parameterType="com.dingdong.domain.model.PubRegion">
         update pub_region
         <set>
             <if test="parentCode != null">PARENT_CODE=#{parentCode,jdbcType=VARCHAR},</if>
@@ -77,7 +77,7 @@
         </where>
     </sql>
 
-    <select id="queryList" parameterType="pubRegionQuery" resultMap="pubRegionMap">
+    <select id="queryList" parameterType="com.dingdong.domain.query.PubRegionQuery" resultMap="pubRegionMap">
         select pr.CODE
         <choose>
             <when test="columns != null and columns.length>0">
@@ -98,15 +98,15 @@
         </if>
     </select>
 
-    <select id="queryCount" parameterType="pubRegionQuery" resultType="int">
+    <select id="queryCount" parameterType="com.dingdong.domain.query.PubRegionQuery" resultType="int">
         select count(1)
         <include refid="queryCommonSql"/>
     </select>
 
-    <update id="updateStatus" parameterType="pubRegion">
+    <update id="updateStatus" parameterType="com.dingdong.domain.model.PubRegion">
 		update pub_region set status=#{status} where   CODE=#{code} 	</update>
 
-    <update id="updateIsDeleted" parameterType="pubRegion">
+    <update id="updateIsDeleted" parameterType="com.dingdong.domain.model.PubRegion">
         update pub_region set is_deleted=#{isDeleted} where   CODE=#{code}     </update>
 
     <delete id="delete" parameterType="string">
