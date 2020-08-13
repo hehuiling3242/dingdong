@@ -41,7 +41,23 @@ server.use(bodyParser.urlencoded({
   extended: false
 }))
 
-
+server.get('/ceshi',(req,res)=>{
+  let _uname=req.query.username;
+  let _pwd=req.query.password;
+  console.log(_uname)
+  console.log(_pwd)
+  let sql='select id from user where username=? and password=?';
+  pool.query(sql,[_uname,_pwd],(err,a)=>{
+      if(err) throw err;
+      if(a.length==0){
+          console.log('1')
+      }else{
+          res.send(a)
+      }
+  })
+})
 
 //指定服务器的监听端口号
-server.listen(3000);
+server.listen(3000,()=>{
+  console.log('服务器启动...');
+})

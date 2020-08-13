@@ -26,6 +26,8 @@ import jiujiu from '../components/demo/jiujiu.vue'
 import NavTop from '../components/demo/NavTop.vue'
 // 特色专区
 import HomeFea from '../components/demo/HomeFea.vue'
+import Navigation from '../components/demo/Navigation.vue'
+import Soppings from '../components/demo/Soppings.vue'
 
 // 组长
 // 注册页面
@@ -34,9 +36,65 @@ import Details from '../components/demo/Details.vue'
 import lunbo from '../components/demo/lunbo.vue'
 import sc from '../components/demo/sc.vue'
 
+// 徐佳
+// 会员
+import homead from '../components/demo/home_ad.vue'
+// 首页分类
+import homesort from '../components/demo/home_sort.vue'
+
+// 海
+import HomeList from '../components/demo/HomeList.vue'
+// 我的
+import mynews from '../components/demo/myNews.vue'
+
+// 俞
+// 我的
+import goods from '../components/demo/goods.vue'
+import listgoods from '../components/demo/list_goods.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path:'/soppings',
+    component:Soppings
+    // 地址跳转
+  },
+  {
+    path:'/listgoods',
+    component:listgoods
+    // 地址跳转
+  },
+  {
+    path:'/goods',
+    component:goods
+    // 地址跳转
+  },
+  {
+    path:'/mynews',
+    component:mynews
+    // 地址跳转
+  },
+  {
+    path:'/navigation',
+    component:Navigation
+    // 地址跳转
+  },
+  {
+    path:'/homelist',
+    component:HomeList
+    // 会员
+  },
+  {
+    path:'/homesort',
+    component:homesort
+    // 会员
+  },
+  {
+    path:'/homead',
+    component:homead
+    // 会员
+  },
   {
     path:'/lunbo',
     component:lunbo
@@ -49,10 +107,6 @@ const routes = [
     path:'/details/:id',
     component:Details,
   },
-  // {
-  //   path:'/details',
-  //   component:Details,
-  // },
   {
     path:'/jiujiu',
     component:jiujiu

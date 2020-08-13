@@ -1,8 +1,8 @@
 <template>
     <div class="homenew">
         <table></table>
-        <div class="homenew_top">
-            <div class="homenew_top_l">
+        <div class="HomeSale">
+            <div class="HomeSale_l">
                 <div></div>
                 <h2>限时抢购</h2>
                 <p>{{tohour}}</p>
@@ -11,7 +11,7 @@
                 <span>:</span>
                 <p>{{tosecond}}</p>
             </div>
-            <div class="homenew_top_r">
+            <div class="HomeSale_r">
                 <p>更多</p>
             </div>
         </div>
@@ -95,31 +95,31 @@ export default {
         box-sizing: border-box;
         margin-top: 1rem;
     }
-    .homenew_top{
+    .HomeSale{
         display: flex;
         justify-content: space-between;
         color: #fff;
         margin: 1rem 0px 1rem 0px;
         padding: 0px 1rem 0px 1rem;
     }
-    .homenew_top_l{
+    .HomeSale_l{
         display: flex;
         align-items:flex-end;
     }
-    .homenew_top_l>div{
+    .HomeSale_l>div{
         width: .4rem;
         height: 1.6rem;
         background: linear-gradient(90deg,#47d15e,#18bf49);
         margin-right: .8rem;
     }
-    .homenew_top_l>h2{
+    .HomeSale_l>h2{
         font-size: 1.8rem;
         font-weight:600;
         letter-spacing:.1rem;
         margin-right: .5rem;
         color: #151515
     }
-    .homenew_top_l>p{
+    .HomeSale_l>p{
         font-size: 1.4rem;
         letter-spacing:.1rem;
         width: 24px;
@@ -130,16 +130,16 @@ export default {
         justify-content: center;
         align-items: center;
     }
-    .homenew_top_l>span{
+    .HomeSale_l>span{
         color: #151515;
         margin: 0px 5px 0px 5px;
         margin-bottom: .4rem;
     }
-    .homenew_top_r{
+    .HomeSale_r{
         display: flex;
         align-items:flex-end
     }
-    .homenew_top_r>p{
+    .HomeSale_r>p{
         font-size: 1.4rem;
         letter-spacing:.1rem;
         color: #4ebf71;

@@ -49,6 +49,7 @@ export default {
     .homenew{
         /* background: url("../../assets/img/home_bgc.png") no-repeat; */
         padding: .5px 1rem .5px 1rem;
+        /* margin: 1.4rem 0rem; */
         /* height: 500px; */
         box-sizing: border-box;
     }

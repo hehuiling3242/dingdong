@@ -5,11 +5,16 @@
             <xitong></xitong>
             <navtop></navtop>
             <classifyinput></classifyinput>
+            <table> </table>
             <homenew></homenew>
             <homecoupon></homecoupon>
             <jiujiu></jiujiu>
+            <homesort></homesort>
+            <homead></homead>
             <homesale></homesale>
             <homefea></homefea>
+            <table></table>
+            <homelist></homelist>
             <bottontab></bottontab>
             <table></table>
         </div>
@@ -24,6 +29,12 @@ import navtop from '../demo/NavTop.vue'
 import homefea from '../demo/HomeFea.vue'
 import jiujiu from '../demo/jiujiu.vue'
 // 特色专区
+import homead from '../demo/home_ad.vue'
+// 会员
+import homesort from '../demo/home_sort.vue'
+// 首页分类
+import homelist from '../demo/HomeList.vue'
+// 首页分类
 export default {
     data(){
         return{
@@ -34,6 +45,9 @@ export default {
         
     },
     components:{
+        homelist,
+        homesort,
+        homead,
         homenew,
         homecoupon,
         homesale,
@@ -50,7 +64,7 @@ export default {
     }
     .app{
         background: url("../../assets/img/home_bgc.gif") no-repeat;
-        margin-bottom: 44.8px;
+        margin-bottom: 54.8px;
         /* padding-top: 55px; */
     }
 </style>

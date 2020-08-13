@@ -4,7 +4,11 @@
     </div>
 </template>
 <style scoped>
-    .jiujiu{
-        margin-top: 62px;
+    .jiujiu {
+        width: 100%;
+        margin-top: 5.8rem;
+    }
+    img{
+        width: 100%;
     }
 </style>

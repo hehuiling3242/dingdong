@@ -2,37 +2,56 @@
   <div class="home">
     <xitongtwo></xitongtwo>
     <div class="kongbai"></div>
-    <img src="../../assets/img/jiantou.png" @click="switchTo(a)">
-    登录/注册
-    <input @blur="checkUname" v-model="username" type="text" placeholder="请输入用户名" />
-    <p v-show="isUname">
-      <img v-if="unameState" src="../../assets/img/ture.png" alt />
-      <img v-else src="../../assets/img/false.png" alt />
+    <div class="home_top">
+        <img src="../../assets/img/jiantou.png" @click="switchTo(a)">
+        <div>
+            <p>登录</p>/
+            <p>注册</p>
+        </div>
+    </div>
+    <div class="home_zhong">
+        <div class="home_zhong_top">
+            <input @blur="checkUname" v-model="username" type="text" placeholder="请输入用户名" />
+            <div v-show="isUname">
+                <img v-if="unameState" src="../../assets/img/ture.png" alt />
+                <img v-else src="../../assets/img/false.png" alt />
+            </div>
+        </div>
+        <div class="home_zhong_btn">
+            <input @blur="checkUpwd" v-model="password" type="password" placeholder="请输入密码" />
+            <div v-show="isUpwd">
+                <img v-if="upwdState" src="../../assets/img/ture.png" alt />
+                <img v-else src="../../assets/img/false.png" alt />
+            </div>
+        </div>
+    </div>
+    <input class="submit" :class="{btnBg:mybtn}" type="submit" value="登录" @click="login()"/>
+    <!-- <div class="home_zhong_xia">
+        <p>没有账号？</p>
+        <p>点击注册</p>
+    </div> -->
+    <div class="home_zhong_btn1">
+        <div class="home_zhong_btn_top">
+            <p>第三方账号登录</p>
+        </div>
+        <div class="home_zhong_btn_zhong">
+            <img src="../../assets/img/weixin.png" alt="">
+            <p>微信登录</p>
+        </div>
+        <div class="home_zhong_btn_btn">
+            <p class="foot">
+            登录即代表你同意叮咚买菜
+            <span>《服务协议》</span>和
+            <span>《隐私政策》</span>
     </p>
-    <input @blur="checkUpwd" v-model="password" type="password" placeholder="请输入密码" />
-    <p v-show="isUpwd">
-      <img v-if="upwdState" src="../../assets/img/ture.png" alt />
-      <img v-else src="../../assets/img/false.png" alt />
-    </p>
-    <input class="submit" :class="{btnBg:mybtn}" type="submit" value="登录" />
-    <p>
-      没有账号？
-      <a href="#">点击注册</a>
-    </p>
-    <p class="cen_wei">
-      <span>第三方账号登录</span>
-      <img src="../../assets/img/weixin.png" alt />
-      <span>微信登录</span>
-    </p>
-    <p class="foot">
-      登录即代表你同意叮咚买菜
-      <span>《服务协议》</span>和
-      <span>《隐私政策》</span>
-    </p>
+        </div>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import qs from 'qs'
 export default {
   data() {
     return {
@@ -43,10 +62,56 @@ export default {
       upwdState: false,
       mybtn: false,
       isUname:false,
-      isUpwd:false
+      isUpwd:false,
+      userQuery:{},
+      productQuery:{},
+      productList:[{}]
     };
   },
+  created(){
+      // this.login();
+  },
   methods: {
+    // queryProductList() {
+    //     this.productQuery.id = parseInt(this.$route.params.id);
+    //     console.log(this.productQuery.id);
+    //     let url = "/user/login"
+    //     this.axios.get(url, {params: this.productQuery}).then((res) => {
+    //         console.log(res);
+    //         this.productList = res.data;
+    //         console.log("--->> 用户",this.productList);
+    // }),
+    // login(){
+    //     // console.log(1)
+    //     axios.get(
+    //     "/ceshi",{params:{username:this.username,password:this.password}}
+    //     )
+    //     .then(res=>{
+    //         if(res.data == 1 ){
+    //             // location.href('http://127.0.0.1:8080')
+    //             console.log(1)
+    //         }else{
+    //           // console.log(res.data)
+    //           let id=res.data[0].id
+    //           console.log(id)
+    //           sessionStorage.setItem("id",id)
+    //           // console.log('登录成功')
+    //           this.$router.replace("/");
+    //         }
+    //     })
+    // },
+    login() {
+      this.userQuery=this.username,this.password;
+      let url = "/server/user/login"
+      this.axios.get(url, {params:this.userQuery}).then((res) => {
+        console.log(res.data)
+        if(res.data.code == 400){
+          console.log("用户名或密码错误")
+        }else{
+          console.log("登录成功")
+        }
+        })
+      },
     switchTo(path){
     // console.log(this.$router)
         this.$router.replace(path)
@@ -73,8 +138,9 @@ export default {
     checkUpwd() {
       this.isUpwd=true;
       let password = this.password;
-      //校验密码,密码的规则为:字母、数字及下划线的组合,长度为8~20个字符
-      let passwordRegExp = /^[0-9A-Za-z_]{8,20}$/;
+      //校验密码,密码的规则为:字母、数字及下划线的组合,长度为4~20个字符
+      //are you kidding me?数据库里的密码最长的就6位,你限制8位?那我怎么输?
+      let passwordRegExp = /^[0-9A-Za-z_]{4,20}$/;
       if (passwordRegExp.test(password)) {
         this.upwdState = true;
       } else {
@@ -87,10 +153,6 @@ export default {
 </script>
 
 <style scope>
-.kongbai{
-  height: 1rem;
-  width: 100%;
-}
 .home {
   width: 100%;
   padding: 0px 2rem;
@@ -100,13 +162,26 @@ export default {
   box-sizing: border-box;
   /* margin-top: 20px; */
 }
-.home > img {
+.kongbai{
+  height: 1rem;
+  width: 100%;
+}
+.home_top{
+    display: flex;
+}
+.home_top > img {
   width: 2rem;
   vertical-align: middle;
-  margin-right: 1.5rem;
+  margin-right: 2rem;
 }
-input {
-  display: block;
+.home_top > div{
+    display: flex;
+}
+.home_zhong{
+    margin-top: 2rem;
+}
+.home_zhong>input{
+    display: block;
   height: 5.5rem;
   width: 100%;
   font-size: 1.6rem;
@@ -118,71 +193,62 @@ input {
   letter-spacing:.1rem;
   box-sizing: border-box  ;
 }
-.home > input:nth-of-type(1) {
-  margin-top: 2rem;
+.home_zhong img{
+    width: 2rem;
 }
-.home p:nth-of-type(1)>img{
-  width: 2rem;
-  position: absolute;
-  right: 2rem;
-  top: 11rem;
+.home_zhong_top{
+    display: flex;
+    align-items: center;
 }
-.home p:nth-of-type(2)>img{
-  width: 2rem;
-  position: absolute;
-  right: 2rem;
-  top: 17rem;
+.home_zhong_btn{
+    display: flex;
+    align-items: center;
 }
-.home .submit {
-  width: 100%;
-  height: 4.5rem;
-  background-color: #cdcdcd;
-  color: #fff;
-  border-radius: 5rem;
-  margin-top: 3rem;
+.home_zhong_btn1{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    bottom: 3rem;
 }
-.btnBg {
-  background-color: #32cd32 !important;
+.home_zhong_xia{
+    display: flex;
+     justify-content:flex-end;
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    color: #8a8a8a;
+    text-align: right;
 }
-.home > p:nth-of-type(3) {
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  color: #8a8a8a;
-  text-align: right;
+.home_zhong_xia>p:last-child{
+    color: #32cd32;
+    cursor: pointer;
+    
 }
-.home > p:nth-of-type(3) > a {
-  color: #32cd32;
+.home_zhong_btn_top{
+    width: 100%;
+    border-top: 1px solid #dcdcdc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
-.cen_wei {
-  width: 9rem;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: row;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-  color: #707070;
-  margin: 10rem auto 0px;
-  margin-top: 10rem;
+.home_zhong_btn_top>p{
+    position: absolute;
+    top:-8px;
+    background-color: #fff;
+    padding: 0px 1rem;
 }
-.cen_wei > img {
-  width: 5rem;
-  /* display: block; */
-  margin-top: 2rem;
-  margin-bottom: 0.4rem;
+.home_zhong_btn_zhong{
+    margin-top: 8rem;
 }
-.cen_wei > span{
-  width: 100px;
-  display: flex;
-  justify-content: center;
+.home_zhong_btn_zhong>img{
+    margin-bottom: 1rem;
 }
 .foot {
   font-size: 0.5rem;
   text-align: center;
   color: #707070;
   margin-top: 3rem;
-}
-.foot > span {
-  color: #32cd32;
 }
 </style>

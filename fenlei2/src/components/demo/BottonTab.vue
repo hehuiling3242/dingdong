@@ -39,7 +39,7 @@ export default {
             a:"/",
             b:"/classify",
             c:"/whateat",
-            d:"/login",
+            d:"/cart",
             e:"/mine",
         }
     },

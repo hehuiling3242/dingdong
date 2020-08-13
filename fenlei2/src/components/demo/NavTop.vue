@@ -1,8 +1,8 @@
 <template>
     <div class="nav">
     <table></table>
-        <div class="nav_div">
-            <div class="nav_div_l">
+        <div class="nav_div" >
+            <div class="nav_div_l" @click="switchTo(a)">
                 <img src="../../assets/img/dingwei.png" alt="" class="nav_div_l_img1">
                 <p>钱江新城</p>
                 <span class="nav_span">丰谭站</span>
@@ -18,7 +18,19 @@
 </template>
 <script>
 export default {
+    data(){
+        return {
+            a:"/navigation",
+            // a:"/"
+        }
+    },
     
+    methods:{
+        switchTo(path){
+        // console.log(this.$router)
+            this.$router.replace(path)
+        },
+    }   
 }
 </script>
 <style  scoped>
@@ -60,44 +72,6 @@ export default {
         width: .8rem;
         height: .4rem;
     }
-    /* .nav>:nth-child(2){
-        display: flex;
-        justify-content: space-between;
-    }
-    .nav>:nth-child(2)>div:first-child{
-        display: flex;
-        justify-content: space-around;
-        margin:1rem 0 0 1.5rem;
-    }
-    .nav>:nth-child(2)>div:first-child>img{
-        width: 1.6rem;
-        height: 1.6rem;
-        margin: 0.2rem 0.8rem;
-    }
-    .nav>:nth-child(2)>div:first-child>:nth-child(4){
-         width: 1rem;
-         height: 0.6rem;
-         margin: 1rem 0 0 1rem;
-    }
-    .nav>:nth-child(2)>div:first-child>p{
-        color:#fff;
-        font-size: 1.6rem;
-        font-weight: bolder;
-        margin-right: 0.5rem;
-        font-weight:500;
-    }
-    .nav>:nth-child(2)>div:first-child>span{
-        color:#eee;
-        background-color: rgba(0, 0, 0, 0.2);
-        padding: 0rem 0.3rem;
-        font-size: 1rem;
-        line-height: 2.1rem;
-        margin-left: 0.5rem;
-    }
-     .nav>:nth-child(2)>:nth-child(2)>img{
-        width: 1.6rem;
-        height: 1.6rem;
-        margin: 1rem 2.3rem 0 0;
-     } */
+
 </style>
     

@@ -177,12 +177,12 @@
             },
 
             queryProductList() {
-                // this.productQuery.id = 1014;
+                this.productQuery.classifyId = 101;
                 console.log(this.productQuery);
                 let url = "server/product/query-list"
                 this.axios.get(url, {params: this.productQuery}).then((res) => {
                     this.productList = res.data;
-                    console.log("--->> 商品",this.productList);
+                    console.log("1--->> 商品",this.productList,this.productQuery);
                 })
             },
         }

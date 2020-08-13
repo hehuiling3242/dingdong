@@ -1,5 +1,6 @@
 <template>
     <div>
+            <xitongtwo></xitongtwo>
         <div class="inputseek">
             <img src="../../assets/img/jiantou.png" alt="" @click="switchTo(a)">
             <div>

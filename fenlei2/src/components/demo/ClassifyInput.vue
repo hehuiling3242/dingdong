@@ -1,5 +1,6 @@
 <template>
     <div class="classifyinput">
+        
        <div @click="switchTo(a)">
            <img src="../../assets/img/sousuo.png" alt="">
            <p>牛奶</p>
@@ -25,7 +26,7 @@ export default {
     .classifyinput{
         width: 100%;
         padding: 0px 1rem 0px 1rem;
-        margin-bottom: 1rem;
+        margin: .7rem 0rem;
         box-sizing: border-box;
     }
     .classifyinput>div{

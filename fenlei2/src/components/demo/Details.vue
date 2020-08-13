@@ -1,28 +1,32 @@
 <script src="../../router/index.js"></script>
 <template>
-  <div class="details">
+  <div class="detailstwo">
     <xitongtwo></xitongtwo>
     <div id="toTop" v-show="showAbs">
       <div class="none">
-      <img src="../../assets/img/jiantou.png">
-      <p style="display:inline-block" class="nonecen">
-        <a href="#lL">商品</a>
-        <a href="#2L">评价</a>
-        <a href="#3L">详情</a>
-        <a href="#4L">推荐</a>
-      </p>
-      <img src="../../assets/img/zhuan.png" alt="">
+        <img src="../../assets/img/jiantou.png">
+        <p style="display:inline-block" class="nonecen">
+          <a href="#lL">商品</a>
+          <a href="#2L">评价</a>
+          <a href="#3L">详情</a>
+          <a href="#4L">推荐</a>
+        </p>
+        <img src="../../assets/img/zhuan.png" alt="">
       </div>
     </div>
     <img src="../../assets/img/jiantou.png">
     <!-- 轮播 -->
-    <lunbo  class="lunbo"></lunbo>
+    <!-- <img :src="productList[0].filePaths[0]" alt=""> -->
+    <div class="lunbo">
+      <img :src="productList[p].filePaths[p]" alt="">
+    </div>
+    <!-- <lunbo class="lunbo"></lunbo> -->
     <p class="price">
-      <span>¥{{productList[0].price}}</span>
+      <span>¥{{productList[p].price}}</span>
       <del>¥{{original_cost}}</del>  
     </p>
-    <p class="title">{{productList[0].productName}}</p>
-    <p class="deta">{{productList[0].digg}}</p>
+    <p class="title">{{productList[p].productName}}</p>
+    <p class="deta">{{productList[p].productAbout}}</p>
     <hr style="border:0.05rem solid #eee"/>
     <div class="time">
       <img src="../../assets/img/shijian.png" alt="">
@@ -30,18 +34,18 @@
     </div>
     <img src="../../assets/img/hf.jpg" alt="">
     <hr style="border:0.05rem solid #eee;margin-bottom:2rem"/>
-    <!-- 推荐做法 -->
+    <!-- 相似商品 -->
     <div class="recom">
       <p  class="recom_top">
-        <span class="tui">推荐做法</span>
+        <span class="tui">相似商品</span>    
         <img src="../../assets/img/gengduo.png" alt="">
       </p>
       <div class="homenew_btn">
         <div class="sliding_box">
-          <div class="sliding_item" v-for="(item,index) in content" :key="index">
+          <div class="sliding_item" v-for="(filePaths,index) in classList" :key="index">
             <div class="sliding_item_img">
-              <img src="../../assets/img/yt.jpg" alt="">
-                <p>{{title}}</p>
+              <a :href="'http://127.0.0.1:8080/details/'+classList[index].id"><img :src="classList[index].filePaths[p]"></a>
+              <p>{{classList[index].productName}}</p>
             </div>
           </div>
         </div>
@@ -63,7 +67,7 @@
             <img src="../../assets/img/fivex.png" alt="">
             <span>很满意</span>
           </p>
-          <p>真方便，不在父母身边，也能为他们买东西，省得他们老人大热天出去买这么沉的东西</p>
+          <p>{{productList[p].digg}}</p>
           <p>查看更多(6622)</p>
         </div>
       </div>
@@ -76,18 +80,19 @@
     <hr style="border:0.05rem solid #eee;margin:2rem 0rem"/>
     <p class="tui">规格</p>
     <hr style="border:0.05rem solid #eee;margin:1.6rem 0rem"/>
-    <pre>净含量      900g</pre>
+    <pre>净含量      <span>{{productList[p].detail}}</span></pre>
     <hr style="border:0.05rem solid #eee;margin:1.6rem 0rem"/>
     <pre>保质期      18个月</pre>
     <hr style="border:0.05rem solid #eee;margin:1.6rem 0rem"/>
     <pre>保存条件    常温</pre>
     <hr style="border:0.05rem solid #eee;margin:1.6rem 0rem"/>
     <div class="detabom" id="4L">
-      <img src="../../assets/img/datails1021-1.jpg" alt="">
-      <img src="../../assets/img/datails1022-2.jpg" alt="">
+      <img :src="productList[p].filePaths[m]" alt="">
+      <!-- <img src="../../assets/img/datails1021-1.jpg" alt=""> -->
     </div>
+    <hotsale></hotsale>
 
-    <div style="height:6rem"></div>
+    <!-- <div style="height:6rem"></div> -->
     <div class="detailadd">
       <img src="./../../assets/cart.png" alt="">
       <span v-show="btnadd">{{n}}</span>
@@ -99,68 +104,49 @@
 <script>
 import homenew from '../demo/HomeNew.vue'
 import lunbo from '../demo/lunbo.vue'
+import hotsale from '../demo/Hotsale.vue'
 export default {
     data(){
         return{
-          // price:2.55,
+          index:0,
+          m:1,
+          p:0,
           original_cost:5.55,
-          // title:"杭白菜 300g",
-          // describe:"又称毛毛菜，煮汤味更美哦",
-          content:13,
           showAbs: false,
           n:0,
           btnadd:false,
-          // 数量
-          content: 13,
-          // 价格
-          price: 19.90,
-          // 标题
-          title: "樱桃果酱樱桃果酱",
-          a: null,   // 倒计时默认值
-          oldTime: new Date().getTime(),   //获取现在距离1970年的毫秒数
-          newTime: new Date('2020/8/4 00:00:00').getTime(),   //获取现在距离1970年的毫秒数
-          second: null, //秒数
-          hour: null,  //多少小时
-          minute: null,  //多少分钟
           tosecond: null,
           tohour: null,
           tominute: null,
           productQuery:{},
-          productList:[{}]
+          productList:[{}],
+          classList:[{}],
         }
     },
     created(){
       this.queryProductList();
+      this.queryProductClass();
     },
-
     methods:{
       queryProductList() {
-                // this.productQuery.id = 1072;
-                // this.productQuery.id = parseInt(window.location.search.slice(4));
-                this.productQuery.id = parseInt(this.$route.params.id);
-                console.log(this.productQuery.id);
-                let url = "/server/product/query-list"
-                this.axios.get(url, {params: this.productQuery}).then((res) => {
-                    console.log(res);
-                    this.productList = res.data;
-                    console.log("--->> 商品",this.productList);
-                })
-            },
-      tow(n){
-            return n>=0 && n<10 ? '0'+n : ''+n;
+        this.productQuery.id = parseInt(this.$route.params.id);
+        console.log(this.productQuery.id);
+        let url = "/server/product/query-list"
+        this.axios.get(url, {params: this.productQuery}).then((res) => {
+            console.log(res);
+            this.productList = res.data;
+            console.log("--->> 商品",this.productList);
+        })
       },
-      load(){
-        setInterval(()=>{
-            this.oldTime= new Date().getTime()
-            this.second=Math.floor((this.newTime - this.oldTime) / 1000),//总共多少秒
-            this.hour=Math.floor(this.second / 3600),  //多少小时
-            this.second %= 3600,
-            this.minute=Math.floor(this.second / 60),  //多少分钟
-            this.second %= 60
-            this.tosecond=this.tow(this.second)
-            this.tohour=this.tow(this.hour)
-            this.tominute=this.tow(this.minute)
-        },1000)
+      queryProductClass() {
+        this.productQuery={};
+        this.productQuery.classifyId = Number(this.$route.params.id.slice(0,3));
+        let url = "/server/product/query-list"
+        this.axios.get(url, {params: this.productQuery}).then((res) => {
+            console.log(res);
+            this.classList = res.data;
+            console.log("2--->> 商品",this.classList,this.productQuery);
+        })
       },
       scrollTops(){
         var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
@@ -179,12 +165,13 @@ export default {
         
     },
     mounted(){
-      this.load();
+      // this.load();
       window.addEventListener('scroll',this.scrollTops);
     },
     components:{
         homenew,
         lunbo,
+        hotsale,
     },
 
 }
@@ -194,7 +181,7 @@ export default {
   /* body, html {
     scroll-behavior: smooth;
   } */
-  .details{
+  .detailstow{
     padding: 0rem 2rem;
   }
   #toTop{
@@ -204,6 +191,10 @@ export default {
     background-color: #fff;
     box-sizing: border-box;
   }
+  #toTop+img{
+    width: 3rem;
+    margin-left: 2rem;
+  }
   .none{
     width: 90%;
     display: flex;
@@ -212,6 +203,7 @@ export default {
     font-size: 1.8rem;
     font-weight: 550;
     padding: 2rem 0rem;
+    margin-left: 1.5rem;
   }
   .none>.nonecen{
     width: 65%;
@@ -228,9 +220,12 @@ export default {
   .details>img{
     width: 2.5rem;
   }
-  .lunbo{
-    width: 100%;
+  .lunbo>img{
+     width: 100%;
     margin: 1rem 0rem;
+  }
+  .price,.title,.deta,.time{
+    padding: 0 1.5rem;
   }
   .price>span{
     color: red;
@@ -280,30 +275,23 @@ export default {
     font-weight: 600;
     height: 4rem;
     line-height: 4rem;
+    padding-left: 1.5rem;
   }
   .recom_top>img{
     height: 4rem;
     vertical-align: middle;
-  }
-
-  .homenew>.homenew_top{
-    display: none;
   }
   .recom .sliding_box{
     display: flex;
     overflow-y: hidden;
     overflow-x: scroll;
     background-color: #fff;
-    /* border-radius: .6rem; */
     margin-bottom: .8rem;
-    /* overflow-y: scroll; */
-    /* overflow:hidden */
   }
   .recom .sliding_item{
     display: flex;
     margin-right: .8rem;
     margin-left: .8rem;
-    /* background-color: #CDCDCD; */
     border-radius: .6rem;
   }
   .recom .sliding_item_img {
@@ -314,24 +302,30 @@ export default {
     flex-direction: column;
     align-items:center;
   }
-  .recom .sliding_item_img>img{
+  .recom .sliding_item_img img{
     margin: 1.5rem 0px 1.5rem;
     width: 12rem;
     border-radius: 1rem;
     height: 9rem;
   }
-  .recom .sliding_item_img>p{
+  .recom .sliding_item_img p{
+    width: 12rem;
     text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .asscen{
     display: flex;
     justify-content: space-between;
     font-size: 1.4rem;
+    padding: 0 1.5rem;
   }
   .asscen>img{
     height: 3.3rem;
     margin-right: 1.5rem;
+    
   }
   .assright>p:nth-child(1){
     display: flex;
@@ -355,6 +349,7 @@ export default {
     font-size: 1.7rem;
     margin-top: 1rem;
     font-weight: 550;
+    margin-left: 1.5rem;
   }
   .detabom img{
     width: 100%;
@@ -377,7 +372,7 @@ export default {
     justify-content:space-between;
   }
   .detailadd img{
-    height: 3.5rem;
+    height: 5rem;
     padding: 1rem 1rem;
     vertical-align: middle;
     position: relative;
