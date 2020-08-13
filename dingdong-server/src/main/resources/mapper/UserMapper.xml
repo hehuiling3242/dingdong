@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.dingdong.mapper.UserMapper">
+    <resultMap id="userMap" type="user">
+        <id column="id" property="id"/><!-- 主键 -->
+        <result column="username" property="userName"></result>
+        <result column="password" property="passWord"></result>
+        <result column="real_name" property="realName"></result>
+        <result column="sex" property="sex"></result>
+        <result column="mobile" property="mobile"></result>
+        <result column="birthday" property="birthday"></result>
+        <result column="province_code" property="provinceCode"></result>
+        <result column="city_code" property="cityCode"></result>
+        <result column="region_code" property="regionCode"></result>
+        <result column="address" property="address"></result>
+        <result column="post_code" property="postCode"></result>
+    </resultMap>
+
+    <select id="queryList" parameterType="com.dingdong.domain.query.UserQuery" resultMap="userMap">
+        select u.id
+        ,u.username
+        ,u.password
+        ,u.real_name
+        ,u.sex
+        ,u.mobile
+        ,u.birthday
+        ,u.province_code
+        ,u.city_code
+        ,u.region_code
+        ,u.address
+        ,post_code
+        <include refid="queryCommonSql"></include>
+    </select>
+
+    <sql id="queryCommonSql">
+        FROM user u
+        <where>
+            <if test="idArray != null">
+                and u.id in
+                <foreach collection="idArray" index="index" item="item" open="(" separator="," close=")">#{item}
+                </foreach>
+            </if>
+            <if test="userName != null">and u.username = #{userName}</if>
+            <if test="passWord != null">and u.password = #{passWord}</if>
+            <if test="realName != null">and u.real_name = #{realName}</if>
+            <if test="sex != null">and u.sex = #{sex}</if>
+            <if test="mobile != null">and u.mobile = #{mobile}</if>
+            <if test="birthday != null">and u.birthday = #{birthday}</if>
+            <if test="provinceCode != null">and u.province_code = #{provinceCode}</if>
+            <if test="cityCode != null">and u.city_code = #{cityCode}</if>
+            <if test="regionCode != null">and u.region_code = #{regionCode}</if>
+            <if test="address != null">and u.address = #{address}</if>
+            <if test="postCode != null">and u.post_code = #{postCode}</if>
+        </where>
+    </sql>
+
+    <update id="update" parameterType="user">
+        update user
+        <set>
+            <if test="username != null">username=#{username,jdbcType=VARCHAR},</if>
+            <if test="password != null">password=#{password,jdbcType=VARCHAR},</if>
+            <if test="realName != null">real_name=#{realName,jdbcType=VARCHAR},</if>
+            <if test="sex != null">sex=#{sex,jdbcType=VARCHAR},</if>
+            <if test="mobile != null">mobile=#{mobile,jdbcType=VARCHAR},</if>
+            <if test="birthday != null">birthday=#{birthday,jdbcType=TIMESTAMP},</if>
+            <if test="province_code != null">province_code=#{provinceCode,jdbcType=VARCHAR},</if>
+            <if test="cityCode != null">city_code=#{cittCode,jdbcType=VARCHAR},</if>
+            <if test="regionCode != null">region_code=#{regionCode,jdbcType=VARCHAR},</if>
+            <if test="address != null">address=#{address,jdbcType=VARCHAR},</if>
+            <if test="postCode != null">post_code=#{postCode,jdbcType=VARCHAR},</if>
+        </set>
+        where id=#{id}
+    </update>
+
+</mapper>

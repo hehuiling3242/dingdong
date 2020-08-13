@@ -6,8 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Mapper
 public interface DingDongProductMapper {
+
+    void update(DingDongProduct dingDongProduct);
 
     DingDongProduct load(Long id);
 

@@ -27,6 +27,9 @@ public class DingDongFileQuery extends BaseQuery{
     @ApiModelProperty(value = "商品id")
     private Long productId;
 
+    @ApiModelProperty(value = "商品id")
+    private Collection<Long> productIdArray;
+
     public Long getId() {
         return id;
     }
@@ -73,5 +76,13 @@ public class DingDongFileQuery extends BaseQuery{
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public Collection<Long> getProductIdArray() {
+        return productIdArray;
+    }
+
+    public void setProductIdArray(Collection<Long> productIdArray) {
+        this.productIdArray = productIdArray;
     }
 }
