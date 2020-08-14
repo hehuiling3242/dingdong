@@ -45,15 +45,20 @@
                 <foreach collection="statusArray" index="index" item="item" open="(" separator="," close=")">#{item}
                 </foreach>
             </if>
-            <if test="productName != null and productName.trim() !=''">and p.product_name = #{productName}</if>
+            <if test="productName != null and productName.trim() !=''">and p.product_name like CONCAT(CONCAT('%',#{productName}), '%')</if>
             <if test="classifyId != null">and p.classify_id = #{classifyId}</if>
             <if test="price != null">and p.price = #{price}</if>
             <if test="digg != null">and p.digg = #{digg}</if>
-            <if test="productAbout != null">and p.product_about = #{productAbout}</if>
-            <if test="detail != null">and p.detail = #{detail}</if>
+            <if test="productAbout != null">and p.product_about like CONCAT(CONCAT('%',#{productAbout}), '%')</if>
+            <if test="detail != null">and p.detail like CONCAT(CONCAT('%',#{detail}), '%')</if>
             <if test="count != null">and p.count = #{count}</if>
             <if test="productShow != null">and p.product_show = #{productShow}</if>
-
+            <if test="commonString != null and commonString.trim() !=''">and (
+                p.product_name like CONCAT(CONCAT('%',#{commonString}), '%')or
+                p.product_about like CONCAT(CONCAT('%',#{commonString}), '%')or
+                p.detail like CONCAT(CONCAT('%',#{commonString}), '%')
+                )
+            </if>
         </where>
     </sql>
 

@@ -15,6 +15,8 @@ public class BaseQuery implements Serializable {
     private int pageSize; // 每页多少条
     @ApiModelProperty(value = "排序")
     private String sort; // 排序表达式
+    @ApiModelProperty(value = "模糊搜索")
+    private String commonString;
 
     public int getPageNo() {
         return pageNo;
@@ -38,5 +40,13 @@ public class BaseQuery implements Serializable {
 
     public void setSort(String sort) {
         this.sort = sort;
+    }
+
+    public String getCommonString() {
+        return commonString;
+    }
+
+    public void setCommonString(String commonString) {
+        this.commonString = commonString;
     }
 }

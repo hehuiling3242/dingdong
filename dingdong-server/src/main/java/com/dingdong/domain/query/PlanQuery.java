@@ -44,6 +44,12 @@ public class PlanQuery extends BaseQuery implements Serializable {
 	@ApiModelProperty("下单数量")
 	private Integer planCount;//下单数量
 
+    /**
+     * @see com.dingdong.domain.enums.PlanStatusEnum
+     */
+    @ApiModelProperty(value = "状态")
+    private Integer status;
+
 	@ApiModelProperty("收货地址省级code")
 	private String deliverProvinceCode;//收货地址省级code
 
@@ -184,5 +190,21 @@ public class PlanQuery extends BaseQuery implements Serializable {
     /***详细收货地址*/
     public void setDeliverAddress(String deliverAddress) {
         this.deliverAddress = deliverAddress;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

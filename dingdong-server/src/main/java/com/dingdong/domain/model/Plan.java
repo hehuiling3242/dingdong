@@ -50,6 +50,12 @@ public class Plan implements Serializable {
     @ApiModelProperty("详细收货地址")
 	private String deliverAddress;//详细收货地址
 
+    /**
+     * @see com.dingdong.domain.enums.PlanStatusEnum
+     */
+    @ApiModelProperty(value = "状态")
+    private Integer status;
+
 
     public Plan() {
     }
@@ -227,5 +233,13 @@ public class Plan implements Serializable {
      */
     public void setDeliverAddress(String deliverAddress) {
         this.deliverAddress = deliverAddress;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
