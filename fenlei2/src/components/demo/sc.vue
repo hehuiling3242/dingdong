@@ -44,7 +44,7 @@
             </el-table-column>
             <el-table-column
                     prop="url"
-                    label="tupian"
+                    label="图片"
                     width="180">
                 <template slot-scope="scope">
                     <el-image v-for="url in scope.row.filePaths" :key="url" :src="url" lazy></el-image>
@@ -177,9 +177,11 @@
             },
 
             queryProductList() {
-                this.productQuery.classifyId = 101;
-                console.log(this.productQuery);
-                let url = "server/product/query-list"
+                // this.productQuery={};
+                // this.productQuery.classifyId = parseInt(this.$route.params.id);
+                this.productQuery.classifyId = 106;
+                console.log(this.productQuery.classifyId);
+                let url = "/server/product/query-list"
                 this.axios.get(url, {params: this.productQuery}).then((res) => {
                     this.productList = res.data;
                     console.log("1--->> 商品",this.productList,this.productQuery);

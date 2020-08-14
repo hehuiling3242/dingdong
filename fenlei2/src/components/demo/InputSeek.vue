@@ -7,9 +7,19 @@
                 <div>
                     <img src="../../assets/img/sousuo.png" alt="">
                 </div>
-                <input type="text" placeholder="请输入商品名称">
+                <input type="text" placeholder="请输入商品名称" @input="search($event)"> 
             </div>
-            <p>搜索</p>
+            <p>搜索</p> 
+        </div>
+        <div class="search">
+            <!-- <a :href="'http://127.0.0.1:8080/details/'+productList[index].id">
+                <span>{{productList[index].productName}}</span>
+            </a> -->
+            <p v-for="(productName,index) of productList" :key="index">
+                <a :href="'http://127.0.0.1:8080/details/'+productList[index].id">
+                    {{productList[index].productName}}
+                </a>
+            </p>
         </div>
         <div class="findseek">
             <h2>搜索发现</h2>
@@ -23,12 +33,24 @@
 export default {
     data(){
         return{
-            a:"/classify"
+            a:"/classify",
+            searchText:'',
+            productQuery:{},
+            productList:[{}],
         }
     },
     methods:{
+        search: function (event) {
+            this.productQuery.productName = event.currentTarget.value;
+            console.log(this.materialName);
+            let url = "/server/product/query-list"
+            this.axios.get(url, {params: this.productQuery}).then((res) => {
+                console.log(res);
+                this.productList = res.data;
+                console.log("--->> 商品",this.productList);
+            })
+        },
         switchTo(path){
-        // console.log(this.$router)
             this.$router.replace(path)
         }
     }
@@ -85,6 +107,21 @@ export default {
         align-items: center;
         cursor:pointer;
         outline:none;
+    }
+    .search{
+        margin-left: 9rem;
+        z-index: 100;
+    }
+    .search p{
+        width: 25rem;
+        font-size: 1.5rem;
+        margin: 1rem 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .search p>a{
+        color: #333;
     }
     .findseek{
         margin-top: 40px;

@@ -11,10 +11,10 @@
           <a href="#3L">详情</a>
           <a href="#4L">推荐</a>
         </p>
-        <img src="../../assets/img/zhuan.png" alt="">
+        <img src="../../assets/img/zhuan.png" alt="" >
       </div>
     </div>
-    <img src="../../assets/img/jiantou.png">
+    <img src="../../assets/img/jiantou.png" @click="switchTo(a)">
     <!-- 轮播 -->
     <!-- <img :src="productList[0].filePaths[0]" alt=""> -->
     <div class="lunbo">
@@ -108,7 +108,7 @@ import hotsale from '../demo/Hotsale.vue'
 export default {
     data(){
         return{
-          index:0,
+          a:"/classify",
           m:1,
           p:0,
           original_cost:5.55,
@@ -128,6 +128,9 @@ export default {
       this.queryProductClass();
     },
     methods:{
+      switchTo(path){
+            this.$router.replace(path)
+      },
       queryProductList() {
         this.productQuery.id = parseInt(this.$route.params.id);
         console.log(this.productQuery.id);
