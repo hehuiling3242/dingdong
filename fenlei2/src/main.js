@@ -21,6 +21,9 @@ Vue.component('bottontab',BottonTab)
 // 搜索框组件
 import ClassifyInput from './components/demo/ClassifyInput.vue'
 Vue.component('classifyinput',ClassifyInput)
+// 搜索框组件
+import ClassifyInputhome from './components/demo/ClassifyInputhome.vue'
+Vue.component('classifyinputhome',ClassifyInputhome)
 //系统栏组件黑
 import xitong from './components/demo/xitong.vue'
 Vue.component('xitong',xitong)

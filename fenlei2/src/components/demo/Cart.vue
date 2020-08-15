@@ -16,6 +16,16 @@ export default {
         hotsale,
         shoppings
     },
+    mounted(){
+        var id=sessionStorage.getItem("id")
+        console.log(id)
+        if(id==null){
+            console.log("您未登录");
+            this.$router.replace("/login");
+        }else{
+            console.log("登录成功")
+        }
+    },
 }
 </script>
 <style scoped>

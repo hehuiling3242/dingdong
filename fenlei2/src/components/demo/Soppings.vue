@@ -5,7 +5,7 @@
         <p>购物车</p>
       </div>
       <div>
-        <span @click="delet">删除</span>
+        <span @click="delet()" :style="fontcolor">删除</span>
       </div>
     </div>
     <div class="Soppings_body">
@@ -13,38 +13,30 @@
         <img src="../../assets/img/timg.jpg" alt />
       </div>
       <div v-show="shop_none">
-        <button @click="junmp_SY">去逛逛</button>
+        <button @click="switchTo()" class="qgg">去逛逛</button>
       </div>
-      <div v-for="(products,sub) of shoplist" :key="sub" class="lastSopp">
+      <div v-for="(products,sub) of this.shoplist" :key="sub" class="lastSopp">
         <div>
           <input type="checkbox" v-model="isAgress[sub]" @click="Check($event,sub)" class="item" />
           <label for="item"></label>
-          <img src="../../assets/img/shuiguo.jpg" alt />
+          <img :src="products.filePaths[0]" alt />
         </div>
         <div>
-          <p>{{products.sp_name}}</p>
+          <p>{{products.productName}}</p>
           <ul class="lastSopp_smalltitle">
             <li>新人尝鲜</li>
             <li>限购99件</li>
           </ul>
           <p>
-            {{`¥${products.sp_price}`}}
+            {{`¥${products.price}`}}
             <span>/份</span>
           </p>
         </div>
         <div>
-          <button @click="delet1(sub)">-</button>
+          <button @click="delet1(sub)" :disabled="isAgress[sub]==false">-</button>
           <span>{{products.count}}</span>
-          <button @click="adds(sub)">+</button>
+          <button @click="adds(sub)"  :disabled="isAgress[sub]==false">+</button>
         </div>
-      </div>
-    </div>
-    <div class="ceshi">
-      <div v-for="(shop,index) of shopAll" :key="index">
-        <img src="../../assets/img/shuiguo.jpg" alt />
-        <p>{{shop.sp_name}}</p>
-        <p>{{`¥${shop.sp_price}`}}</p>
-        <img src="../../assets/img/gouwu.png" @click="addcar(index)" />
       </div>
     </div>
     <div></div>
@@ -95,9 +87,20 @@
 </template>
 <script>
 export default {
+  data(){
+    return{
+      a:"/classify"
+    }
+  },
   methods: {
+    switchTo(path){
+      this.$router.replace(path)
+      this.$router.push("/");
+    },
     delet() {
-      this.deletSopp = true;
+      if(this.shoplist.length>0){
+        this.deletSopp = true;
+      }
       //点击删除按钮跳出删除所有商品的框
     },
     deletSopp_quit() {
@@ -106,6 +109,8 @@ export default {
     },
     deletSopp_true() {
       //点击确定，删除所有商品的框框按钮
+      this.$store.commit('remove_car_count');
+      this.fontcolor.color='#000'
       this.shoplist = [];
       this.priceage = 0;
       //商品个数为0
@@ -135,27 +140,9 @@ export default {
       console.log(`下标${this.Index}已删除`);
     },
     junmp_SY() {
-      this.$router.push("/");
+      // this.$router.push("/");
+      console.log(this.shoplist, this.Sprice);
       //跳转首页
-    },
-    addcar(index) {
-      this.shop_none = false; //购物车大图消失
-      this.priceSum = true; //价格结算框显示
-      if (this.shoplist.indexOf(this.shopAll[index]) == -1) {
-        this.isAgress.push(true);
-        //如果当前商品的位置返回-1说明不存在，name在新数组末尾添加该数组
-        this.shoplist.push(this.shopAll[index]);
-        this.shoplist[this.shoplist.length - 1].count = 1;
-        //找到这个商品中[长度-1的位置]的数量为1
-        //商品数量++
-        this.priceage++;
-      } else {
-        this.priceage++;
-        //否则这个商品的数量自增
-        var i = this.shoplist.indexOf(this.shopAll[index]);
-        this.shoplist[i].count++;
-        //总价+=当前商品的价格
-      }
     },
     delet1(sub) {
       //减少当前购物车清单中的商品数量
@@ -183,13 +170,13 @@ export default {
       }
     },
     Check(e, sub) {
+      this.$store.commit('check_change',sub);
       this.Agressindex = sub;
       if (e.target.checked !== true) {
         this.priceage -= this.shoplist[sub].count;
       } else {
         this.priceage += this.shoplist[sub].count;
       }
-      console.log(this.isAgress);
     },
     checkedAll() {
       for (var key in this.isAgress) {
@@ -215,7 +202,6 @@ export default {
       console.log(this.shoplist);
     },
   },
-
   data() {
     return {
       count: 1,
@@ -224,7 +210,6 @@ export default {
       deletSopp: false,
       deletSopp2: false,
       shop_none: true,
-      shopAll: [],
       shoplist: [],
       priceSum: false,
       priceage: 0,
@@ -232,26 +217,49 @@ export default {
       checkedall: true,
       Agressindex: -1,
       Sprice: 0,
+      fontcolor:{
+      color:'#000',
+      a:"/classify"
+      }
     };
   },
   mounted() {
-    this.axios.get("/Soppings").then((result) => {
-      this.shopAll = result.data.result;
-    });
+    // this.axios.get("/Soppings").then((result) => {
+    //   this.shopAll = result.data.result;
+    // });
+    // console.log(indexAll)
+    // setInterval(()=>{
+    if(this.$store.state.shoplist.length>0){
+          this.fontcolor.color='#6fb13c'
+          this.shop_none = false;
+          this.priceage=0;
+          for(var i in this.$store.state.shoplist){
+            // console.log(this.$store.state.shoplist[i])
+            this.isAgress.push(this.$store.state.shoplist[i].status);
+            if(this.$store.state.shoplist[i].status==1){
+              this.priceage+=this.$store.state.shoplist[i].count;
+            }
+          }
+          this.priceSum = true;
+        }
+        this.shoplist=this.$store.state.shoplist;
+    // },200)
+    
   },
+  
   computed: {},
+
   watch: {
     priceage() {
-      setTimeout(() => {
+      setImmediate(() => {
         this.Sprice = 0;
         for (var key in this.shoplist) {
           this.Sprice +=
-            this.shoplist[key].sp_price *
+            this.shoplist[key].price *
             this.shoplist[key].count *
             this.isAgress[key];
-          console.log(this.isAgress[key]);
         }
-      }, 200);
+      });
     },
     isAgress() {
       this.checkedall = true;
@@ -262,11 +270,6 @@ export default {
         }
       }
     },
-    // this.axios.get('/cart?uid='+this.uid).then(result=>{
-    //   if(result.data.code!==0){
-    //     this.shoplist=result.data.result;
-    //   }
-    // })
   },
 };
 </script>
@@ -276,7 +279,12 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
-
+.qgg{
+  font-size: 1.6rem;
+}
+.lastSopp_smalltitle{
+  width: 100%;
+}
 .Soppings_title {
   padding: 10px 15px;
   display: flex;
@@ -285,33 +293,34 @@ export default {
   display: flex;
   width: 100%;
   justify-content: center;
-  font-size: 20px;
+  font-size: 2rem;
   font-weight: 600;
-  text-indent: 50px;
+  text-indent: 5rem;
 }
 .Soppings_title > div:last-child {
   float: right;
   justify-content: flex-end;
 }
 .Soppings_title > div:last-child > span {
-  font-size: 16px;
+  font-size: 1.6rem;
   color: #666;
   display: inline-block;
-  width: 32px;
+  width: 3.2rem;
   text-align: right;
 }
 .Soppings_alert {
   height: 100vh;
   width: 100%;
-  z-index: 999;
   position: fixed;
   top: 0px;
   left: 0px;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 9999;
 }
 .Soppings_alert > div {
   width: 260px;
   height: 80px;
-  background: #999;
+  background: #fff;
   position: fixed;
   top: 37%;
   left: 50%;
@@ -367,17 +376,6 @@ export default {
   color: #fff;
   background-color: green;
 }
-.ceshi {
-  /* width: 100%; */
-  display: flex;
-}
-.ceshi > div > img {
-  width: 80%;
-}
-.ceshi > div > :last-child {
-  width: 15px;
-  height: 15px;
-}
 .Soppings_body > .lastSopp {
   display: flex;
   justify-content: flex-start;
@@ -429,10 +427,10 @@ export default {
   font-size: 1.8rem;
   font-weight: 600;
 }
-.Soppings_Price > div > div:last-child > div>p{
+.Soppings_Price > div > div:last-child > div > p {
   font-size: 1.6rem;
 }
-.Soppings_Price > div > div:last-child > div>p:last-child{
+.Soppings_Price > div > div:last-child > div > p:last-child {
   font-size: 1.4rem;
   color: rgba(0, 0, 0, 0.6);
 }
@@ -501,7 +499,7 @@ label {
   margin-top: -0.8rem;
   z-index: 100;
 }
-.Checkitem{
+.Checkitem {
   padding: 0 2rem;
 }
 .itemAll:checked + label {
@@ -553,11 +551,11 @@ label {
 .lastSopp_smalltitle > li {
   background-color: rgba(255, 0, 0, 0.2);
   margin-right: 0.5rem;
-  padding: 0.1rem;
+  padding: 0.3rem;
   border-radius: 0.4rem;
   color: rgba(255, 0, 0, 0.6);
-  width: 5.2rem;
-  height: 1.6rem;
+  /* width: 5.2rem; */
+  /* height: 1.6rem; */
   text-align: center;
 }
 .Soppings_body > .lastSopp > div > p:last-child {
@@ -567,5 +565,8 @@ label {
 }
 .Soppings_body > .lastSopp > div > p:last-child > span {
   color: rgba(0, 0, 0, 0.2);
+}
+button:disabled{
+  color: rgba(0, 0, 0, 0.3) !important;
 }
 </style>

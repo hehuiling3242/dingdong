@@ -63,24 +63,16 @@ export default {
       mybtn: false,
       isUname:false,
       isUpwd:false,
-      userQuery:{},
       productQuery:{},
-      productList:[{}]
+      productList:[{}],
+      userQuery:{},
+      userList:[]
     };
   },
   created(){
       // this.login();
   },
   methods: {
-    // queryProductList() {
-    //     this.productQuery.id = parseInt(this.$route.params.id);
-    //     console.log(this.productQuery.id);
-    //     let url = "/user/login"
-    //     this.axios.get(url, {params: this.productQuery}).then((res) => {
-    //         console.log(res);
-    //         this.productList = res.data;
-    //         console.log("--->> 用户",this.productList);
-    // }),
     // login(){
     //     // console.log(1)
     //     axios.get(
@@ -101,17 +93,25 @@ export default {
     //     })
     // },
     login() {
-      this.userQuery=this.username,this.password;
+      this.userQuery.userName= this.username;
+      this.userQuery.passWord= this.password;
       let url = "/server/user/login"
-      this.axios.get(url, {params:this.userQuery}).then((res) => {
-        console.log(res.data)
-        if(res.data.code == 400){
-          console.log("用户名或密码错误")
-        }else{
-          console.log("登录成功")
-        }
-        })
-      },
+      this.axios.get(url, {params: this.userQuery}).then((res) => {
+        console.log(res)
+      if(res.data.code == 400){
+        console.log("用户名或密码错误")
+      }else{
+        console.log("登录成功")
+        this.$router.replace("/");
+        let data=JSON.stringify(res.data.data);
+        sessionStorage.setItem("userList",data)
+        let id=res.data.data.id;
+        sessionStorage.setItem("id",id)
+        console.log(data,id)
+      }
+        console.log("--->> 用户",this.productList);
+      })
+    },
     switchTo(path){
     // console.log(this.$router)
         this.$router.replace(path)

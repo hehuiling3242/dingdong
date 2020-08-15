@@ -5,7 +5,6 @@ import com.dingdong.domain.query.DingDongFileQuery;
 import com.dingdong.domain.vo.DingDongFileVO;
 import com.dingdong.service.DingDongFileService;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -29,8 +28,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("file")
-public class
-DingDongFileController {
+public class DingDongFileController {
 
     @Autowired
     private DingDongFileService dingDongFileService;
@@ -59,13 +57,13 @@ DingDongFileController {
 
     @ApiOperation(value = "修改文件")
     @PostMapping("upate-file")
-    public void updateFile(@ApiParam("修改对象") DingDongFile dingDongFile){
+    public void updateFile(DingDongFile dingDongFile){
         dingDongFileService.updateFile(dingDongFile);
     }
 
     @ApiOperation(value = "根据id查询")
     @GetMapping("{id}/load")
-    public void load(@PathVariable("id") @ApiParam("id") Long id, HttpServletResponse response){
+    public void load(@PathVariable("id") Long id, HttpServletResponse response){
         DingDongFile dingDongFile = dingDongFileService.load(id);
 
         //读取路径下面的文件

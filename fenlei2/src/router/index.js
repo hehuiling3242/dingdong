@@ -20,6 +20,8 @@ import HomeSale from '../components/demo/HomeSale.vue'
 // 99活动
 import jiujiu from '../components/demo/jiujiu.vue'
 
+// 搜索框
+import InputSeekhome from '../components/demo/InputSeekhome.vue'
 
 // 项总 
 // 顶部定位
@@ -41,6 +43,8 @@ import sc from '../components/demo/sc.vue'
 import homead from '../components/demo/home_ad.vue'
 // 首页分类
 import homesort from '../components/demo/home_sort.vue'
+// 我的订单
+import myGoods from '../components/demo/myGoods.vue'
 
 // 海
 import HomeList from '../components/demo/HomeList.vue'
@@ -51,10 +55,26 @@ import mynews from '../components/demo/myNews.vue'
 // 我的
 import goods from '../components/demo/goods.vue'
 import listgoods from '../components/demo/list_goods.vue'
+// import Fills from '../components/demo/Fills.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  // {
+  //   path:'/fills',
+  //   component:Fills
+  //   // 我的订单
+  // },
+  {
+    path:'/mygoods',
+    component:myGoods
+    // 我的订单
+  },
+  {
+    path:'/inputseekhome',
+    component:InputSeekhome
+    // 首页搜索
+  },
   {
     path:'/soppings',
     component:Soppings
@@ -164,7 +184,8 @@ const routes = [
   },
   {
     path:'/cart',
-    component:Cart
+    component:Cart,
+    // meta: { requiresAuth: true } // 添加表示需要验证
     // 购物车
   },
   {

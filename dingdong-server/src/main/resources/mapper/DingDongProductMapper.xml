@@ -5,7 +5,7 @@
 
 <mapper namespace="com.dingdong.mapper.DingDongProductMapper">
     <resultMap id="dingDongProductMap" type="dingDongProduct">
-        <id column="id" property="id"/>
+        <id column="id" property="id"/><!-- 主键 -->
         <result column="status" property="status"></result>
         <result column="product_name" property="productName"></result>
         <result column="classify_id" property="classifyId"></result>
@@ -21,13 +21,12 @@
         update commodity_details
         <set>
             <if test="status != null">status = #{status,jdbcType=NUMBER}</if>
-            <if test="count != null">count = #{count,jdbcType=INTEGER}</if>
         </set>
         where id=#{id}
     </update>
 
     <select id="load" parameterType="long" resultMap="dingDongProductMap">
-        select * from commodity_details where id=#{id}
+        select * from file where id=#{id}
     </select>
 
     <sql id="queryCommonSql">
@@ -45,23 +44,19 @@
                 <foreach collection="statusArray" index="index" item="item" open="(" separator="," close=")">#{item}
                 </foreach>
             </if>
-            <if test="productName != null and productName.trim() !=''">and p.product_name like CONCAT(CONCAT('%',#{productName}), '%')</if>
+            <if test="productName != null and productName.trim() !=''">and p.product_name = #{productName}</if>
             <if test="classifyId != null">and p.classify_id = #{classifyId}</if>
             <if test="price != null">and p.price = #{price}</if>
             <if test="digg != null">and p.digg = #{digg}</if>
-            <if test="productAbout != null">and p.product_about like CONCAT(CONCAT('%',#{productAbout}), '%')</if>
-            <if test="detail != null">and p.detail like CONCAT(CONCAT('%',#{detail}), '%')</if>
+            <if test="productAbout != null">and p.product_about = #{productAbout}</if>
+            <if test="detail != null">and p.detail = #{detail}</if>
             <if test="count != null">and p.count = #{count}</if>
             <if test="productShow != null">and p.product_show = #{productShow}</if>
-            <if test="commonString != null and commonString.trim() !=''">and (
-                p.product_name like CONCAT(CONCAT('%',#{commonString}), '%')or
-                p.product_about like CONCAT(CONCAT('%',#{commonString}), '%')or
-                p.detail like CONCAT(CONCAT('%',#{commonString}), '%')
-                )
-            </if>
+
         </where>
     </sql>
 
+    <!-- 排序 -->
     <sql id="sortSql">
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -73,6 +68,7 @@
         </choose>
     </sql>
 
+    <!-- 分页 -->
     <sql id="pageEnd">
         <if test="pageSize > 0">
             limit ${startRowBegin},${pageSize}

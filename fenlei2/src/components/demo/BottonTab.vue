@@ -17,6 +17,8 @@
             <div class="tab_item" @click="switchTo(d)">
                 <img :src=" $route.path=='/cart' ? tabBarImgArr[3].selected : tabBarImgArr[3].normal" class="but">
                 <span :class="{on:d === $route.path}">购物车</span>
+                <span v-show="this.$store.getters.productNum!==0" class="tab_item_red">{{this.$store.getters.productNum}}</span>
+                <!-- 小圆圈数量需要修改 -->
             </div>
             <div class="tab_item" @click="switchTo(e)">
                 <img :src=" $route.path=='/mine' ? tabBarImgArr[4].selected : tabBarImgArr[4].normal" class="but">
@@ -52,6 +54,19 @@ export default {
 }
 </script>
 <style scoped>
+.tab_item_red{
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: red;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 1.5rem;
+    top: .6rem;
+}
 .botton_tab{
     width: 100%;
     height: 8%;
@@ -62,6 +77,7 @@ export default {
     display: flex;
 }
 .tab_item{
+    position: relative;
     display: flex;
     flex: 1;
     flex-direction: column;

@@ -5,6 +5,7 @@
         <div class="my_top">
             <xitongtwo></xitongtwo>
             <div class="my_top_top">
+                <!-- <div @click="login()">11111</div>x -->
                  <img src="./../../assets/img/tongzhih.png" alt="">
             </div>
         </div>
@@ -12,10 +13,10 @@
             <div class="my_z_l">
                 <img src="./../../assets/img/touxiang.png" alt="">
                 <div>
-                    <h2>{{id}}</h2>
+                    <h2>{{userList.realName}}</h2>
                     <div>
                         <img src="./../../assets/img/shouji.png" alt="">
-                        <p>159****7712</p>
+                        <p>{{userList.mobile}}</p>
                     </div>
                 </div>
             </div>
@@ -48,20 +49,24 @@
                 <p  @click="switchTo(a)">查看全部订单></p>
             </div>
             <div>
-                <div>
+                <div class="states">
                     <img src="./../../assets/img/daizhifu.png" alt="">
+                    <span v-show="nopay">{{m}}</span>
                     <p>待支付</p>
                 </div>
-                <div>
+                <div class="states">
                     <img src="./../../assets/img/daishouhuo.png" alt="">
+                    <span v-show="notake">{{n}}</span>
                     <p>待收货</p>
                 </div>
-                <div>
+                <div class="states">
                     <img src="./../../assets/img/daipingjia.png" alt="">
+                    <span v-show="noasse">{{o}}</span>
                     <p>待评价</p>
                 </div>
-                <div>
+                <div class="states">
                     <img src="./../../assets/img/shouhou.png" alt="">
+                    <span v-show="saled">{{p}}</span>
                     <p>售后/退款</p>
                 </div>
             </div>
@@ -132,15 +137,45 @@
 export default {
     data(){
         return{
-            id:"叮咚_毛XX",
+            m:1,
+            nopay:false,
+            n:1,
+            notake:false,
+            o:1,
+            noasse:false,
+            p:1,
+            saled:false,
+            id:'',
             a:"/mygoods",
+            userList:{},
+            planQuery:{},
+            planList:[{}],
         }
     },
+    created(){
+        this.queryUserList();
+        this.queryPlanList();
+    },
     methods:{
+        queryUserList() {
+            this.userList = JSON.parse(sessionStorage.getItem("userList"));
+        },
+        queryPlanList(){
+            this.planQuery.userId = this.userList.id;
+            let url = "/server/plan/query-list"
+            this.axios.get(url, {params: this.planQuery}).then((res) => {
+                this.planList = res.data;
+                console.log(this.planList);
+                if(this.planList[0].status==3){
+                    this.noasse=true;
+                }
+            })
+        },
         switchTo(path){
             this.$router.replace(path)
-        }
-    }
+        },  
+    },
+    
 
 }
 </script>
@@ -149,6 +184,22 @@ export default {
         width: 100%;
         padding: 0px 1rem;
         background: url(../../assets/img/my_bg.png);
+    }
+    /* 订单状态 */
+    .states{
+        position: relative;
+    }
+    .states span{
+        position: absolute;
+        display: inline-block;
+        width: 2.2rem;height: 2.2rem;
+        background-color: red;
+        border-radius: 50%;
+        line-height: 2rem;
+        color: #fff;
+        font-size: 1.5rem;
+        text-align: center;
+        left: 2rem;top: -0.7rem;
     }
     .my_top{
         width: 100%;

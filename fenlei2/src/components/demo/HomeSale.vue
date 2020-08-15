@@ -19,11 +19,13 @@
             <div class="sliding_box">
                 <div class="sliding_item" v-for="(item,index) in content" :key="index">
                     <div class="sliding_item_img">
-                        <img src="../../assets/img/xia.png" alt="">
-                        <p>{{title}}</p>
+                        <a :href="'http://127.0.0.1:8080/details/'+productList[index].id">
+                            <img :src="productList[index].filePaths[0]" alt="">
+                        </a>
+                        <p>{{productList[index].productName}}</p>
                         <div class="sliding_item_btn">
                             <div class="sliding_item_btn_l">
-                                <div><span>¥</span>{{price}}</div>
+                                <div><span>¥</span>{{productList[index].price.toFixed(2)}}</div>
                                 <p>6.90</p>
                             </div>
                             <div class="sliding_item_btn_r">
@@ -49,22 +51,26 @@ export default {
             title: "桂冠香肠(台湾风味) 108g/袋",
             a: null,   // 倒计时默认值
             oldTime: new Date().getTime(),   //获取现在距离1970年的毫秒数
-            newTime: new Date('2020/8/4 00:00:00').getTime(),   //获取现在距离1970年的毫秒数
+            newTime: new Date('2020/8/14 00:00:00').getTime(),   //获取现在距离1970年的毫秒数
             second: null, //秒数
             hour: null,  //多少小时
             minute: null,  //多少分钟
             tosecond: null,
             tohour: null,
-            tominute: null
+            tominute: null,
+            productQuery:{},
+            productList:[{}],
+            filePaths:[]
         }
+    },
+    created(){
+        this.queryProductList();
     },
     methods:{
         tow(n){
             return n>=0 && n<10 ? '0'+n : ''+n;
         },
-        // getDate () {
-        //     setInterval(this.load(),1000);
-        // },
+        
         load(){
             setInterval(()=>{
                 this.oldTime= new Date().getTime()
@@ -77,6 +83,16 @@ export default {
                 this.tohour=this.tow(this.hour)
                 this.tominute=this.tow(this.minute)
             },1000)
+        },
+        queryProductList() {
+            this.productQuery.productShow = 1;
+            // console.log(this.productQuery.productShow);
+            let url = "/server/product/query-list"
+            this.axios.get(url, {params: this.productQuery}).then((res) => {
+                console.log(res);
+                this.productList = res.data;
+                console.log("--->> 促销商品",this.productList);
+            })
         },
     },
     mounted(){
@@ -169,7 +185,7 @@ export default {
         flex-direction: column;
         align-items:center;
     }
-    .sliding_item_img>img{
+    .sliding_item_img img{
         margin: 1.5rem 0px 1.5rem;
         width: 9rem;
         height: 9rem;
@@ -179,10 +195,15 @@ export default {
         margin-top: 1.6rem;
         align-items:center;
     }
-    .sliding_item_img>p{
+    .sliding_item_img p{
+        width: 100%;
         font-size: 1.5rem;
         color: #393939;
         font-weight:500;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        text-align: center;
     }
     .sliding_item_btn_l{
         margin-right: 2rem;

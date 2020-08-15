@@ -12,16 +12,20 @@
         </div>
         <div class="homenew_btn">
             <div class="sliding_box">
+                    <!-- {{this.$store.state.shoplist[0].productName}} -->
                 <div class="sliding_item" v-for="(item,index) in content" :key="index">
                     <div class="sliding_item_img">
-                        <img src="../../assets/img/jidan.png" alt="">
-                        <p>土鸡蛋8枚</p>
+                        <a :href="'http://127.0.0.1:8080/details/'+productList[index].id">
+                            <img :src="productList[index].filePaths[0]" alt="">
+                        </a>
+                        <!-- <img :src="productList[index].filePaths[0]" alt=""> -->
+                        <p>{{productList[index].productName}}</p>
                         <div class="sliding_item_btn">
                             <div class="sliding_item_btn_l">
-                                <div><span>¥</span>5.99</div>
+                                <div><span>¥</span>{{productList[index].price.toFixed(2)}}</div>
                                 <p>6.90</p>
                             </div>
-                            <div class="sliding_item_btn_r">
+                            <div class="sliding_item_btn_r"   @click="addcar(index)">
                                 <img src="../../assets/img/gouwuche.png" alt="">
                             </div>
                         </div>
@@ -36,8 +40,49 @@
 export default {
     data(){
         return{
-            content: 5
+            // a:1,
+            content: 10,
+            productQuery:{},
+            productList:[{}],
+            filePaths:[]
         }
+    },
+    created(){
+        this.queryProductList();
+    },
+    methods:{
+        queryProductList() {
+            this.productQuery.productShow = 0;
+            // console.log(this.productQuery.productShow);
+            let url = "/server/product/query-list"
+            this.axios.get(url, {params: this.productQuery}).then((res) => {
+                console.log(res);
+                this.productList = res.data;
+                // console.log("--->> 商品",this.productList);
+            })
+        },
+        addcar(index) {
+            var obj = this.productList[index];
+            this.itemAll = [];
+            this.$store.state.shoplist.forEach((item) => {
+                this.itemAll.push(item.id);
+            });
+            var id=sessionStorage.getItem("id")
+            console.log(id)
+            if(id==null){
+                console.log("您未登录");
+                this.$router.replace("/login");
+            }else{
+                console.log("登录成功")
+            }
+            if (this.itemAll.indexOf(obj.id) == -1) {
+                obj.count = 1;
+                this.$store.commit("add_car_mutations", obj);
+            } else {
+                var i = this.itemAll.indexOf(obj.id);
+                this.$store.commit("add_car_count", i);
+            }
+        },
     }
 }
 </script>
@@ -104,8 +149,9 @@ export default {
         display: flex;
         flex-direction: column;
         align-items:center;
+        /* justify-content: center; */
     }
-    .sliding_item_img>img{
+    .sliding_item_img img{
         margin: 1.5rem 0px 1.5rem;
         width: 9rem;
         height: 9rem;
@@ -115,10 +161,17 @@ export default {
         margin-top: 2.6rem;
         align-items:center;
     }
-    .sliding_item_img>p{
+    .sliding_item_img p{
+        width: 100%;
         font-size: 1.4rem;
         color: #393939;
         font-weight:800;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        text-align: center;
+        /* display: flex; */
+        /* align-items: center; */
     }
     .sliding_item_btn_l{
         margin-right: 2rem;

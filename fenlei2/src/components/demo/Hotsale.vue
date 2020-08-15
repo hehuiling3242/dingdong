@@ -6,52 +6,28 @@
                 <div class="hotsale_top">
                     <p>猜你喜欢</p>
                 </div>
-                <div class="hotsale_btn"  v-for="(item,index) in content" :key="index">
-                    <div class="lieB1">
+                <div class="hotsale_btn"  >
+                    <div class="lieB1" v-for="(item,index) in content" :key="index">
                         <div>
                             <div>
                                 <div class="lieB1_top">
-                                    <img class="shopTu1" src="../../assets/img/fangz1.png" alt="">
+                                    <a class="shopTu1" :href="'http://127.0.0.1:8080/details/'+productList[index].id">
+                                        <img :src="productList[index].filePaths[0]" alt="">
+                                    </a>
                                 </div>
                                 <div class="lieB1_z">
-                                    <p class="wen1">南翔小笼包 180g/袋</p>
-                                    <p class="wen2">10只装 在家就能尝到</p>
+                                    <p class="wen1">{{productList[index].productName}}</p>
+                                    <p class="wen2">{{productList[index].productAbout}}</p>
                                 </div>
                                 <div class="lieB1_btn">
                                     <div class="lieB1_btn_l">
                                         <div>
-                                            <span>$</span>
-                                            7.90
+                                            <span>¥</span>
+                                            {{productList[index].price.toFixed(2)}}
                                         </div>
-                                        <p>$9.90</p>
+                                        <p>¥9.90</p>
                                     </div>
-                                    <div class="lieB1_btn_r">
-                                        <img src="../../assets/img/gouwuche.png" alt="">
-                                    </div>
-                                </div>
-                                <table></table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lieB1">
-                        <div>
-                            <div>
-                                <div class="lieB1_top">
-                                    <img class="shopTu1" src="../../assets/img/fangz1.png" alt="">
-                                </div>
-                                <div class="lieB1_z">
-                                    <p class="wen1">南翔小笼包 180g/袋</p>
-                                    <p class="wen2">10只装 在家就能尝到</p>
-                                </div>
-                                <div class="lieB1_btn">
-                                    <div class="lieB1_btn_l">
-                                        <div>
-                                            <span>$</span>
-                                            7.90
-                                        </div>
-                                        <p>$9.90</p>
-                                    </div>
-                                    <div class="lieB1_btn_r">
+                                    <div class="lieB1_btn_r"  @click="addcar(index)">
                                         <img src="../../assets/img/gouwuche.png" alt="">
                                     </div>
                                 </div>
@@ -60,6 +36,7 @@
                         </div>
                     </div>
                 </div>
+                    <table></table>
             </div>
         <table></table>   
         </div> 
@@ -69,18 +46,58 @@
 export default {
     data(){
         return{
-            content:10
+            content:20,
+            productQuery:{},
+            productList:[{}],
+            filePaths:[],
+            a:1
         }
+    },
+    created(){
+        this.queryProductList();
+    },
+    methods:{
+        queryProductList() {
+            this.productQuery.productShow = 1;
+            // console.log(this.productQuery.productShow);
+            let url = "/server/product/query-list"
+            this.axios.get(url, {params: this.productQuery}).then((res) => {
+                console.log(res);
+                this.productList = res.data;
+                console.log("--->> 促销商品",this.productList);
+            })
+        },
+        addcar(index) {
+            var obj = this.productList[index];
+            this.itemAll = [];
+            this.$store.state.shoplist.forEach((item) => {
+                this.itemAll.push(item.id);
+            });
+            if (this.itemAll.indexOf(obj.id) == -1) {
+                obj.count = 1;
+                this.$store.commit("add_car_mutations", obj);
+            } else {
+                var i = this.itemAll.indexOf(obj.id);
+                this.$store.commit("add_car_count", i);
+            }
+        },
     }
 }
 </script>
 <style scoped>
+    .wen2,.wen1{
+        width:100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
     .sale{
         background-color: #f0f0f0;
         width: 100%;
-        margin-bottom: 54.8px;
+        margin-bottom: 34.8px;
     }
     .hotsale{
+        width: 100%;
         background-color: #f0f0f0;
         padding: 0px 1rem;
     }
@@ -107,12 +124,14 @@ export default {
         margin: 1rem 0px;
         display: flex;
         justify-content: space-between;
+        /* flex-direction:row; */
+        flex-wrap:wrap;
     }
     .lieB1{
         width: 49%;
         border-radius: .6rem;
         overflow: hidden;
-        /* margin-bottom: 1rem; */
+        margin-bottom: 1rem;
     }
     .lieB1>div{
         width: 100%;
@@ -127,7 +146,7 @@ export default {
     .lieB1_top{
         width: 100%;
     }
-    .lieB1_top>img{
+    .lieB1_top img{
         width: 100%;
     }
     .lieB1_z{

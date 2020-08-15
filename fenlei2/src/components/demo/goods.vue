@@ -19,17 +19,17 @@
                   </div>
                   <div class="shangp" v-for="(item,index) of list" :key="index">
                      <div class="shangp1">
-                        <img src="../../assets/img/egg.png">
+                        <img :src="item.filePaths[0]">
                         <div class="details">
-                           <p class="title">上海青 约300g</p>
-                           <p class="jieshao">上海本地菜 小时候妈妈的味道</p>
+                           <p class="title">{{item.productName}}</p>
+                           <p class="jieshao">{{item.productAbout}}</p>
                            <p class="huod">专区满21元赠豆腐</p>
                            <div class="pri">
                               <p class="price">
                                  <em>¥</em>
-                                 <span><b>2.99</b></span>
+                                 <b>{{`¥${item.price}`}}</b>
                               </p>
-                              <div class="gouwuc">
+                              <div class="gouwuc"  @click="addcar(index)">
                                  <img src="../../assets/img/gouwu.png">
                               </div>
                            </div>
@@ -46,8 +46,11 @@ export default {
    name:'listGoods',
     data(){
       return {
+         list: [],
+         itemAll: [],
+         productQuery: {},
          //存储商品详细的数据
-         list:5,
+         // list:5,
          n:-1,
          // list1:17,
          //存储分类表中的内容
@@ -56,7 +59,39 @@ export default {
          move:[] 
       }
     },
+   created() {
+      this.queryProductList();
+   },
     methods:{
+       
+      queryProductList() {
+      let url = "/server/product/query-list";
+      this.axios.get(url).then((res) => {
+        this.list = res.data;
+      });
+    },
+    addcar(index) {
+      var obj = this.list[index];
+      this.itemAll = [];
+      this.$store.state.shoplist.forEach((item) => {
+        this.itemAll.push(item.id);
+      });
+      var id=sessionStorage.getItem("id")
+      console.log(id)
+      if(id==null){
+            console.log("您未登录");
+            this.$router.replace("/login");
+      }else{
+            console.log("登录成功")
+      }
+      if (this.itemAll.indexOf(obj.id) == -1) {
+        obj.count = 1;
+        this.$store.commit("add_car_mutations", obj);
+      } else {
+        var i = this.itemAll.indexOf(obj.id);
+        this.$store.commit("add_car_count", i);
+      }
+    },
     },
     watch:{
       
@@ -64,6 +99,7 @@ export default {
     mounted(){
       //   this.mt=this.$refs.right.offsetHeight;
       //   console.log(this.n);
+      
       this.$refs.right.onscroll=()=>{
          this.sctop=this.$refs.right.scrollTop;
          for(var i=0;i<this.move.length;i++){

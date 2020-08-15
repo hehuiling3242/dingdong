@@ -71,12 +71,4 @@ public class DingDongProductService {
         }
         return result;
     }
-
-    public DingDongProduct load(Long productId){
-        return dingDongProductMapper.load(productId);
-    }
-
-    public void update(DingDongProduct dingDongProduct){
-        dingDongProductMapper.update(dingDongProduct);
-    }
 }

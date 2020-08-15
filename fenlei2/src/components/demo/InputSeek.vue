@@ -41,8 +41,9 @@ export default {
     },
     methods:{
         search: function (event) {
+            // console.log(event)
             this.productQuery.productName = event.currentTarget.value;
-            console.log(this.materialName);
+            // console.log(tthis.productQuery.productName);
             let url = "/server/product/query-list"
             this.axios.get(url, {params: this.productQuery}).then((res) => {
                 console.log(res);
@@ -51,7 +52,9 @@ export default {
             })
         },
         switchTo(path){
-            this.$router.replace(path)
+            // this.$router.replace(path)
+            this.$router.go(-1)
+            console.log(this.$router.go(-1))
         }
     }
 }
