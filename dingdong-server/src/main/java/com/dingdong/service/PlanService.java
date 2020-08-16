@@ -40,7 +40,7 @@ public class PlanService {
             result.setMessage("请选择商品信息");
             return result;
         }
-        if(null == plan.getProductId()){
+        /*if(null == plan.getProductId()){
             result.setCode("400");
             result.setMessage("请选择商品");
             return result;
@@ -74,7 +74,7 @@ public class PlanService {
             result.setCode("400");
             result.setMessage("请输入购买数量");
             return result;
-        }
+        }*/
 
         DingDongProduct product = dingDongProductService.load(plan.getProductId());
         if(null == product){

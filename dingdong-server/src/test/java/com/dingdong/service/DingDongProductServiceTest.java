@@ -24,4 +24,11 @@ class DingDongProductServiceTest {
         System.out.println("---->> " + toJSONString);
     }
 
+    @Test
+    public void testLoad(){
+        DingDongProduct dingDongProduct = dingDongProductService.load(1016L);
+        String toJSONString = JSON.toJSONString(dingDongProduct);
+        System.out.println("---->> " + toJSONString);
+    }
+
 }

@@ -27,7 +27,7 @@
     </update>
 
     <select id="load" parameterType="long" resultMap="dingDongProductMap">
-        select * from file where id=#{id}
+        select * from commodity_details where id=#{id}
     </select>
 
     <sql id="queryCommonSql">
