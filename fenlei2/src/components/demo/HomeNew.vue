@@ -72,6 +72,7 @@ export default {
             if(id==null){
                 console.log("您未登录");
                 this.$router.replace("/login");
+                return;
             }else{
                 console.log("登录成功")
             }

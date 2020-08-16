@@ -19,9 +19,10 @@ import HomeCoupon from '../components/demo/HomeCoupon.vue'
 import HomeSale from '../components/demo/HomeSale.vue'
 // 99活动
 import jiujiu from '../components/demo/jiujiu.vue'
-
 // 搜索框
 import InputSeekhome from '../components/demo/InputSeekhome.vue'
+// 搜索框
+import AddRemark from '../components/demo/AddRemark.vue'
 
 // 项总 
 // 顶部定位
@@ -55,16 +56,27 @@ import mynews from '../components/demo/myNews.vue'
 // 我的
 import goods from '../components/demo/goods.vue'
 import listgoods from '../components/demo/list_goods.vue'
-// import Fills from '../components/demo/Fills.vue'
+import Fills from '../components/demo/Fills.vue'
+import filldingd from '../components/demo/fill_dingd.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  // {
-  //   path:'/fills',
-  //   component:Fills
-  //   // 我的订单
-  // },
+  {
+    path:'/addremark',
+    component:AddRemark
+    // 我的订单
+  },
+  {
+    path:'/filldingd',
+    component:filldingd
+    // 我的订单
+  },
+  {
+    path:'/fills',
+    component:Fills
+    // 我的订单
+  },
   {
     path:'/mygoods',
     component:myGoods

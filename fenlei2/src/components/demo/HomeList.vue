@@ -37,50 +37,24 @@
         <div class="NeiR1" v-if="NeiR=='NeiR11'">
                 <div class="lieB1">
                         <div>
-                            <div>
+                            <div v-for="(item,index) in productList" :key="index">
                                 <div class="lieB1_top">
-                                    <img class="shopTu1" src="../../assets/img/fangz1.png" alt="">
+                                    <a :href="'http://127.0.0.1:8080/details/'+productList[index].id"><img :src="productList[index].filePaths[p]"></a>
                                 </div>
                                 <div class="lieB1_z">
-                                    <p class="wen1">南翔小笼包 180g/袋</p>
-                                    <p class="wen2">10只装 在家就能尝到</p>
+                                    <p class="wen1">{{productList[index].productName}}</p>
+                                    <p class="wen2">{{productList[index].productAbout}}</p>
                                 </div>
                                 <div class="lieB1_btn">
                                     <div class="lieB1_btn_l">
                                         <div>
-                                            <span>$</span>
-                                            7.90
+                                            <span>¥</span>
+                                            {{productList[index].price}}
                                         </div>
-                                        <p>$9.90</p>
+                                        <p>¥9.90</p>
                                     </div>
                                     <div class="lieB1_btn_r">
-                                        <img src="../../assets/img/gouwuche.png" alt="">
-                                    </div>
-                                </div>
-                                <table></table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lieB1">
-                        <div>
-                            <div>
-                                <div class="lieB1_top">
-                                    <img class="shopTu1" src="../../assets/img/fangz1.png" alt="">
-                                </div>
-                                <div class="lieB1_z">
-                                    <p class="wen1">南翔小笼包 180g/袋</p>
-                                    <p class="wen2">10只装 在家就能尝到</p>
-                                </div>
-                                <div class="lieB1_btn">
-                                    <div class="lieB1_btn_l">
-                                        <div>
-                                            <span>$</span>
-                                            7.90
-                                        </div>
-                                        <p>$9.90</p>
-                                    </div>
-                                    <div class="lieB1_btn_r">
-                                        <img src="../../assets/img/gouwuche.png" alt="">
+                                        <img src="../../assets/img/gouwuche.png" alt=""  @click="addcar(index)">
                                     </div>
                                 </div>
                                 <table></table>
@@ -93,168 +67,93 @@
          <div class="NeiR2" v-else-if="NeiR=='NeiR22'">
                 <div class="lieB1">
                         <div>
-                            <div>
+                            <div v-for="(item,index) in productList1" :key="index">
                                 <div class="lieB1_top">
-                                    <img class="shopTu1" src="../../assets/img/fangz1.png" alt="">
+                                    <a :href="'http://127.0.0.1:8080/details/'+productList1[index].id"><img :src="productList1[index].filePaths[p]"></a>
                                 </div>
                                 <div class="lieB1_z">
-                                    <p class="wen1">南翔小笼包 180g/袋</p>
-                                    <p class="wen2">10只装 在家就能尝到</p>
+                                    <p class="wen1">{{productList1[index].productName}}</p>
+                                    <p class="wen2">{{productList1[index].productAbout}}</p>
                                 </div>
                                 <div class="lieB1_btn">
                                     <div class="lieB1_btn_l">
                                         <div>
-                                            <span>$</span>
-                                            7.90
+                                            <span>¥</span>
+                                           {{productList1[index].price}}
                                         </div>
-                                        <p>$9.90</p>
+                                        <p>¥9.90</p>
                                     </div>
                                     <div class="lieB1_btn_r">
-                                        <img src="../../assets/img/gouwuche.png" alt="">
+                                        <img src="../../assets/img/gouwuche.png" alt=""  @click="addcar(index)">
                                     </div>
                                 </div>
                                 <table></table>
                             </div>
                         </div>
                     </div>
-                    <div class="lieB1">
-                        <div>
-                            <div>
-                                <div class="lieB1_top">
-                                    <img class="shopTu1" src="../../assets/img/fangz1.png" alt="">
-                                </div>
-                                <div class="lieB1_z">
-                                    <p class="wen1">南翔小笼包 180g/袋</p>
-                                    <p class="wen2">10只装 在家就能尝到</p>
-                                </div>
-                                <div class="lieB1_btn">
-                                    <div class="lieB1_btn_l">
-                                        <div>
-                                            <span>$</span>
-                                            7.90
-                                        </div>
-                                        <p>$9.90</p>
-                                    </div>
-                                    <div class="lieB1_btn_r">
-                                        <img src="../../assets/img/gouwuche.png" alt="">
-                                    </div>
-                                </div>
-                                <table></table>
-                            </div>
-                        </div>
-                    </div>
+
         </div>
         <!-- 内容二结束 -->
         <!-- n内容三开始 -->
         <div class="NeiR3" v-else-if="NeiR=='NeiR33'">
-                <div class="lieB1">
+   <div class="lieB1">
                         <div>
-                            <div>
+                            <div v-for="(item,index) in productList2" :key="index">
                                 <div class="lieB1_top">
-                                    <img class="shopTu1" src="../../assets/img/fangz1.png" alt="">
+                                    <a :href="'http://127.0.0.1:8080/details/'+productList2[index].id"><img :src="productList2[index].filePaths[p]"></a>
                                 </div>
                                 <div class="lieB1_z">
-                                    <p class="wen1">南翔小笼包 180g/袋</p>
-                                    <p class="wen2">10只装 在家就能尝到</p>
+                                    <p class="wen1">{{productList2[index].productName}}</p>
+                                    <p class="wen2">{{productList2[index].productAbout}}</p>
                                 </div>
                                 <div class="lieB1_btn">
                                     <div class="lieB1_btn_l">
                                         <div>
-                                            <span>$</span>
-                                            7.90
+                                            <span>¥</span>
+                                           {{productList2[index].price}}
                                         </div>
-                                        <p>$9.90</p>
+                                        <p>¥9.90</p>
                                     </div>
                                     <div class="lieB1_btn_r">
-                                        <img src="../../assets/img/gouwuche.png" alt="">
+                                        <img src="../../assets/img/gouwuche.png" alt=""   @click="addcar(index)">
                                     </div>
                                 </div>
                                 <table></table>
                             </div>
                         </div>
                     </div>
-                    <div class="lieB1">
-                        <div>
-                            <div>
-                                <div class="lieB1_top">
-                                    <img class="shopTu1" src="../../assets/img/fangz1.png" alt="">
-                                </div>
-                                <div class="lieB1_z">
-                                    <p class="wen1">南翔小笼包 180g/袋</p>
-                                    <p class="wen2">10只装 在家就能尝到</p>
-                                </div>
-                                <div class="lieB1_btn">
-                                    <div class="lieB1_btn_l">
-                                        <div>
-                                            <span>$</span>
-                                            7.90
-                                        </div>
-                                        <p>$9.90</p>
-                                    </div>
-                                    <div class="lieB1_btn_r">
-                                        <img src="../../assets/img/gouwuche.png" alt="">
-                                    </div>
-                                </div>
-                                <table></table>
-                            </div>
-                        </div>
-                    </div>
+
         </div>
         <!-- 内容三结束 -->
         <!-- 内容4开始 -->
          <div class="NeiR4" v-else>
-                <div class="lieB1">
+                 <div class="lieB1">
                         <div>
-                            <div>
+                            <div v-for="(item,index) in productList3" :key="index">
                                 <div class="lieB1_top">
-                                    <img class="shopTu1" src="../../assets/img/fangz1.png" alt="">
+                                    <a :href="'http://127.0.0.1:8080/details/'+productList3[index].id"><img :src="productList3[index].filePaths[p]"></a>
                                 </div>
                                 <div class="lieB1_z">
-                                    <p class="wen1">南翔小笼包 180g/袋</p>
-                                    <p class="wen2">10只装 在家就能尝到</p>
+                                    <p class="wen1">{{productList3[index].productName}}</p>
+                                    <p class="wen2">{{productList3[index].productAbout}}</p>
                                 </div>
                                 <div class="lieB1_btn">
                                     <div class="lieB1_btn_l">
                                         <div>
-                                            <span>$</span>
-                                            7.90
+                                            <span>¥</span>
+                                           {{productList3[index].price}}
                                         </div>
-                                        <p>$9.90</p>
+                                        <p>¥9.90</p>
                                     </div>
                                     <div class="lieB1_btn_r">
-                                        <img src="../../assets/img/gouwuche.png" alt="">
+                                        <img src="../../assets/img/gouwuche.png" alt=""   @click="addcar(index)">
                                     </div>
                                 </div>
                                 <table></table>
                             </div>
                         </div>
                     </div>
-                    <div class="lieB1">
-                        <div>
-                            <div>
-                                <div class="lieB1_top">
-                                    <img class="shopTu1" src="../../assets/img/fangz1.png" alt="">
-                                </div>
-                                <div class="lieB1_z">
-                                    <p class="wen1">南翔小笼包 180g/袋</p>
-                                    <p class="wen2">10只装 在家就能尝到</p>
-                                </div>
-                                <div class="lieB1_btn">
-                                    <div class="lieB1_btn_l">
-                                        <div>
-                                            <span>$</span>
-                                            7.90
-                                        </div>
-                                        <p>$9.90</p>
-                                    </div>
-                                    <div class="lieB1_btn_r">
-                                        <img src="../../assets/img/gouwuche.png" alt="">
-                                    </div>
-                                </div>
-                                <table></table>
-                            </div>
-                        </div>
-                    </div>
+
         </div>
                
          
@@ -267,10 +166,88 @@
     export default({
         data(){
             return {
-                NeiR:"NeiR11"
+                p:0,
+                NeiR:"NeiR11",
+                productQuery:{},
+                productList:[{}],
+                productList1:[{}],
+                productList2:[{}],
+                productList3:[{}],
+
             }
         },
+        created(){
+      this.queryProductList();
+      this.queryProductList1();
+      this.queryProductList2();
+      this.queryProductList3();
+    },
         methods:{
+            addcar(index) {
+            var obj = this.productList[index];
+            this.itemAll = [];
+            this.$store.state.shoplist.forEach((item) => {
+                this.itemAll.push(item.id);
+            });
+            var id=sessionStorage.getItem("id")
+            console.log(id)
+            if(id==null){
+                console.log("您未登录");
+                this.$router.replace("/login");
+                return;
+            }else{
+                console.log("登录成功")
+            }
+            if (this.itemAll.indexOf(obj.id) == -1) {
+                obj.count = 1;
+                this.$store.commit("add_car_mutations", obj);
+            } else {
+                var i = this.itemAll.indexOf(obj.id);
+                this.$store.commit("add_car_count", i);
+                }
+            },
+            queryProductList() {
+            this.productQuery.classifyId=109;
+            console.log(this.productQuery.classifyId);
+            let url = "/server/product/query-list";
+            this.axios.get(url, {params: this.productQuery}).then((res) => {
+                console.log(res);
+                this.productList = res.data;
+                console.log("--->> 商品",this.productList);
+        })
+      }, 
+      queryProductList1() {
+            this.productQuery={};
+            this.productQuery.classifyId=107;
+            console.log(this.productQuery.classifyId);
+            let url = "/server/product/query-list";
+            this.axios.get(url, {params: this.productQuery}).then((res) => {
+                console.log(res);
+                this.productList1 = res.data;
+                console.log("--->> 商品",this.productList1);
+        })
+      },queryProductList2() {
+            this.productQuery={};
+            this.productQuery.classifyId=106;
+            // console.log(this.productQuery.classifyId);
+            let url = "/server/product/query-list";
+            this.axios.get(url, {params: this.productQuery}).then((res) => {
+                // console.log(res);
+                this.productList2 = res.data;
+                // console.log("--->> 商品",this.productList1);
+        })
+      },queryProductList3() {
+            this.productQuery={};
+            this.productQuery.classifyId=110;
+            // console.log(this.productQuery.classifyId);
+            let url = "/server/product/query-list";
+            this.axios.get(url, {params: this.productQuery}).then((res) => {
+                // console.log(res);
+                this.productList3 = res.data;
+                // console.log("--->> 商品",this.productList1);
+        })
+      },
+
             change(nr){
                 this.NeiR=nr;
             }
@@ -386,40 +363,57 @@
 }
 /*  */
 .lieB1{
-        width: 49%;
-        /* margin-bottom: 1rem; */
+        width:100%;
+        
     }
     .lieB1>div{
         width: 100%;
-        background-color: #f5f5f5;
-        /* padding: 1rem; */
+        background-color: #f5f5f5;  
+        display: flex; 
+        flex-wrap: wrap;
+        justify-content: space-between;
     }
     .lieB1>div>div{
-        width: 100%;
+        width: 49%;
         background-color: #fff;
-        /* padding: 1rem; */
+        display: flex;
+        justify-content: space-between;
+         flex-wrap: wrap;
+        flex-direction: column;
+        margin-top: 1rem;
     }
     .lieB1_top{
         width: 100%;
     }
-    .lieB1_top>img{
+    .lieB1_top>a>img{
         width: 100%;
+        /* height: ; */
     }
     .lieB1_z{
+        display: flex;
+        width: 100%;
+        flex-direction:column ;
         padding: 0px 1rem;
     }
     .lieB1_z>p:first-child{
+        display: block;
         font-size: 1.4rem;
         color: #1a1a1a;
         margin-top: 1rem;
     }
     .lieB1_z>p:last-child{
+        display:block;
+        width: 50%;
         font-size: 1.2rem;
         color: #afafaf;
         margin-top: .5rem;
+         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .lieB1_btn{
         display: flex;
+        width:100%;
         align-items: center;
         justify-content: space-between;
         margin: 1rem 0px 1rem;   

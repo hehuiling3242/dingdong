@@ -5,14 +5,16 @@
         <div class="my_top">
             <xitongtwo></xitongtwo>
             <div class="my_top_top">
-                <!-- <div @click="login()">11111</div>x -->
                  <img src="./../../assets/img/tongzhih.png" alt="">
             </div>
         </div>
         <div class="my_z">
             <div class="my_z_l">
                 <img src="./../../assets/img/touxiang.png" alt="">
-                <div>
+                <div v-if="login">
+                    <h2 @click="loginTo(f)">请点击登录</h2>
+                </div>
+                <div v-else>
                     <h2>{{userList.realName}}</h2>
                     <div>
                         <img src="./../../assets/img/shouji.png" alt="">
@@ -27,11 +29,11 @@
         </div>
         <div class="my_btn">
             <div class="my_btn_l">
-                <h2>4</h2>
+                <h2>0</h2>
                 <p>优惠券</p>
             </div>
             <div class="my_btn_z">
-                <h2>5</h2>
+                <h2>0</h2>
                 <p>积分</p>
             </div>
             <div class="my_btn_y">
@@ -51,22 +53,34 @@
             <div>
                 <div class="states">
                     <img src="./../../assets/img/daizhifu.png" alt="">
-                    <span v-show="nopay">{{m}}</span>
+                    <p v-show="nopay">
+                        <span v-if="login"></span>
+                        <span v-else>{{m}}</span>
+                    </p>
                     <p>待支付</p>
                 </div>
                 <div class="states">
                     <img src="./../../assets/img/daishouhuo.png" alt="">
-                    <span v-show="notake">{{n}}</span>
+                    <p v-show="notake">
+                        <span v-if="login"></span>
+                        <span v-else>{{n}}</span>
+                    </p>
                     <p>待收货</p>
                 </div>
                 <div class="states">
                     <img src="./../../assets/img/daipingjia.png" alt="">
-                    <span v-show="noasse">{{o}}</span>
+                    <p v-show="noasse">
+                        <span v-if="login"></span>
+                        <span v-else>{{o}}</span>
+                    </p>
                     <p>待评价</p>
                 </div>
                 <div class="states">
                     <img src="./../../assets/img/shouhou.png" alt="">
-                    <span v-show="saled">{{p}}</span>
+                    <p v-show="saled">
+                        <span v-if="login"></span>
+                        <span v-else>{{p}}</span>
+                    </p>
                     <p>售后/退款</p>
                 </div>
             </div>
@@ -137,16 +151,18 @@
 export default {
     data(){
         return{
-            m:1,
+            m:0,
             nopay:false,
-            n:1,
+            n:0,
             notake:false,
-            o:1,
+            o:0,
             noasse:false,
-            p:1,
+            p:0,
             saled:false,
             id:'',
+            login:true,
             a:"/mygoods",
+            f:"/login",
             userList:{},
             planQuery:{},
             planList:[{}],
@@ -162,18 +178,35 @@ export default {
         },
         queryPlanList(){
             this.planQuery.userId = this.userList.id;
+            if(this.userList.id!=null){
+                this.login=false;
+            };
             let url = "/server/plan/query-list"
             this.axios.get(url, {params: this.planQuery}).then((res) => {
                 this.planList = res.data;
-                console.log(this.planList);
-                if(this.planList[0].status==3){
-                    this.noasse=true;
-                }
+                this.planList.forEach(aa=>{
+                    if(aa.status==1){
+                        this.nopay=true;
+                        this.m++;
+                    }else if(aa.status==2){
+                        this.notake=true;
+                        this.n++;
+                    }else if(aa.status==3){
+                        this.noasse=true;
+                        this.o++;
+                    }else{
+                        this.saled=true;
+                        this.p++;
+                    }
+                })
             })
         },
-        switchTo(path){
-            this.$router.replace(path)
-        },  
+        switchTo(a){
+            this.$router.replace(a);
+        },
+        loginTo(f){
+            this.$router.replace(f);
+        }  
     },
     
 

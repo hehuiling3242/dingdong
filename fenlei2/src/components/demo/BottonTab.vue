@@ -54,6 +54,7 @@ export default {
 }
 </script>
 <style scoped>
+
 .tab_item_red{
     width: 1.5rem;
     height: 1.5rem;

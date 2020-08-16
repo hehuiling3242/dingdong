@@ -30,24 +30,28 @@
             </div>
         </div>
         <div class="nav_DW">
-            <div class="nav_RE">
+            <div class="nav_RE" v-if="map"></div>
+            <div class="nav_RE" v-else>
                 <p>当前地址</p>
-                <div>
+                <div class="nav_cen">
                     <div>
-                        <p>联强大厦</p>
-                        <p>西湖区文三路253号</p>
+                        <p>{{userList.address}}</p>
+                        <p>{{userList.fullAddress}}</p>
                     </div>
                     <div>
                         <img src="../../assets/img/miaozhun.png" alt="">
                         <span>重新定位</span>
                     </div>
                 </div>
-            </div> 
+            </div>
             <div class="nav_BD" >
-                <p>附近地址</p>
-                <div v-for="(i,k) of 5" :key="k">
-                    <p>钱江世纪城</p>
-                    <p>江干区阿里巴巴66号</p>
+                <p>热门地址</p>
+                <div>
+                    <p>故宫博物馆</p>
+                    <p>西溪国家湿地公园</p>
+                    <p>西双版纳</p>
+                    <p>张家界大峡谷</p>
+                    <p>昆明拉布海</p>
                 </div>
             </div>
         </div>
@@ -66,7 +70,17 @@
 </template>
 <script>
 export default {
+    created(){
+        this.queryUserList();
+    },
     methods: {
+        queryUserList() {
+            this.userList = JSON.parse(sessionStorage.getItem("userList"));
+            if(this.userList.id!=null){
+                this.map=false;
+            };
+        },
+
         jump(){
             this.$router.push("/")
         },
@@ -82,6 +96,8 @@ export default {
     },
     data(){
         return {
+            map:true,
+            userList:{},
             city:"杭州市",
             citys:["上海市","深圳市","杭州市","北京市","苏州市","宁波市","无锡市","常州市","绍兴市","嘉兴市"],
             NoneTrue:false,
@@ -190,6 +206,10 @@ export default {
         padding-left: 1.5rem;
         padding: 0.5rem 1.5rem;
     }
+    .nav_cen{
+        display: flex;
+        justify-content: space-between;
+    }
     .Navigation>.nav_DW>.nav_RE>div{
         display: flex;
         justify-content: space-between;
@@ -223,11 +243,11 @@ export default {
     }
     .Navigation .nav_BD{
         background-color: #f6f5f5;
+        margin: 0.5rem 0;
     }
-    .Navigation .nav_BD>p{
+    .Navigation .nav_BD p{
         font-size: 1.6rem;
         color:#666;
-        padding-left: 1.5rem;
         padding: 0.5rem 1.5rem;
     }
     .Navigation .nav_BD>div{

@@ -34,6 +34,9 @@ Vue.component('xitongtwo',xitongtwo)
 Vue.prototype.axios = axios;
 Vue.config.productionTip = false
 
+// Vue.prototype.changeData = fanhui = function (){//changeData是函数名
+//   alert('执行成功');w
+// }
 new Vue({
   router,
   store,

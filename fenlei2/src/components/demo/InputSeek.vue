@@ -7,7 +7,7 @@
                 <div>
                     <img src="../../assets/img/sousuo.png" alt="">
                 </div>
-                <input type="text" placeholder="请输入商品名称" @input="search($event)"> 
+                <input type="text" v-model="n" placeholder="请输入商品名称"> 
             </div>
             <p>搜索</p> 
         </div>
@@ -24,7 +24,9 @@
         <div class="findseek">
             <h2>搜索发现</h2>
             <div>
-                <div v-for="(a,i) of 10" :key="i">鸡蛋</div>
+                <div v-for="(item,index) of classiFy" :key="index" @click="values($event)">
+                    {{classiFy[index]}}  
+                </div>
             </div>
         </div>
     </div>
@@ -33,16 +35,27 @@
 export default {
     data(){
         return{
+            n:'',
             a:"/classify",
             searchText:'',
             productQuery:{},
             productList:[{}],
+            classiFy:["土豆","可乐","可爱多","车厘子","小龙虾","鸡爪","南瓜饼","烤羊排","酸奶","卤肉","三只松鼠","鸡蛋"],
         }
     },
     methods:{
-        search: function (event) {
-            // console.log(event)
-            this.productQuery.productName = event.currentTarget.value;
+        values(e){
+            this.n=e.target.innerText;
+        },
+        switchTo(path){
+            // this.$router.replace(path)
+            this.$router.go(-1)
+            console.log(this.$router.go(-1))
+        }
+    },
+    watch:{
+        n(){
+            this.productQuery.productName = this.n;
             // console.log(tthis.productQuery.productName);
             let url = "/server/product/query-list"
             this.axios.get(url, {params: this.productQuery}).then((res) => {
@@ -50,11 +63,6 @@ export default {
                 this.productList = res.data;
                 console.log("--->> 商品",this.productList);
             })
-        },
-        switchTo(path){
-            // this.$router.replace(path)
-            this.$router.go(-1)
-            console.log(this.$router.go(-1))
         }
     }
 }

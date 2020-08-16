@@ -4,7 +4,7 @@
             <table></table>
             <xitong></xitong>
             <navtop></navtop>
-            <classifyinputhome></classifyinputhome>
+            <classifyinput></classifyinput>
             <table> </table>
             <homenew></homenew>
             <homecoupon></homecoupon>

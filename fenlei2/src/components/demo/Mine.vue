@@ -3,6 +3,9 @@
         <!-- <h1>我的</h1> -->
         <mynews></mynews>
         <hotsale></hotsale>
+        <!-- <div @click="fanhui()">
+            1212321312312312
+        </div> -->
         <bottontab></bottontab>
     </div>
 </template>
@@ -16,6 +19,11 @@ export default {
         hotsale,
         mynews
     },
+    methods:{
+        // fanhui(){
+        //     alert('执行成功');
+        // }
+    }
 }
 </script>
 <style scoped>

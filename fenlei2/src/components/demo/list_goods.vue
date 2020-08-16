@@ -20,7 +20,21 @@ export default {
          list:5,
          // list1:17,
          //存储分类表中的内容
-         fenlei:[{label:'推荐'},{label:'新品'},{label:'平价好菜'},{label:'供港蔬菜'},{label:'茄果瓜果'},{label:'根茎类'},{label:'豆腐豆浆'},{label:'叶菜类'},{label:'香辛葱蒜'},{label:'球茎类'},{label:'菌菇类'},{label:'豆类'},{label:'有机蔬菜'},{label:'豆芽海带'},{label:'净菜'},{label:'豆干豆皮'},{label:'其他豆制品'}],
+         fenlei:[
+            {id:101,label:'蔬菜豆制品'},
+            {id:102,label:'新鲜水果'},
+            {id:103,label:'肉禽蛋品'},
+            {id:104,label:'海鲜水产'},
+            {id:105,label:'快手菜'},
+            {id:106,label:'乳品烘焙'},
+            {id:107,label:'冰淇淋'},
+            {id:108,label:'营养早餐'},
+            {id:109,label:'熟食卤味'},
+            {id:110,label:'速食冻品'},
+            {id:111,label:'粮油调味'},
+            {id:112,label:'酒饮零食'},
+            {id:113,label:'厨房用品'}
+         ],
          //设置分类的样式
          changeGreen:0
          //左侧分类绿标的滑动        

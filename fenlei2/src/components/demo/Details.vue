@@ -177,7 +177,7 @@ export default {
 }
 </script>
 
-<style scope>
+<style scoped>
   /* body, html {
     scroll-behavior: smooth;
   } */

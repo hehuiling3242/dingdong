@@ -29,7 +29,7 @@
                                 <p>6.90</p>
                             </div>
                             <div class="sliding_item_btn_r">
-                                <img src="../../assets/img/gouwuche.png" alt="">
+                                <img src="../../assets/img/gouwuche.png" alt=""    @click="addcar(index)">
                             </div>
                         </div>
                     </div>
@@ -70,7 +70,29 @@ export default {
         tow(n){
             return n>=0 && n<10 ? '0'+n : ''+n;
         },
-        
+        addcar(index) {
+            var obj = this.productList[index];
+            this.itemAll = [];
+            this.$store.state.shoplist.forEach((item) => {
+                this.itemAll.push(item.id);
+            });
+            var id=sessionStorage.getItem("id")
+            console.log(id)
+            if(id==null){
+                console.log("您未登录");
+                this.$router.replace("/login");
+                return;
+            }else{
+                console.log("登录成功")
+            }
+            if (this.itemAll.indexOf(obj.id) == -1) {
+                obj.count = 1;
+                this.$store.commit("add_car_mutations", obj);
+            } else {
+                var i = this.itemAll.indexOf(obj.id);
+                this.$store.commit("add_car_count", i);
+            }
+        },
         load(){
             setInterval(()=>{
                 this.oldTime= new Date().getTime()

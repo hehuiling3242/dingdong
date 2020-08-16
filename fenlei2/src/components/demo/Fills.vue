@@ -1,21 +1,22 @@
 <template>
   <div class="content">
-    <div class="title">
-      <p>
-        <img src="../../assets/img/left1.png" />
+    <xitongtwo></xitongtwo>
+    <div class="titles">
+      <p @click="say">
+        <img src="../../assets/img/jiantou.png" />
       </p>
       <p class="dingdan">填写订单</p>
     </div>
-    <div class="dizhi">
-      <router-link to="/dingd">
+    <div class="dizhi" >
+      <div @click="shdzshow">
         <div class="dizhi1">
           <p>选择收货地址</p>
           <img src="../../assets/img/right.png" />
         </div>
         <div class="dizhi2"></div>
-      </router-link>
+      </div>
     </div>
-    <div class="time">
+    <div class="times">
       <div class="shangp">
         <span class="shangp_left">送达时间</span>
         <div class="shangp_right" @click="show">
@@ -28,22 +29,22 @@
       <div class="shangp1">
         <p class="shangp1_left">超时补偿</p>
         <p class="shangp1_center">超时10分钟获赔300积分，可抵扣现金</p>
-        <p class="shangp1_right">?</p>
+        <!-- <p class="shangp1_right">?</p> -->
       </div>
-      <div class="shangp2">
-        <img src="../../assets/img/egg.png" />
+      <div class="shangp2" v-for="(products,index) of this.$store.state.shoplist" :key="index">
+        <img :src="products.filePaths[0]" >
         <div class="details">
           <div class="details1">
-            <p class="title">黄瓜 约600g</p>
+            <p class="title">{{products.productName}}</p>
             <div class="price_right">
               <em>¥</em>
               <span>
-                <b>3.90</b>
+                <b>{{products.price}}</b>
               </span>
             </div>
           </div>
-          <p class="price">单价: ¥3.90/份</p>
-          <p class="count">数量: 1份</p>
+          <p class="price">单价: ¥{{products.price}}/份</p>
+          <p class="count">数量: {{products.count}}份</p>
         </div>
       </div>
     </div>
@@ -85,7 +86,7 @@
       </div>
     </div>
     <div class="youhui">
-      <div class="juan1">
+      <!-- <div class="juan1">
         <router-link to="/youhui">
           <div class="juan">
             <p>优惠券</p>
@@ -99,10 +100,10 @@
             <img src="../../assets/img/right.png" />
           </div>
         </router-link>
-      </div>
+      </div> -->
       <div class="jifen">
         <p>积分 共0，满300可用</p>
-        <p>?</p>
+        <!-- <p>?</p> -->
       </div>
     </div>
     <div class="beizhu">
@@ -119,7 +120,7 @@
         <p>商品金额</p>
         <p>
           <span>配送费</span>
-          <span>?</span>
+          <!-- <span>?</span> -->
         </p>
         <p>配送费减免</p>
       </div>
@@ -127,7 +128,7 @@
         <p>
           <b>
             <em>¥</em>
-            <span>13.98</span>
+            <span>{{this.$store.getters.productPrice.toFixed(2)}}</span>
           </b>
         </p>
         <p>
@@ -151,10 +152,12 @@
       <p>
         <b>
           <em>¥</em>
-          <span>13.98</span>
+          <span>
+            {{Number(this.$store.getters.productPrice.toFixed(2))+Number(a)}}
+          </span>
         </b>
       </p>
-      <p>提交订单</p>
+      <p @click="switchTo(b)">提交订单</p>
     </div>
     <div class="yincang1" v-show="yincang1_show">
       <div class="yincang" ref="yincang_1" :style="{height:myheight}">
@@ -196,16 +199,38 @@
         </div>
       </div>
     </div>
+    <div class="shdz" v-show="shdz_show">
+      <div class="shdz_posi">
+        <div class="shdz_top">
+          <p></p>
+          <p>选择送达时间</p>
+          <img @click="shdz" src="../../assets/img/cha.svg" />
+        </div>
+        <div class="shdz_btn" @click="shdz">
+          <p>
+            {{userList.address}}
+          </p>
+          <p>
+            {{userList.fullAddress}}
+          </p>
+        </div>
+      </div>
+      
+    </div>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      a:5,
+      b:"/mygoods",
       mydate:26,
       myheight: "0vh",
       yincang1_show: false,
+      shdz_show:false,
       yincang1_close:true,
+      userList:{},
       //设置时间的样式
       changGreen: 0,
       //设置时间被选中时候后面的勾的显示与隐藏
@@ -259,7 +284,28 @@ export default {
       ],
     };
   },
+  created(){
+    this.queryUserList();
+  },
   methods: {
+    switchTo(a){
+      this.$router.replace(a);
+      this.$store.state.shoplist.forEach(indexSP=>{
+        console.log(this.$store.state.shoplist);
+        console.log(indexSP.id);
+          let url="/serve/plan/add";
+          this.axios.post(url,`userId=${sessionStorage.getItem("id")}&productId=${indexSP.id}&productName=${indexSP.productName}&planCount=${indexSP.count}`).then(res=>{
+            console.log(res.data);
+          })
+      })
+    },
+    queryUserList(){
+      this.userList = JSON.parse(sessionStorage.getItem("userList"));
+    },
+    //填写订单左边的按钮点击完后跳转
+    say() {
+       this.$router.push('/soppings');
+    },
     show() {
       //送达时间的设定右边      
       var date=new Date();
@@ -288,8 +334,6 @@ export default {
       }else{
         this.changewhite = 1;
       }
-
-
       //控制送达时间的显示与隐藏 
       var i = 0;
       this.yincang1_show = true;
@@ -337,13 +381,70 @@ export default {
       this.$refs.shangp_right.innerText = this.datexs + this.datexs1;
       this.yincang1_show = false;
       console.log(this.datexs + this.datexs1);
-    }
+    },
+    shdzshow(){
+      this.shdz_show = true
+      console.log(1)
+    },
+    shdz(){
 
+      this.shdz_show = false
+    },
+    // dzbgc(){
 
+    // }
   },
 };
 </script>
 <style scoped>
+.shon{
+    background-color: #ccc;
+}
+.shdz{
+  position: fixed;
+  bottom: 0px;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  font-size: 1.6rem;
+  color: #282828;
+}
+.shdz_posi{
+  position: fixed;
+  bottom: 0px;
+  /* height: 20vh; */
+  width: 100%;
+  background-color: #fff;
+  border-radius: 1rem 1rem 0px 0px;
+}
+.shdz_top{
+  height: 4.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 1rem;
+}
+.shdz_btn{
+  margin: 0px 1rem;
+  padding: 1rem;
+  border-top:1px solid #ccc
+}
+.shdz_btn>p:first-child{
+  font-size: 1.6rem;
+  color: #333;
+  /* margin-top:.rem */
+}
+.shdz_btn>p:last-child{
+  font-size: 1.4rem;
+  color: #666;
+  margin-top:.5rem
+}
+.shdz_top>p:first-child{
+  width: 2rem;
+}
+.shdz_top>img{
+  width: 2rem;
+}
 .content {
   display: flex;
   background-color: #f5f5f5;
@@ -356,7 +457,7 @@ export default {
 }
 
 /* 第一行 */
-.content > .title {
+.content > .titles {
   width: 100%;
   background-color: #fff;
   height: 5.5rem;
@@ -367,20 +468,20 @@ export default {
   align-items: center;
   /* text-align: center; */
 }
-.title > p:first-child {
+.titles > p:first-child {
   width: 1.5rem;
   height: 2rem;
   line-height: 2rem;
   margin: 0 2rem 0 1rem;
 }
-.title > p:first-child img {
+.titles > p:first-child img {
   width: 100%;
-  height: 2rem;
+  height: 1.5rem;
   vertical-align: middle;
 }
 /* 第一行的字体设置 */
-.title .dingdan {
-  font-size: 2.2rem;
+.titles .dingdan {
+  font-size: 1.8rem;
 }
 
 /* 第二行设置 */
@@ -414,19 +515,19 @@ export default {
 }
 .dizhi2 {
   width: 100%;
-  height: 0.5rem;
+  height: 0.2rem;
   background-image: url("../../assets/img/border.png");
   background-repeat: repeat-x;
 }
 
 /* 第三行设置 */
-.time {
+.times {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
-.time > .shangp {
+.times > .shangp {
   width: 100%;
   height: 5rem;
   background-color: #fff;
@@ -439,11 +540,11 @@ export default {
 }
 
 /* 第三行送达时间设置 */
-.time .shangp_left {
+.times .shangp_left {
   margin: 0 0 0 1.5rem;
   color: #242424;
 }
-.time .shangp_right {
+.times .shangp_right {
   width: 40%;
   display: flex;
   justify-content: space-between;
@@ -460,7 +561,7 @@ export default {
   margin: 0 1rem 0 0;
 }
 /* 第三行里的第二行 */
-.time .shangp1 {
+.times .shangp1 {
   width: 100%;
   height: 3rem;
   display: flex;
@@ -488,6 +589,9 @@ export default {
   height: 1.4rem;
   border: 0.1rem solid #aeaeae;
   border-radius: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 /* 第三行里的第三行 */
 .shangp2 {
@@ -519,9 +623,12 @@ export default {
   color: #242424;
   font-size: 1.4rem;
 }
-.details > .price,
+.details > .price{
+  margin: .4rem 0px;
+  color: #666;
+}
 .details > .count {
-  color: #aeaeae;
+  color: #666;
   /* margin: 0 0 0 0; */
 }
 
@@ -619,7 +726,7 @@ export default {
 /* 第五行优惠 */
 .youhui {
   width: 100%;
-  height: 12rem;
+  /* height: 12rem; */
   background-color: #fff;
   display: flex;
   margin-top: 1.5rem;
@@ -817,7 +924,7 @@ export default {
 /* 提交下方的灰色部分 */
 .tijiao1 {
   width: 100%;
-  height: 12rem;
+  height: 4rem;
   background-color: #f5f5f5;
 }
 
@@ -952,6 +1059,9 @@ export default {
   line-height: 6vh;
   font-size: 1.8rem;
   color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #2ac058;
   border-top-left-radius: 3vh;
   border-top-right-radius: 3vh;

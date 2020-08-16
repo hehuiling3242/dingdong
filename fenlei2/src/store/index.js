@@ -16,7 +16,17 @@ export default new Vuex.Store({
               state.shoplist[key].count 
           }
           return productnumber;
-        }
+        },
+        productPrice(state){
+           let productprice=0;
+           for(var key in state.shoplist){
+             productprice+=
+             state.shoplist[key].price*
+             state.shoplist[key].count*
+             state.shoplist[key].status
+           }
+           return productprice;
+         }
       },
   mutations: {
      //添加商品种类
