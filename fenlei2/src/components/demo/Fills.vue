@@ -293,7 +293,7 @@ export default {
       this.$store.state.shoplist.forEach(indexSP=>{
         console.log(this.$store.state.shoplist);
         console.log(indexSP.id);
-          let url="/server/plan/add?" + `userId=${sessionStorage.getItem("id")}&productId=${indexSP.id}&productName=${indexSP.productName}&planCount=${indexSP.count}&deliverAddress='aaa'&deliverRegionCode='330106'&deliverCityCode='330100'&deliverProvinceCode = '330000'`;
+          let url="/server/plan/add?" + `userId=${sessionStorage.getItem("id")}&productId=${indexSP.id}&productName=${indexSP.productName}&planCount=${indexSP.count}`;
           this.axios.post(url).then(res=>{
             console.log(res.data);
           })
