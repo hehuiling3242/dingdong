@@ -71,4 +71,12 @@ public class DingDongProductService {
         }
         return result;
     }
+
+    public DingDongProduct load(Long id){
+        return dingDongProductMapper.load(id);
+    }
+
+    public void update(DingDongProduct dingDongProduct){
+        dingDongProductMapper.update(dingDongProduct);
+    }
 }

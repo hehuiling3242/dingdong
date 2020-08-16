@@ -12,4 +12,6 @@ public interface DingDongProductMapper {
     DingDongProduct load(Long id);
 
     List<DingDongProduct> queryList(DingDongProductQuery query);
+
+    void update(DingDongProduct dingDongProduct);
 }

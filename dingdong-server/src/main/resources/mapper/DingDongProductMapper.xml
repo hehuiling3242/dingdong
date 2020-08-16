@@ -21,6 +21,7 @@
         update commodity_details
         <set>
             <if test="status != null">status = #{status,jdbcType=NUMBER}</if>
+            <if test="count != null">count = #{count,jdbcType=INTEGER}</if>
         </set>
         where id=#{id}
     </update>
