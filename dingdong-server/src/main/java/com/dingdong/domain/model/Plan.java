@@ -4,6 +4,7 @@ import io.swagger.annotations
         .ApiModelProperty;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -56,6 +57,14 @@ public class Plan implements Serializable {
     @ApiModelProperty(value = "状态")
     private Integer status;
 
+    @ApiModelProperty(value = "订单总金额")
+    private BigDecimal total;
+
+    @ApiModelProperty(value = "单价")
+    private BigDecimal unitPrice;
+
+    @ApiModelProperty(value = "商品主图id")
+    private Long mainImgId;
 
     public Plan() {
     }
@@ -241,5 +250,29 @@ public class Plan implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public Long getMainImgId() {
+        return mainImgId;
+    }
+
+    public void setMainImgId(Long mainImgId) {
+        this.mainImgId = mainImgId;
     }
 }
