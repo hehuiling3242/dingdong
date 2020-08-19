@@ -17,7 +17,10 @@
         <result column="deliver_city_code" property="deliverCityCode"/><!-- 收货地址市级code -->
         <result column="deliver_region_code" property="deliverRegionCode"/><!-- 收货地址区级code -->
         <result column="deliver_address" property="deliverAddress"/><!-- 详细收货地址 -->
-        <result column="status" property="status"/><!-- 详细收货地址 -->
+        <result column="status" property="status"/><!-- 订单状态 -->
+        <result column="total" property="total"/><!-- 订单总金额 -->
+        <result column="unit_price" property="unitPrice"/><!-- 单价 -->
+        <result column="main_img_id" property="mainImgId"/><!-- 商品主图id -->
     </resultMap>
 
     <insert id="insert" parameterType="plan" useGeneratedKeys="true" keyProperty="id">
@@ -35,6 +38,9 @@
             <if test="deliverRegionCode != null">,deliver_region_code</if>
             <if test="deliverAddress != null">,deliver_address</if>
             <if test="status != null">,status</if>
+            <if test="total != null">,total</if>
+            <if test="unitPrice != null">,unit_price</if>
+            <if test="mainImgId != null">,main_img_id</if>
         </trim>
         )values(
         <trim prefix="" prefixOverrides=",">
@@ -50,6 +56,9 @@
             <if test="deliverRegionCode != null">,#{deliverRegionCode,jdbcType=VARCHAR}</if>
             <if test="deliverAddress != null">,#{deliverAddress,jdbcType=VARCHAR}</if>
             <if test="status != null">,#{status,jdbcType=INTEGER}</if>
+            <if test="total != null">,#{total,jdbcType=NUMERIC}</if>
+            <if test="unitPrice != null">,#{unitPrice,jdbcType=NUMERIC}</if>
+            <if test="mainImgId != null">,#{mainImgId,jdbcType=BIGINT}</if>
         </trim>
         )
     </insert>
@@ -69,6 +78,9 @@
             <if test="deliverRegionCode != null">deliver_region_code=#{deliverRegionCode,jdbcType=VARCHAR},</if>
             <if test="deliverAddress != null">deliver_address=#{deliverAddress,jdbcType=VARCHAR},</if>
             <if test="status != null">status=#{status,jdbcType=INTEGER},</if>
+            <if test="total != null">total=#{total,jdbcType=NUMERIC},</if>
+            <if test="unitPrice != null">unit_price=#{unitPrice,jdbcType=NUMERIC},</if>
+            <if test="mainImgId != null">main_img_id=#{mainImgId,jdbcType=BIGINT},</if>
         </set>
         where id=#{id}
     </update>
@@ -134,6 +146,9 @@
         ,p.deliver_region_code
         ,p.deliver_address
         ,p.status
+        ,p.total
+        ,p.unit_price
+        ,p.main_img_id
         <include refid="queryCommonSql"/>
         <include refid="sortSql"/>
         <if test="pageSize > 0">
