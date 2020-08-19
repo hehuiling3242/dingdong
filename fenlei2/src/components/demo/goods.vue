@@ -19,7 +19,7 @@
           </div>
           <div class="shangp" v-for="(item1,index1) of list[index]" :key="index1">
             <div class="shangp1">
-              <img :src="item1.filePaths[0]" />
+              <a :href="'http://127.0.0.1:8080/details/'+item1.id"><img :src="item1.filePaths[0]" /></a>
               <div class="details">
                 <p class="title">{{item1.productName}}</p>
                 <p class="jieshao">{{item1.productAbout}}</p>
@@ -237,7 +237,7 @@ export default {
   /* flex-wrap: wrap */
   /* align-items:flex-end; */
 }
-.shangp1 > img {
+.shangp1 > a > img {
   width: 10rem;
   height: 10rem;
 }
@@ -261,6 +261,7 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   align-content: space-around;
+  width: 100%;
 }
 .details > .title {
   font-size: 1.6rem;

@@ -24,26 +24,29 @@
                 <p>最近常买的商品</p>
                 <button>常购清单</button>
             </div>
-     <div v-show="this.$store.state.shoplist.length>0">
-         <div class="goods_qubu2">
+     <div v-show="this.planList.length>0" >
+         <div class="goods_qubu2" v-for="(item,index) of planList" :key="index">
               <div class="goods_qubu3">
-               <span>2020-08-20 22:43:42</span>
+               <span>{{planList[index].planDate}}</span>
                <span></span>
               </div>
-              <div class="goods_qubu4" v-for="(products,index) of this.$store.state.shoplist" :key='index'>
+              <div class="goods_qubu4">
                <div>
-               <img :src="products.filePaths[0]" alt="">
+                   <!-- 图片位置 -->
+                    <!-- <a :href="'http://127.0.0.1:8080/details/'+planList[index].id"> -->
+                        <img :src="'http://121.199.24.90:9090/file/'+planList[index].mainImgId+'/load'"/>
+                    <!-- </a> -->
                </div>
                <div class="goods_qubu5">
                 <div>
-               <p>{{products.productName}}</p><span>¥{{products.price}}</span>
+               <p>{{planList[index].productName}}</p><span>¥{{planList[index].unitPrice}}</span>
                 </div>
-               <p>单价:¥{{products.price}}/份</p>
-               <p>数量:{{products.count}}份</p>
+               <p>单价:¥{{planList[index].unitPrice}}/份</p>
+               <p>数量:{{planList[index].planCount}}份</p>
                </div>
               </div>
               <div class="goods_qubu6">
-                   <span>共{{this.$store.getters.productNum}}份商品 实付¥{{this.$store.getters.productPrice.toFixed(2)}}</span>
+                   <span>共{{planList[index].planCount}}份商品 实付¥{{planList[index].unitPrice}}</span>
                </div>
                         
                <div class="goods_qubu7">
@@ -63,17 +66,17 @@
             <span @click="show($event)">查看三个月以前的订单<img src="../../assets/img/xia_jiantou.png" alt=""></span>
          </div>
       <div v-show="isShow"  class=".goods_qubu2A" >
-         <div v-show="this.$store.state.shoplist.length>0">
-              <div class="goods_qubu4" v-for="(products,index) of this.$store.state.shoplist" :key='index'>
+         <div v-show="this.planList.length>0">
+              <div class="goods_qubu4" v-for="(item,index) of planList" :key="index">
                <div>
-               <img :src="products.filePaths[0]" alt="">
+               <img :src="'http://121.199.24.90:9090/file/'+planList[index].mainImgId+'/load'"/>
                </div>
                <div class="goods_qubu5">
                 <div>
-               <p>{{products.productName}}</p><span>¥{{products.price}}</span>
+               <p>{{planList[index].productName}}</p><span>¥{{planList[index].unitPrice}}</span>
                 </div>
-               <p>单价:¥{{products.price}}/份</p>
-               <p>数量:{{products.count}}份</p>
+               <p>单价:¥{{planList[index].unitPrice}}/份</p>
+               <p>数量:{{planList[index].planCount}}份</p>
                </div>
               </div>
                <div class="goods_qubu7">
@@ -84,21 +87,21 @@
  </div>
     <div v-show="a==2" class="goods_322">
           <div v-show="e">
-             <div class="goods_qubu2" v-show="this.$store.state.shoplist.length>0">
+             <div class="goods_qubu2" v-show="this.planList.length>0">
               <div class="goods_qubu3">
-               <span>2020-08-20 22:43:42</span>
+               <span>2020-08-20</span>
                <span></span>
               </div>
-              <div class="goods_qubu4" v-for="(products,index) of this.$store.state.shoplist" :key='index'>
+              <div class="goods_qubu4" v-for="(item,index) of planList" :key="index">
                <div>
-               <img :src="products.filePaths[0]" alt="">
+               <img :src="'http://121.199.24.90:9090/file/'+planList[index].mainImgId+'/load'"/>
                </div>
                <div class="goods_qubu5">
                 <div>
-               <p>{{products.productName}}</p><span>¥{{products.price}}</span>
+               <p>{{planList[index].productName}}</p><span>¥{{planList[index].unitPrice}}</span>
                 </div>
-               <p>单价:¥{{products.price}}/份</p>
-               <p>数量:{{products.count}}份</p>
+               <p>单价:¥{{planList[index].unitPrice}}/份</p>
+               <p>数量:{{planList[index].planCount}}份</p>
                </div>
               </div>
                <div class="goods_qubu6">
@@ -174,14 +177,39 @@
 export default({
     data(){
         return{
+            imgurl:'',
             a:1,
             b:"goods_31",
             isShow:false,
             e:true,
-            shanchuY:false
+            shanchuY:false,
+            userList:[],
+            planList:[],
+            imageList:[],
+            planQuery:{}
         }
     },
+    created(){
+            this.queryUserList();
+            this.queryPlanList();
+        },
     methods:{
+        queryUserList() {
+            this.userList = JSON.parse(sessionStorage.getItem("userList"));
+            console.log(this.userList);
+        },
+        queryPlanList(){
+            this.planQuery.userId = this.userList.id;
+            let url = "/server/plan/query-list"
+            this.axios.get(url, {params: this.planQuery}).then((res) => {
+                this.planList = res.data;
+                this.planList.forEach(aa=>{
+                    console.log(aa.mainImgId);
+                    let id=aa.mainImgId;
+                    this.imgurl = "http://121.199.24.90:9090/file/" + aa.mainImgId + "/load";
+                })  
+            })
+        },
         change(ab){
             this.a=ab;
         },

@@ -51,7 +51,7 @@ export default {
             title: "桂冠香肠(台湾风味) 108g/袋",
             a: null,   // 倒计时默认值
             oldTime: new Date().getTime(),   //获取现在距离1970年的毫秒数
-            newTime: new Date('2020/8/14 00:00:00').getTime(),   //获取现在距离1970年的毫秒数
+            newTime: new Date('2020/8/20 00:00:00').getTime(),   //获取现在距离1970年的毫秒数
             second: null, //秒数
             hour: null,  //多少小时
             minute: null,  //多少分钟

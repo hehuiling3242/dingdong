@@ -7,7 +7,7 @@
                 <p>限量供应,抢完为止</p>
             </div>
             <div class="homenew_top_r">
-                <p>查看更多></p>
+                <p @click="switchTo()">查看更多></p>
             </div>
         </div>
         <div class="homenew_btn">
@@ -51,6 +51,9 @@ export default {
         this.queryProductList();
     },
     methods:{
+        switchTo(){
+            this.$router.replace("/classify")
+        },
         queryProductList() {
             this.productQuery.productShow = 0;
             // console.log(this.productQuery.productShow);

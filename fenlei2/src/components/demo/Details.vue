@@ -4,7 +4,7 @@
     <xitongtwo></xitongtwo>
     <div id="toTop" v-show="showAbs">
       <div class="none">
-        <img src="../../assets/img/jiantou.png">
+        <img @click="switchTo()" src="../../assets/img/jiantou.png">
         <p style="display:inline-block" class="nonecen">
           <a href="#lL">商品</a>
           <a href="#2L">评价</a>
@@ -14,10 +14,10 @@
         <img src="../../assets/img/zhuan.png" alt="">
       </div>
     </div>
-    <img src="../../assets/img/jiantou.png">
+    <img  @click="switchTo()" src="../../assets/img/jiantou.png">
     <!-- 轮播 -->
     <!-- <img :src="productList[0].filePaths[0]" alt=""> -->
-    <div class="lunbo">
+    <div class="lunbo" id="lL">
       <img :src="productList[p].filePaths[p]" alt="">
     </div>
     <!-- <lunbo class="lunbo"></lunbo> -->
@@ -74,11 +74,11 @@
     </div>
     <!-- 为你推荐 -->
     <hr style="border:0.05rem solid #eee;margin:2rem 0rem"/>
-    <p class="tui"  id="3L">为你推荐</p>
+    <p class="tui"  id="4L">为你推荐</p>
     <homenew></homenew>
     <!-- 规格 -->
     <hr style="border:0.05rem solid #eee;margin:2rem 0rem"/>
-    <p class="tui">规格</p>
+    <p class="tui" id="3L">规格</p>
     <hr style="border:0.05rem solid #eee;margin:1.6rem 0rem"/>
     <pre>净含量      <span>{{productList[p].detail}}</span></pre>
     <hr style="border:0.05rem solid #eee;margin:1.6rem 0rem"/>
@@ -86,7 +86,7 @@
     <hr style="border:0.05rem solid #eee;margin:1.6rem 0rem"/>
     <pre>保存条件    常温</pre>
     <hr style="border:0.05rem solid #eee;margin:1.6rem 0rem"/>
-    <div class="detabom" id="4L">
+    <div class="detabom" >
       <img :src="productList[p].filePaths[m]" alt="">
       <!-- <img src="../../assets/img/datails1021-1.jpg" alt=""> -->
     </div>
@@ -128,6 +128,10 @@ export default {
       this.queryProductClass();
     },
     methods:{
+      switchTo(){
+        // this.$router.replace(path)
+        this.$router.push("/");
+      },
       queryProductList() {
         this.productQuery.id = parseInt(this.$route.params.id);
         console.log(this.productQuery.id);

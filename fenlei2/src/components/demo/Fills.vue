@@ -223,6 +223,7 @@
 export default {
   data() {
     return {
+      statu:1,
       a:5,
       b:"/mygoods",
       mydate:26,
@@ -293,7 +294,7 @@ export default {
       this.$store.state.shoplist.forEach(indexSP=>{
         console.log(this.$store.state.shoplist);
         console.log(indexSP.id);
-          let url="/server/plan/add?" + `userId=${sessionStorage.getItem("id")}&productId=${indexSP.id}&productName=${indexSP.productName}&planCount=${indexSP.count}`;
+          let url="/server/plan/add?" + `userId=${sessionStorage.getItem("id")}&productId=${indexSP.id}&productName=${indexSP.productName}&planCount=${indexSP.count}&status=${indexSP.status}&unitPrice=${indexSP.price}&mainImgId=${indexSP.fileIdSet[1]}`;
           this.axios.post(url).then(res=>{
             console.log(res.data);
           })
@@ -304,7 +305,7 @@ export default {
     },
     //填写订单左边的按钮点击完后跳转
     say() {
-       this.$router.push('/soppings');
+       this.$router.push('/cart');
     },
     show() {
       //送达时间的设定右边      

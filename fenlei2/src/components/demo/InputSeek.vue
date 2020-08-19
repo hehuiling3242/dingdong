@@ -36,7 +36,7 @@ export default {
     data(){
         return{
             n:'',
-            a:"/classify",
+            a:"/",
             searchText:'',
             productQuery:{},
             productList:[{}],
@@ -49,8 +49,8 @@ export default {
         },
         switchTo(path){
             // this.$router.replace(path)
-            this.$router.go(-1)
-            console.log(this.$router.go(-1))
+            this.$router.push(path)
+            // console.log(this.$router.go(-1))
         }
     },
     watch:{

@@ -10,8 +10,15 @@
 export default {
     methods:{
         a(){
+            // 退出登录事件
             sessionStorage.clear()
-        }
+            // 跳转首页事件
+        },
+        switchTo(){
+            this.$router.push("/")
+        // this.$router.replace(path)
+        
+        },
     },
     mounted(){
         
@@ -19,11 +26,6 @@ export default {
 }
 </script>
 <style scoped>
-/* #app{
-    font-size: 62.5%;
-    width: 100%;
-    height: 100Vh;
-} */
 
 
 

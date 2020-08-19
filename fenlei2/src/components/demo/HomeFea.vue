@@ -10,24 +10,24 @@
                     <p style="-webkit-background-clip: text;" class="home_fea_text">新品尝鲜</p>
                     <p>戈壁硒砂瓜 细嫩香甜</p>
                     <div class="home_fea_pic">
-                        <img src="../../assets/img/shuiguo.jpg" alt="" class="home_fea_SG">
-                        <img src="../../assets/img/shuiguo.jpg" alt="" class="home_fea_SG">
+                        <img src="../../assets/img/jd-shuiguo.jpg" alt="" class="home_fea_SG">
+                        <img src="../../assets/img/jd-shuiguo.jpg" alt="" class="home_fea_SG">
                     </div>
                 </div>
                 <div>
-                    <p style="-webkit-background-clip: text;" class="home_fea_text">7月爆款</p>
+                    <p style="-webkit-background-clip: text;" class="home_fea_text1">7月爆款</p>
                     <p>很丑好甜 蜜宝火龙果</p>
                     <div class="home_fea_pic">
-                        <img src="../../assets/img/shuiguo.jpg" alt="" class="home_fea_SG">
-                        <img src="../../assets/img/shuiguo.jpg" alt="" class="home_fea_SG">
+                        <img src="../../assets/img/jidan.png" alt="" class="home_fea_SG">
+                        <img src="../../assets/img/jidan.png" alt="" class="home_fea_SG">
                     </div>
                 </div>
                 <div>
-                    <p style="-webkit-background-clip: text;" class="home_fea_text">平价菜场</p>
+                    <p style="-webkit-background-clip: text;" class="home_fea_text2">平价菜场</p>
                     <p>苦瓜约550g 3.99元/份</p>
                         <div class="home_fea_pic">
-                        <img src="../../assets/img/shuiguo.jpg" alt="" class="home_fea_SG">
-                        <img src="../../assets/img/shuiguo.jpg" alt="" class="home_fea_SG">
+                        <img src="../../assets/img/jd-xianrou.jpg" alt="" class="home_fea_SG">
+                        <img src="../../assets/img/jd-xianrou.jpg" alt="" class="home_fea_SG">
                         </div>
                 </div>
                 <div class="home_fea_foot" style="border-left:0;border-top: 0;">
@@ -35,14 +35,14 @@
                         <p class="home_fea_title">一周菜单</p>
                         <p>童年·美味</p>
                         <div>
-                        <img src="../../assets/img/shuiguo.jpg" alt="" class="home_fea_SG">
+                        <img src="../../assets/img/kuaishoucai.jpg" alt="" class="home_fea_SG">
                         </div>
                     </div>
                     <div>
                         <p class="home_fea_title">绿卡专享</p>
                         <p>一省再省!</p>
                         <div>
-                        <img src="../../assets/img/shuiguo.jpg" alt="" class="home_fea_SG">
+                        <img src="../../assets/img/jd-shuiguo.webp" alt="" class="home_fea_SG">
                         </div>
                     </div>
                 </div>
@@ -106,7 +106,21 @@ export default {
     .home_fea .home_fea_text{
         font-size: 1.8rem;
         font-weight: 600;
-        background: linear-gradient(to right, red, blue);
+        background: linear-gradient(to right, #eb504d, #ef9659);
+        color: transparent;
+        margin-bottom: .7rem;
+    }
+    .home_fea .home_fea_text1{
+        font-size: 1.8rem;
+        font-weight: 600;
+        background: linear-gradient(to right, #fc445e, #df6693);
+        color: transparent;
+        margin-bottom: .7rem;
+    }
+    .home_fea .home_fea_text2{
+        font-size: 1.8rem;
+        font-weight: 600;
+        background: linear-gradient(to right, #5b8a76, #6ca652);
         color: transparent;
         margin-bottom: .7rem;
     }
@@ -122,7 +136,7 @@ export default {
         margin-bottom: .7rem;
     }
     .home_fea_box>:nth-child(1),.home_fea_box>:nth-child(2),.home_fea_box>:nth-child(3){
-        padding: 1rem 0 0 1.5rem;
+        padding: 1rem  1.5rem;
     }
     .home_fea_foot>div>:nth-child(2){
         color:#989898;

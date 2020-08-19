@@ -7,6 +7,15 @@ export default new Vuex.Store({
   state: {
     shoplist:[
     ],
+    dizhilist:[
+    ],
+    name:'',
+    sex:'',
+    phone:'',
+    menpai:'',
+    moren:'',
+    biaoqian:'',
+    dizhi: ''
   },
    getters:{
         productNum(state){
@@ -44,8 +53,45 @@ export default new Vuex.Store({
   //判断是否为check状态
   check_change(state,sub){
   state.shoplist[sub].status=(state.shoplist[sub].status=1?0:1)
-  }
   },
+  //订单栏地址
+
+    //姓名内容
+    addgetListPOI(state,name) {
+      state.dizhilist.push(name);
+    },
+    //性别内容
+    addshow1(state,sex) {
+      state. dizhilist.push(sex);
+    },
+    //手机号内容
+    addgetListPOI1(state,phone) {
+      state. dizhilist.push(phone);
+    },
+    //门牌号内容
+    addgetListPOI2(state,menpai) {
+      state.dizhilist.push(menpai);
+    },
+    //标签内容
+    addbiaoqian(state,biaoqian) {
+      state.dizhilist.push(biaoqian);
+    },
+    //设为默认地址的变化
+    addcolorchange(state,qiu) {
+      state.dizhilist.push(qiu);
+    },
+
+    //保存并使用提交并改变前页面的值
+    addtijiao(state) {
+      console.log(state.dizhilist);
+    },
+    //保存dzchange的值
+    adddzchange(state,dizhi1) {
+       state.dizhi = dizhi1;
+       console.log(state.dizhi);
+    }
+  },
+  
   actions: {
   },
   modules: {

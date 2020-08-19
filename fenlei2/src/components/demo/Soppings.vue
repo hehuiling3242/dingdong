@@ -68,7 +68,7 @@
             </p>
             <p>已免配送费</p>
           </div>
-          <button @click="switchTo()">{{`去结算(${priceage})`}}</button>
+          <button @click="switchTo1()">{{`去结算(${priceage})`}}</button>
         </div>
       </div>
     </div>
@@ -95,6 +95,10 @@ export default {
   },
   methods: {
     switchTo(){
+      // this.$router.replace(path)
+      this.$router.push("/classify");
+    },
+    switchTo1(){
       // this.$router.replace(path)
       this.$router.push("/fills");
     },

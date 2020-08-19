@@ -52,12 +52,12 @@
             </div>
             <div>
                 <div class="states">
-                    <img src="./../../assets/img/daizhifu.png" alt="">
+                    <img @click="switchTo(a)" src="./../../assets/img/daizhifu.png" alt="">
                     <p v-show="nopay">
                         <span v-if="login"></span>
                         <span v-else>{{m}}</span>
                     </p>
-                    <p>待支付</p>
+                    <p @click="switchTo(a)">待支付</p>
                 </div>
                 <div class="states">
                     <img src="./../../assets/img/daishouhuo.png" alt="">

@@ -161,7 +161,7 @@
                     fileType:this.fileType,
                     id:this.fileId
                 }
-                let url = "/server/file/upate-file?id=" + this.fileId + "&productId=" + productId + "&fileType=" + this.fileType
+                let url = "server/file/upate-file?id=" + this.fileId + "&productId=" + productId + "&fileType=" + this.fileType
                 this.axios.post(url).then((res) => {
                     this.fileType = '';
                     this.fileId = '';
