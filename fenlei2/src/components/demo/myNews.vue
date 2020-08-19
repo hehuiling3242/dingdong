@@ -48,16 +48,16 @@
         <div class="my_t_top">
             <div>
                 <p>我的订单</p>
-                <p  @click="switchTo(a)">查看全部订单></p>
+                <p  @click="switchTo()">查看全部订单></p>
             </div>
             <div>
                 <div class="states">
-                    <img @click="switchTo(a)" src="./../../assets/img/daizhifu.png" alt="">
+                    <img @click="switchTo()" src="./../../assets/img/daizhifu.png" alt="">
                     <p v-show="nopay">
                         <span v-if="login"></span>
                         <span v-else>{{m}}</span>
                     </p>
-                    <p @click="switchTo(a)">待支付</p>
+                    <p @click="switchTo()">待支付</p>
                 </div>
                 <div class="states">
                     <img src="./../../assets/img/daishouhuo.png" alt="">
@@ -108,42 +108,48 @@
         <div class="my_b">
             <div>
                 <div>
-                    <img src="./../../assets/img/daizhifu.png" alt="">
+                    <img src="./../../assets/img/tuceng3.png" alt="">
                     <p>绿卡会员</p>
                 </div>
                 <div>
-                    <img src="./../../assets/img/daizhifu.png" alt="">
+                    <img src="./../../assets/img/tuceng10.png" alt="">
                     <p>收货地址</p>
                 </div>
                 <div>
-                    <img src="./../../assets/img/daizhifu.png" alt="">
+                    <img src="./../../assets/img/tuceng9.png" alt="">
                     <p>邀请有礼</p>
                 </div>
                 <div>
-                    <img src="./../../assets/img/daizhifu.png" alt="">
+                    <img src="./../../assets/img/tuceng8.png" alt="">
                     <p>联系客服</p>
                 </div>
             </div>
             <div>
                 <div>
-                    <img src="./../../assets/img/daizhifu.png" alt="">
+                    <img src="./../../assets/img/tuceng7.png" alt="">
                     <p>礼品卡</p>
                 </div>
                 <div>
-                    <img src="./../../assets/img/daizhifu.png" alt="">
+                    <img src="./../../assets/img/tuceng6.png" alt="">
                     <p>扫一扫</p>
                 </div>
                 <div>
-                    <img src="./../../assets/img/daizhifu.png" alt="">
+                    <img src="./../../assets/img/tuceng5.png" alt="">
                     <p>意见反馈</p>
                 </div>
-                <div>
-                    <img src="./../../assets/img/daizhifu.png" alt="">
+                <div >
+                    <img  @click="showCont()" src="./../../assets/img/tuceng4.png" alt="">
                     <p>设置</p>
                 </div>
             </div>
         </div>
         <table></table>
+    </div>
+    <div class="tuichu" v-show="yangshi " >
+        <div>
+            <span class="login" @click="tui()"><p>退出登录</p></span>
+            <span @click="close()"><p >取消退出</p></span>
+        </div>
     </div>
 </div>
 </template>
@@ -161,11 +167,10 @@ export default {
             saled:false,
             id:'',
             login:true,
-            a:"/mygoods",
-            f:"/login",
             userList:{},
             planQuery:{},
             planList:[{}],
+            yangshi:false,
         }
     },
     created(){
@@ -201,15 +206,29 @@ export default {
                 })
             })
         },
-        switchTo(a){
-            this.$router.replace(a);
+        switchTo(){
+            var id=sessionStorage.getItem("id")
+                console.log(id)
+            if(id==null){
+                this.$router.replace("/login");
+            }else{
+                this.$router.replace("/mygoods");
+            }
         },
         loginTo(f){
             this.$router.replace(f);
-        }  
+        },
+        showCont(){
+        this.yangshi = true;
+        },
+        close() {
+          this.yangshi = false;
+        },
+        tui(){
+            sessionStorage.clear()
+            this.$router.push("/")
+        }
     },
-    
-
 }
 </script>
 <style scoped>
@@ -219,6 +238,59 @@ export default {
         background: url(../../assets/img/my_bg.png);
     }
     /* 订单状态 */
+     .tuichu{
+        position: fixed;
+        bottom: 0rem;
+        width: 100%;
+        height: 100vh;
+        /* border: 0.1rem solid red; */
+        background-color: rgba(0,0,0,.6);
+        z-index: 9998;
+    }
+    .tuichu>div{
+        height: 20vh;
+        width: 100%;
+        position: fixed;
+        bottom: 0rem;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: #fff;
+      
+
+    }
+    .tuichu span{
+        width: 46%;
+        height: 5.5rem;
+        border: 0;
+        border-radius: 2.5rem;
+        background-color:#2ac058 ;
+        display: flex;
+        justify-content: center;
+    }
+    .tuichu span p{
+        height: 1.9rem;
+        width: 7.5rem;
+        margin: auto;
+        padding: 0;
+        font-size: 1.8rem;
+        color: #fff;
+    }
+    .tuichu .login{
+        background-color: #ee0d45;
+    }
+    .states span{
+        position: absolute;
+        display: inline-block;
+        width: 2.2rem;height: 2.2rem;
+        background-color: red;
+        border-radius: 50%;
+        line-height: 2rem;
+        color: #fff;
+        font-size: 1.5rem;
+        text-align: center;
+        left: 2rem;top: -0.7rem;
+    }
     .states{
         position: relative;
     }

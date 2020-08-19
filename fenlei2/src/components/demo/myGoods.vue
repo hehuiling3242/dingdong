@@ -32,10 +32,7 @@
               </div>
               <div class="goods_qubu4">
                <div>
-                   <!-- 图片位置 -->
-                    <!-- <a :href="'http://127.0.0.1:8080/details/'+planList[index].id"> -->
-                        <img :src="'http://121.199.24.90:9090/file/'+planList[index].mainImgId+'/load'"/>
-                    <!-- </a> -->
+                    <img :src="'http://121.199.24.90:9090/file/'+planList[index].mainImgId+'/load'"/>
                </div>
                <div class="goods_qubu5">
                 <div>

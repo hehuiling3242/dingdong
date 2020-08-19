@@ -43,6 +43,16 @@
                     width="180">
             </el-table-column>
             <el-table-column
+                    prop="count"
+                    label="库存"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="price"
+                    label="价格"
+                    width="180">
+            </el-table-column>
+            <el-table-column
                     prop="url"
                     label="tupian"
                     width="180">

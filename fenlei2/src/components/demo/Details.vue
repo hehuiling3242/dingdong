@@ -23,7 +23,7 @@
     <!-- <lunbo class="lunbo"></lunbo> -->
     <p class="price">
       <span>¥{{productList[p].price}}</span>
-      <del>¥{{original_cost}}</del>  
+      <span class="count">库存:{{productList[p].count}}</span>  
     </p>
     <p class="title">{{productList[p].productName}}</p>
     <p class="deta">{{productList[p].productAbout}}</p>
@@ -228,6 +228,10 @@ export default {
      width: 100%;
     margin: 1rem 0rem;
   }
+  .price{
+    display: flex;
+    justify-content: space-between;
+  }
   .price,.title,.deta,.time{
     padding: 0 1.5rem;
   }
@@ -236,10 +240,11 @@ export default {
     font-size: 3rem;
     font-weight: 800;
   }
-  .price>del{
+  .price>.count{
     margin-left:1rem;
-    font-size: 1.5rem;
-    color: #888;
+    font-size: 1.6rem;
+    color: #333;
+    padding-top: 1rem;
   }
   .title{
     color: #333;

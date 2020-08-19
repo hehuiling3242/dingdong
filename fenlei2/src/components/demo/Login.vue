@@ -69,29 +69,7 @@ export default {
       userList:[]
     };
   },
-  created(){
-      // this.login();
-  },
   methods: {
-    // login(){
-    //     // console.log(1)
-    //     axios.get(
-    //     "/ceshi",{params:{username:this.username,password:this.password}}
-    //     )
-    //     .then(res=>{
-    //         if(res.data == 1 ){
-    //             // location.href('http://127.0.0.1:8080')
-    //             console.log(1)
-    //         }else{
-    //           // console.log(res.data)
-    //           let id=res.data[0].id
-    //           console.log(id)
-    //           sessionStorage.setItem("id",id)
-    //           // console.log('登录成功')
-    //           this.$router.replace("/");
-    //         }
-    //     })
-    // },
     login() {
       this.userQuery.userName= this.username;
       this.userQuery.passWord= this.password;

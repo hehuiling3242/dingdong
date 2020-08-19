@@ -19,7 +19,7 @@
         <div>
           <input type="checkbox" v-model="isAgress[sub]" @click="Check($event,sub)" class="item" />
           <label for="item"></label>
-          <img :src="products.filePaths[0]" alt />
+          <a :href="'http://127.0.0.1:8080/details/'+products.id"><img :src="products.filePaths[0]" alt /></a>
         </div>
         <div>
           <p>{{products.productName}}</p>
@@ -400,7 +400,7 @@ export default {
 .Soppings_body > .lastSopp > div > p:first-child {
   font-size: 15px;
 }
-.Soppings_body > .lastSopp > div > img {
+.Soppings_body > .lastSopp > div img {
   width: 65%;
 }
 .Soppings_Price {
