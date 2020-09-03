@@ -166,6 +166,7 @@ export default {
             p:0,
             saled:false,
             id:'',
+            f:"/login",
             login:true,
             userList:{},
             planQuery:{},
