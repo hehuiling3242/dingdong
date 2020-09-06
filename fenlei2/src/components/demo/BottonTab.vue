@@ -1,103 +1,133 @@
 <template>
-    <div id="app">
-        <img src="" alt="">
-        <div class="botton_tab">
-            <div class="tab_item" @click="switchTo(a)">
-                <img :src="$route.path=='/'? tabBarImgArr[0].selected : tabBarImgArr[0].normal" class="but">
-                <span :class="{on:a === $route.path}">首页</span>
-            </div>
-            <div class="tab_item" @click="switchTo(b)">
-                <img :src=" $route.path=='/classify' ? tabBarImgArr[1].selected : tabBarImgArr[1].normal" class="but">
-                <span :class="{on:b === $route.path}">分类</span>
-            </div>
-            <div class="tab_item" @click="switchTo(c)">
-                <img :src=" $route.path=='/whateat'? tabBarImgArr[2].selected : tabBarImgArr[2].normal" class="but">
-                <span :class="{on:c === $route.path}">吃什么</span>
-            </div>
-            <div class="tab_item" @click="switchTo(d)">
-                <img :src=" $route.path=='/cart' ? tabBarImgArr[3].selected : tabBarImgArr[3].normal" class="but">
-                <span :class="{on:d === $route.path}">购物车</span>
-                <span v-show="this.$store.getters.productNum!==0" class="tab_item_red">{{this.$store.getters.productNum}}</span>
-                <!-- 小圆圈数量需要修改 -->
-            </div>
-            <div class="tab_item" @click="switchTo(e)">
-                <img :src=" $route.path=='/mine' ? tabBarImgArr[4].selected : tabBarImgArr[4].normal" class="but">
-                <span :class="{on:e === $route.path}">我的</span>
-            </div>
-        </div>
+  <div id="app">
+    <img src alt />
+    <div class="botton_tab">
+      <div class="tab_item" @click="switchTo(a)">
+        <img :src="$route.path=='/'? tabBarImgArr[0].selected : tabBarImgArr[0].normal" class="but" />
+        <span :class="{on:a === $route.path}">首页</span>
+      </div>
+      <div class="tab_item" @click="switchTo(b)">
+        <img
+          :src=" $route.path=='/classify' ? tabBarImgArr[1].selected : tabBarImgArr[1].normal"
+          class="but"
+        />
+        <span :class="{on:b === $route.path}">分类</span>
+      </div>
+      <div class="tab_item" @click="switchTo(c)">
+        <img
+          :src=" $route.path=='/whateat'? tabBarImgArr[2].selected : tabBarImgArr[2].normal"
+          class="but"
+        />
+        <span :class="{on:c === $route.path}">吃什么</span>
+      </div>
+      <div class="tab_item" @click="switchTo(d)">
+        <img
+          :src=" $route.path=='/cart' ? tabBarImgArr[3].selected : tabBarImgArr[3].normal"
+          class="but"
+        />
+        <span :class="{on:d === $route.path}">购物车</span>
+        <span
+          v-show="this.$store.getters.productNum!==0"
+          class="tab_item_red"
+        >{{this.$store.getters.productNum}}</span>
+        <!-- 小圆圈数量需要修改 -->
+      </div>
+      <div class="tab_item" @click="switchTo(e)">
+        <img
+          :src=" $route.path=='/mine' ? tabBarImgArr[4].selected : tabBarImgArr[4].normal"
+          class="but"
+        />
+        <span :class="{on:e === $route.path}">我的</span>
+      </div>
     </div>
+  </div>
 </template>
 <script>
 export default {
-    data(){
-        return{
-            tabBarImgArr:[   //图片切换
-                {normal: require('./../../assets/coverage.png'), selected: require('./../../assets/coverage_hover.png')},
-                {normal: require('./../../assets/classify.png'), selected: require('./../../assets/classify_hover.png')},
-                {normal: require('./../../assets/whateat.png'), selected: require('./../../assets/whateat_hover.png')},
-                {normal: require('./../../assets/cart.png'), selected: require('./../../assets/cart_hover.png')},
-                {normal: require('./../../assets/mine.png'), selected: require('./../../assets/mine_hover.png')},
-            ] ,
-            a:"/",
-            b:"/classify",
-            c:"/whateat",
-            d:"/cart",
-            e:"/mine",
-        }
+  data() {
+    return {
+      tabBarImgArr: [
+        //图片切换
+        {
+          normal: require("./../../assets/coverage.png"),
+          selected: require("./../../assets/coverage_hover.png"),
+        },
+        {
+          normal: require("./../../assets/classify.png"),
+          selected: require("./../../assets/classify_hover.png"),
+        },
+        {
+          normal: require("./../../assets/whateat.png"),
+          selected: require("./../../assets/whateat_hover.png"),
+        },
+        {
+          normal: require("./../../assets/cart.png"),
+          selected: require("./../../assets/cart_hover.png"),
+        },
+        {
+          normal: require("./../../assets/mine.png"),
+          selected: require("./../../assets/mine_hover.png"),
+        },
+      ],
+      a: "/",
+      b: "/classify",
+      c: "/whateat",
+      d: "/cart",
+      e: "/mine",
+    };
+  },
+  methods: {
+    switchTo(path) {
+      // console.log(this.$router)
+      // console.log(this.$router)
+      this.$router.replace(path);
     },
-    methods:{
-        switchTo(path){
-        // console.log(this.$router)
-            this.$router.replace(path)
-        }
-    }
-}
+  },
+};
 </script>
 <style scoped>
-
-.tab_item_red{
-    width: 1.5rem;
-    height: 1.5rem;
-    background-color: red;
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    right: 1.5rem;
-    top: .6rem;
+.tab_item_red {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: red;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 1.5rem;
+  top: 0.6rem;
 }
-.botton_tab{
-    width: 100%;
-    height: 8%;
-    background-color: #f8f8f8;
-    position:fixed;
-    left: 0px; 
-    bottom:0px;
-    display: flex;
+.botton_tab {
+  width: 100%;
+  height: 8%;
+  background-color: #f8f8f8;
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  display: flex;
 }
-.tab_item{
-    position: relative;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #5c5c5c;
+.tab_item {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #5c5c5c;
 }
-.tab_item>span{
-    font-size: .8rem;
-
+.tab_item > span {
+  font-size: 0.8rem;
 }
-.tab_item>img{
-    width: 4rem;
-    height: 3rem;
+.tab_item > img {
+  width: 4rem;
+  height: 3rem;
 }
-.on{
-    color: #3dcc5f;
+.on {
+  color: #3dcc5f;
 }
-.but{
-    margin-bottom: .5rem;
+.but {
+  margin-bottom: 0.5rem;
 }
 </style>
